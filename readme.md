@@ -1,0 +1,169 @@
+# vue-virtual-table
+
+Vue table component with virtual dom and easy api.
+
+* Keep smooth when the data reachs thousands of rows or even more.
+* Easy to use with a simple config.
+
+[live demo(doing...)]()
+
+# Usage
+
+A simplest example:
+
+```html
+<template>
+  <vue-virtual-table
+    :config="tableConfig"
+    :data="tableData"
+  >
+  </vue-virtual-table>
+</template>
+
+<script>
+import VueVirtualTable from 'vue-virtual-table'
+export default {
+  components: {
+    VueVirtualTable
+  },
+  data: {
+    tableConfig: [
+      {prop: 'user'},
+      {prop: 'age'}
+    ],
+    tableData: [
+      {user: 'a1', age: 20},
+      {user: 'a2', age: 21},
+      {user: 'a3', age: 23}
+    ]
+  }
+}
+</script>
+```
+
+Every item of the config refers to a column. When you don't set sepcific 'name' of the table column header, it will uses the 'prop' value as default. Or you can set the tableConfig like:
+
+```js
+tableConfig: [{prop: 'user', name: 'User Name'}, {prop: 'age', name: 'Age'}]
+```
+
+And if you want to search in the 'user' column, set the tableConfig like:
+
+```js
+tableConfig: [
+  {prop: 'user', name: 'User Name', searchable: true},
+  {prop: 'age', name: 'Age'}
+]
+```
+
+For the 'age' column which is a set of number, you'd better use 'numberFilter' to filter numbers with "<", ">", "between" etc.
+
+```js
+tableConfig: [
+  {prop: 'user', name: 'User Name', searchable: true},
+  {prop: 'age', name: 'Age', numberFilter: true}
+]
+```
+
+There are many convenient features hard to explain one by one.
+Here is a complex example and you can get more info in the tables below the example:
+
+```html
+<template>
+  <vue-virtual-table
+    :config="tableConfig"
+    :data="tableData"
+    :height="800"
+    :itemHeight="55"
+    :minWidth="1000"
+    :selectable="true"
+    :enableExport="true"
+    v-on:changeSelection="handleSelectionChange"
+  >
+    <template slot-scope="scope" slot="actionCommon">
+      <button @click="edit(scope.index, scope.row)">Edit</button>
+      <button @click="del(scope.index, scope.row)">Delete</button>
+    </template>
+  </vue-virtual-table>
+</template>
+
+<script>
+import VueVirtualTable from 'vue-virtual-table'
+export default {
+  components: {
+    VueVirtualTable
+  },
+  data: {
+    tableConfig: [
+      {prop: '_index', name: '#', width: 80},
+      {prop: 'user', name: 'User', searchable: true, sortable: true, summary: 'COUNT'},
+      {prop: 'age', name: 'Age', numberFilter: true},
+      {prop: 'city', name: 'City', filterable: true},
+      {prop: '_action', name: 'Action', actionName: 'actionCommon'}
+    ],
+    tableData: [
+      {user: 'a1', age: 20, city: 'aaaa'},
+      {user: 'a2', age: 21, city: 'bbbb'},
+      {user: 'a3', age: 23, city: 'aaaa'}
+    ]
+  },
+  methods: {
+  	handleSelectionChange(rows){
+      console.log(rows)
+  	},
+  	edit(index, row){
+  	  console.log(index)
+  	},
+  	del(index, row){
+  	  console.log(index)
+  	}
+  }
+}
+</script>
+```
+
+### Table Attributes
+
+| name           | type    | description                             | required | default |
+| -------------- | ------- | --------------------------------------- | -------- | ------- |
+| data           | Array   | The array of data. Every item is a row. | Yes      |         |
+| config         | Array   | The config of table.                    | Yes      |         |
+| minWidth       | Number  | Set the minimum width of table.         | No       | 1200px  |
+| height         | Number  | Set the height of table.                | No       | 300px   |
+| itemHeight     | Number  | Set the height of row.                  | No       | 42px    |
+| bordered       | Boolean | Whether table has vertical border.      | No       | false   |
+| hoverHighlight | Boolean | Whether to hightlight current row.      | No       | true    |
+| selectable     | Boolean | Whether row is selectable.              | No       | false   |
+| enableExport   | Boolean | Whether to show export-to-table button  | No       | false   |
+| language       | String  | Language from ['en', 'cn']              | No       | 'en'    |
+
+### Table Events
+
+| name            | parameters | description                   |
+| --------------- | ---------- | ----------------------------- |
+| changeSelection | rows       | When the selected rows change |
+
+### Table Config
+
+| param        | type    | description                                      | required | default                   |
+| ------------ | ------- | ------------------------------------------------ | -------- | ------------------------- |
+| prop         | String  | Property name                                    | Yes      |                           |
+| name         | String  | Display name                                     | No       | same to the property name |
+| width        | Number  | Column width                                     | No       | auto                      |
+| sortable     | Boolean | Whether this column is sortable                  | No       | false                     |
+| searchable   | Boolean | Whether this column is searchable                | No       | false                     |
+| filterable   | Boolean | Whether this column is filterable                | No       | false                     |
+| numberFilter | Boolean | If it's a column of number. You can use this.    | No       | false                     |
+| summary      | String  | summary type from ['COUNT', 'SUM'] or customize. | No       |                           |
+| prefix       | String  | Display before the value                         | No       |                           |
+| suffix       | String  | Display after the value                          | No       |                           |
+| alignItems   | String  | Same with flex. Control the content of a cell    | No       | center                    |
+| isHidden     | Boolean | Whether this column is hidden                    | No       | false                     |
+
+### Special Props
+
+| name     | description                          |
+| -------- | ------------------------------------ |
+| \_index  | Show the index of row                |
+| \_action | A slot to customize the content      |
+| \_expand | A slot to customize a popover window |
