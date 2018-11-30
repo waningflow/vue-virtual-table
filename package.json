@@ -30,7 +30,6 @@
     "build:unpkg":
       "rollup --config build/rollup.config.js --format iife --file dist/vue-virtual-table.min.js",
     "precommit": "pretty-quick --staged",
-    "postpublish": "git add docs && git add dist && git commit -a --amend"
   },
   "dependencies": {
     "babel-runtime": "^6.26.0",
