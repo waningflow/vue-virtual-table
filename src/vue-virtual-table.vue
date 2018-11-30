@@ -170,9 +170,9 @@
 
 </template>
 <script>
-import VirtualScroller from './virtual-scroller.vue'
-import XLSX from 'xlsx'
-import {ResizeObserver} from 'vue-resize'
+import VirtualScroller from "./virtual-scroller.vue";
+import XLSX from "xlsx";
+import { ResizeObserver } from "vue-resize";
 import {
   Select,
   Option,
@@ -181,11 +181,11 @@ import {
   Checkbox,
   CheckboxGroup,
   Button
-} from 'element-ui'
-import './element-variables.scss'
+} from "element-ui";
+import "./element-variables.scss";
 
 export default {
-  name: 'VueVirtualTable',
+  name: "VueVirtualTable",
   components: {
     VirtualScroller,
     ResizeObserver,
@@ -201,91 +201,91 @@ export default {
     config: {
       type: Array,
       default: function() {
-        return []
+        return [];
       }
     },
     data: {
       type: Array,
       default: function() {
-        return []
+        return [];
       }
     },
     height: {
       type: Number,
       default: function() {
-        return 300
+        return 300;
       }
     },
     selectable: {
       type: Boolean,
       default: function() {
-        return false
+        return false;
       }
     },
     defaultSelect: {
       type: Array,
       default: function() {
-        return []
+        return [];
       }
     },
     itemHeight: {
       type: Number,
       default: function() {
-        return 42
+        return 42;
       }
     },
     refreshConfig: {
       type: Boolean,
       default: function() {
-        return false
+        return false;
       }
     },
     minWidth: {
       type: Number,
       default: function() {
-        return 1200
+        return 1200;
       }
     },
     bordered: {
       type: Boolean,
       default: function() {
-        return false
+        return false;
       }
     },
     enableExport: {
       type: Boolean,
       default: function() {
-        return false
+        return false;
       }
     },
     enableMultiHeader: {
       type: Boolean,
       default: function() {
-        return false
+        return false;
       }
     },
     multiHeader: {
       type: Object,
       default: function() {
-        return {}
+        return {};
       }
     },
     mainColor: {
       type: String,
       default: function() {
-        return '#3caed2'
+        return "#3caed2";
       }
     },
     hoverHighlight: {
       type: Boolean,
       default: function() {
-        return true
+        return true;
       }
     },
     language: {
       type: String,
       default: function() {
-        return 'cn'
+        return "cn";
       }
     }
   },
@@ -294,7 +294,7 @@ export default {
     return {
       mainWidth: 600,
       colWidth: [],
-      sortParam: {col: '', direction: 'asc'},
+      sortParam: { col: "", direction: "asc" },
       dataInitTemp: [],
       dataTemp: [],
       configTemp: [],
@@ -303,42 +303,42 @@ export default {
       lastConfigTemp: [],
       allOperatorType: [
         {
-          value: 'eq',
-          label: '＝'
+          value: "eq",
+          label: "＝"
         },
         {
-          value: 'neq',
-          label: '≠'
+          value: "neq",
+          label: "≠"
         },
         {
-          value: 'lt',
-          label: '＜'
+          value: "lt",
+          label: "＜"
         },
         {
-          value: 'le',
-          label: '≤'
+          value: "le",
+          label: "≤"
         },
         {
-          value: 'gt',
-          label: '＞'
+          value: "gt",
+          label: "＞"
         },
         {
-          value: 'ge',
-          label: '≥'
+          value: "ge",
+          label: "≥"
         },
         {
-          value: 'bt',
-          label: 'between'
+          value: "bt",
+          label: "between"
         }
       ],
       allPhraseOperator: [
         {
-          value: 'in',
-          label: 'Include'
+          value: "in",
+          label: "Include"
         },
         {
-          value: 'out',
-          label: 'Exclude'
+          value: "out",
+          label: "Exclude"
         }
       ],
       multiConfigTemp: [],
@@ -347,725 +347,714 @@ export default {
       languageOptions: {
         en: {
           phraseFilter: {
-            in: 'Include',
-            out: 'Exclude',
+            in: "Include",
+            out: "Exclude",
             ph: 'Press "Enter" to Confirm',
-            and_btn: 'And',
-            clear_btn: 'Clear'
+            and_btn: "And",
+            clear_btn: "Clear"
           },
           selectFilter: {
-            confirm_btn: 'Confirm',
-            reverse_btn: 'Reverse'
+            confirm_btn: "Confirm",
+            reverse_btn: "Reverse"
           },
           numberFilter: {
-            eq: '=',
-            neq: '≠',
-            lt: '＜',
-            le: '≤',
-            gt: '＞',
-            ge: '≥',
-            bt: 'between',
-            clear_btn: 'Clear'
+            eq: "=",
+            neq: "≠",
+            lt: "＜",
+            le: "≤",
+            gt: "＞",
+            ge: "≥",
+            bt: "between",
+            clear_btn: "Clear"
           }
         },
         cn: {
           phraseFilter: {
-            in: '包含',
-            out: '不包含',
-            ph: '按“回车”确定',
-            and_btn: '并且',
-            clear_btn: '清除'
+            in: "包含",
+            out: "不包含",
+            ph: "按“回车”确定",
+            and_btn: "并且",
+            clear_btn: "清除"
           },
           selectFilter: {
-            confirm_btn: '确定',
-            reverse_btn: '反转'
+            confirm_btn: "确定",
+            reverse_btn: "反转"
           },
           numberFilter: {
-            eq: '=',
-            neq: '≠',
-            lt: '＜',
-            le: '≤',
-            gt: '＞',
-            ge: '≥',
-            bt: '之间',
-            clear_btn: '清除'
+            eq: "=",
+            neq: "≠",
+            lt: "＜",
+            le: "≤",
+            gt: "＞",
+            ge: "≥",
+            bt: "之间",
+            clear_btn: "清除"
           }
         }
       }
-    }
+    };
   },
   mounted() {
-    this.updateBase()
-    this.refreshSummary()
-    this.setSize()
+    this.updateBase();
+    this.refreshSummary();
+    this.setSize();
   },
   watch: {
     data() {
-      this.update()
+      this.update();
     },
     config() {
-      this.update()
+      this.update();
     },
     multiHeader() {
-      this.update()
+      this.update();
     },
     defaultSelect() {
-      this.update()
+      this.update();
     },
     height() {
-      this.setSize()
+      this.setSize();
     }
   },
   computed: {},
   methods: {
     updateBase() {
-      let self = this
-      self.configTemp = self.deepCopy(self.config)
-      self.dataInitTemp = self.deepCopy(self.data)
-      this.minWidthTemp = this.minWidth
+      let self = this;
+      self.configTemp = self.deepCopy(self.config);
+      self.dataInitTemp = self.deepCopy(self.data);
+      this.minWidthTemp = this.minWidth;
       if (this.enableMultiHeader) {
-        let {config, width, multiConfig} = this.countLevel(this.multiHeader)
-        this.configTemp = self.deepCopy(config)
-        this.minWidthTemp = width
-        this.multiConfigTemp = self.deepCopy(multiConfig)
+        let { config, width, multiConfig } = this.countLevel(this.multiHeader);
+        this.configTemp = self.deepCopy(config);
+        this.minWidthTemp = width;
+        this.multiConfigTemp = self.deepCopy(multiConfig);
       }
-      self.parseConfig()
-      self.updateInitData()
-      self.dataTemp = self.deepCopy(self.dataInitTemp)
+      self.parseConfig();
+      self.updateInitData();
+      self.dataTemp = self.deepCopy(self.dataInitTemp);
     },
     update() {
-      console.log('Data updated!')
-      let self = this
-      self.lastConfigTemp = self.deepCopy(self.configTemp)
-      self.updateBase()
-      self.handleClickConfirmFilter()
-      self.refreshSummary()
-      self.setSize()
+      let self = this;
+      self.lastConfigTemp = self.deepCopy(self.configTemp);
+      self.updateBase();
+      self.handleClickConfirmFilter();
+      self.refreshSummary();
+      self.setSize();
       self.$emit(
-        'changeSelection',
+        "changeSelection",
         self.dataInitTemp.filter(v => v._eSelected === true)
-      )
+      );
     },
     countLevel(originConfig) {
-      const separate_code = '.'
-      const flattenObject = (obj, prefix = '', depth = 10) => {
-        depth--
+      const separate_code = ".";
+      const flattenObject = (obj, prefix = "", depth = 10) => {
+        depth--;
         return Object.keys(obj).reduce((acc, k) => {
-          const pre = prefix.length ? prefix + separate_code : ''
+          const pre = prefix.length ? prefix + separate_code : "";
           if (
-            typeof obj[k] === 'object' &&
+            typeof obj[k] === "object" &&
             !Array.isArray(obj[k]) &&
             depth >= 1
           )
-            Object.assign(acc, flattenObject(obj[k], pre + k, depth))
-          else acc[pre + k] = obj[k]
-          return acc
-        }, {})
-      }
+            Object.assign(acc, flattenObject(obj[k], pre + k, depth));
+          else acc[pre + k] = obj[k];
+          return acc;
+        }, {});
+      };
       const handleConfigData = (config, index = 0, depth) => {
-        let rtn_data = []
+        let rtn_data = [];
         for (let [name, data] of Object.entries(config)) {
-          let item = {}
-          if (typeof data == 'object' && Object.keys(data).length) {
-            let l = 0
-            let temp = handleConfigData(data, index + 1, depth - 1)
+          let item = {};
+          if (typeof data == "object" && Object.keys(data).length) {
+            let l = 0;
+            let temp = handleConfigData(data, index + 1, depth - 1);
             temp = temp.map(v => {
-              v.path = name + '.' + v.path
+              v.path = name + "." + v.path;
               if (v.level == index + 2) {
-                l += v.colspan
+                l += v.colspan;
               }
-              return v
-            })
-            rtn_data = rtn_data.concat(temp)
-            item.rowspan = 1
-            item.colspan = l
+              return v;
+            });
+            rtn_data = rtn_data.concat(temp);
+            item.rowspan = 1;
+            item.colspan = l;
           } else {
-            item.rowspan = depth
-            item.colspan = 1
+            item.rowspan = depth;
+            item.colspan = 1;
           }
-          item.path = name
-          item.name = name
-          item.level = index + 1
-          rtn_data.push(item)
+          item.path = name;
+          item.name = name;
+          item.level = index + 1;
+          rtn_data.push(item);
         }
-        return rtn_data
-      }
-      let config_pain = flattenObject(originConfig, '')
-      let width = 0
+        return rtn_data;
+      };
+      let config_pain = flattenObject(originConfig, "");
+      let width = 0;
       let config = Object.keys(config_pain).map(v => {
-        width += 100
-        return {prop: v, name: v}
-      })
+        width += 100;
+        return { prop: v, name: v };
+      });
       let allLevels = Object.keys(config_pain).map(
         v => v.split(separate_code).length
-      )
-      let maxLevel = Math.max(...allLevels)
-      let rtn_data = handleConfigData(originConfig, 0, maxLevel)
+      );
+      let maxLevel = Math.max(...allLevels);
+      let rtn_data = handleConfigData(originConfig, 0, maxLevel);
       // rtn_data = groupby(rtn_data, ['level'])
-      let multiConfig = Object.values(rtn_data)
-      console.log(multiConfig)
-      return {config, width, multiConfig}
+      let multiConfig = Object.values(rtn_data);
+      return { config, width, multiConfig };
     },
     async clipboardCP(text) {
       if (navigator.clipboard) {
-        return navigator.clipboard.writeText(text)
+        return navigator.clipboard.writeText(text);
       } else {
-        let input = this.$refs.clipboardInput
-        input.value = text
-        input.focus()
-        input.select()
-        const result = document.execCommand('copy')
+        let input = this.$refs.clipboardInput;
+        input.value = text;
+        input.focus();
+        input.select();
+        const result = document.execCommand("copy");
 
-        if (result === 'unsuccessful') {
-          return false
+        if (result === "unsuccessful") {
+          return false;
         }
-        return true
+        return true;
       }
     },
     handleClickCopy(props, tips) {
-      let text = ''
+      let text = "";
       for (let i = 0; i < tips.length; i++) {
-        text += props[tips[i]]
+        text += props[tips[i]];
         if (i < tips.length - 1) {
-          text += '\n'
+          text += "\n";
         }
       }
       this.clipboardCP(text)
         .then(result => {
-          this.$message.success('复制成功')
+          this.$message.success("复制成功");
         })
         .catch(err => {
-          console.log(err)
-        })
+          console.log(err);
+        });
     },
     handleExportTable() {
       let excelHeader = this.configTemp
-        .filter(v => !['_index', '_action', '_expand'].includes(v.prop))
-        .map(v => v.prop)
-      let printData = []
+        .filter(v => !["_index", "_action", "_expand"].includes(v.prop))
+        .map(v => v.prop);
+      let printData = [];
       this.dataTemp.forEach(v => {
-        let item = {}
+        let item = {};
         excelHeader.forEach(val => {
-          item = Object.assign(item, {[val]: v[val]})
-        })
-        printData.push(item)
-      })
-      const wopts = {bookType: 'xlsx', bookSST: false, type: 'binary'}
-      let wb = {SheetNames: [], Sheets: {}, Props: {}}
-      wb.SheetNames.push('sheet1')
-      wb.Sheets['sheet1'] = XLSX.utils.json_to_sheet(printData)
+          item = Object.assign(item, { [val]: v[val] });
+        });
+        printData.push(item);
+      });
+      const wopts = { bookType: "xlsx", bookSST: false, type: "binary" };
+      let wb = { SheetNames: [], Sheets: {}, Props: {} };
+      wb.SheetNames.push("sheet1");
+      wb.Sheets["sheet1"] = XLSX.utils.json_to_sheet(printData);
       this.saveAs(
         new Blob([this.s2ab(XLSX.write(wb, wopts))], {
-          type: 'application/octet-stream'
+          type: "application/octet-stream"
         }),
         new Date().toLocaleDateString() +
-          '.' +
-          (wopts.bookType == 'biff2' ? 'xls' : wopts.bookType)
-      )
+          "." +
+          (wopts.bookType == "biff2" ? "xls" : wopts.bookType)
+      );
     },
     saveAs(obj, fileName) {
       //自定义简单的下载文件实现方式
-      var tmpa = document.createElement('a')
-      tmpa.download = fileName || '下载'
-      tmpa.href = URL.createObjectURL(obj) //绑定a标签
-      tmpa.click() //模拟点击实现下载
+      var tmpa = document.createElement("a");
+      tmpa.download = fileName || "下载";
+      tmpa.href = URL.createObjectURL(obj); //绑定a标签
+      tmpa.click(); //模拟点击实现下载
       setTimeout(function() {
         //延时释放
-        URL.revokeObjectURL(obj)
-      }, 100)
+        URL.revokeObjectURL(obj);
+      }, 100);
     },
     s2ab(s) {
-      if (typeof ArrayBuffer !== 'undefined') {
-        var buf = new ArrayBuffer(s.length)
-        var view = new Uint8Array(buf)
-        for (var i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xff
-        return buf
+      if (typeof ArrayBuffer !== "undefined") {
+        var buf = new ArrayBuffer(s.length);
+        var view = new Uint8Array(buf);
+        for (var i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xff;
+        return buf;
       } else {
-        var buf = new Array(s.length)
-        for (var i = 0; i != s.length; ++i) buf[i] = s.charCodeAt(i) & 0xff
-        return buf
+        var buf = new Array(s.length);
+        for (var i = 0; i != s.length; ++i) buf[i] = s.charCodeAt(i) & 0xff;
+        return buf;
       }
     },
     parseConfig() {
-      let self = this
+      let self = this;
       self.configTemp.forEach((v, i) => {
         let last_item =
-          self.lastConfigTemp.filter(item => item.prop === v.prop)[0] || {}
+          self.lastConfigTemp.filter(item => item.prop === v.prop)[0] || {};
         if (self.refreshConfig) {
-          last_item = {}
+          last_item = {};
         }
         if (!v.width) {
-          self.$set(v, 'width', 'auto')
+          self.$set(v, "width", "auto");
         }
         if (!v.filterTag) {
-          self.$set(v, 'filterTag', {})
+          self.$set(v, "filterTag", {});
         }
         if (v.filterable) {
           let options = self.dataInitTemp.reduce((prev, curr) => {
             if (curr) {
-              prev.push(curr[v.prop])
+              prev.push(curr[v.prop]);
             }
-            return prev
-          }, [])
+            return prev;
+          }, []);
           let filterOptions = [...new Set(options)].sort((a, b) =>
             a.localeCompare(b)
-          )
-          self.$set(v, 'filterOptions', filterOptions)
-          let selecetedOptions = last_item['filterSelectedOptions'] || []
-          let l = selecetedOptions.length
+          );
+          self.$set(v, "filterOptions", filterOptions);
+          let selecetedOptions = last_item["filterSelectedOptions"] || [];
+          let l = selecetedOptions.length;
           for (let index = l - 1; index >= 0; index--) {
             if (filterOptions.indexOf(selecetedOptions[index]) === -1) {
-              selecetedOptions.splice(index, 1)
+              selecetedOptions.splice(index, 1);
             }
           }
-          self.$set(v, 'filterSelectedOptions', selecetedOptions)
-          self.$set(v, 'filterVisible', false)
+          self.$set(v, "filterSelectedOptions", selecetedOptions);
+          self.$set(v, "filterVisible", false);
         }
         if (v.searchable) {
-          let searchPhrase = last_item['searchPhrase'] || [
-            {operator: 'in', value: ''}
-          ]
-          self.$set(v, 'searchPhrase', searchPhrase)
-          self.$set(v, 'searchVisible', false)
+          let searchPhrase = last_item["searchPhrase"] || [
+            { operator: "in", value: "" }
+          ];
+          self.$set(v, "searchPhrase", searchPhrase);
+          self.$set(v, "searchVisible", false);
         }
         if (v.numberFilter) {
-          let filterPhrase = last_item['numberFilterPhrase'] || {
-            operator: 'le',
-            value: ['', '']
-          }
-          self.$set(v, 'numberFilterPhrase', filterPhrase)
-          self.$set(v, 'numberFilterVisible', false)
+          let filterPhrase = last_item["numberFilterPhrase"] || {
+            operator: "le",
+            value: ["", ""]
+          };
+          self.$set(v, "numberFilterPhrase", filterPhrase);
+          self.$set(v, "numberFilterVisible", false);
         }
-      })
+      });
     },
     updateInitData() {
-      let self = this
+      let self = this;
       self.dataInitTemp.forEach((v, i) => {
-        v._eId = self._uuid()
-        v._eSelected = false
+        v._eId = self._uuid();
+        v._eSelected = false;
         if (this.defaultSelect && this.defaultSelect.indexOf(i) > -1) {
-          v._eSelected = true
+          v._eSelected = true;
         }
-        v._eClass = {}
+        v._eClass = {};
         self.configTemp.forEach((v1, i1) => {
           if (v1.eClass) {
-            v._eClass[v1.prop] = self.parseClass(v1.eClass, v)
+            v._eClass[v1.prop] = self.parseClass(v1.eClass, v);
           }
-        })
-      })
+        });
+      });
     },
     parseClass(eClass, item) {
-      let result = {}
+      let result = {};
       for (let cl in eClass) {
-        let text = eClass[cl]
-        let props = text.match(/\${[\w-_]+}/g)
-        props = props || []
+        let text = eClass[cl];
+        let props = text.match(/\${[\w-_]+}/g);
+        props = props || [];
         props.forEach((v, i) => {
-          let this_prop = v.replace(/\${([\w-_]+)}/, '$1')
-          text = text.replace(v, item[this_prop] || 0)
-        })
-        result[cl] = this.evalFunc(text)
+          let this_prop = v.replace(/\${([\w-_]+)}/, "$1");
+          text = text.replace(v, item[this_prop] || 0);
+        });
+        result[cl] = this.evalFunc(text);
       }
-      return result
+      return result;
     },
     evalFunc(phrase) {
-      let fun = new Function('return ' + phrase)
-      return fun()
+      let fun = new Function("return " + phrase);
+      return fun();
     },
     refreshSummary() {
-      let self = this
-      let l = self.dataTemp.length
-      let summary = []
+      let self = this;
+      let l = self.dataTemp.length;
+      let summary = [];
       self.configTemp.forEach((v, i) => {
-        let prop = v.prop
+        let prop = v.prop;
         if (!v.summary) {
-          return
+          return;
         }
-        self.showSummary = true
-        let summary_item = {}
-        summary_item.prop = prop
+        self.showSummary = true;
+        let summary_item = {};
+        summary_item.prop = prop;
         switch (v.summary) {
-          case 'COUNT':
-            summary_item.value = l
-            summary.push(summary_item)
-            break
-          case 'SUM':
+          case "COUNT":
+            summary_item.value = l;
+            summary.push(summary_item);
+            break;
+          case "SUM":
             summary_item.value = self.dataTemp.reduce((prev, curr) => {
               if (!isNaN(curr[prop])) {
-                let this_num = Number(curr[prop])
-                prev += this_num
+                let this_num = Number(curr[prop]);
+                prev += this_num;
               }
-              return prev
-            }, 0)
-            summary_item.value = Number(summary_item.value.toFixed(2))
-            summary.push(summary_item)
-            break
+              return prev;
+            }, 0);
+            summary_item.value = Number(summary_item.value.toFixed(2));
+            summary.push(summary_item);
+            break;
         }
-      })
+      });
       self.configTemp.forEach((v, i) => {
-        let prop = v.prop
+        let prop = v.prop;
         if (!v.summary) {
-          return
+          return;
         }
-        let summary_item = {}
-        summary_item.prop = prop
+        let summary_item = {};
+        summary_item.prop = prop;
         if (/\${[\w-_]+}/.test(v.summary)) {
-          let text = v.summary
-          let props = text.match(/\${[\w-_]+}/g)
+          let text = v.summary;
+          let props = text.match(/\${[\w-_]+}/g);
           props.forEach((v1, i1) => {
-            let this_prop = v1.replace(/\${([\w-_]+)}/, '$1')
+            let this_prop = v1.replace(/\${([\w-_]+)}/, "$1");
             text = text.replace(
               v1,
               summary.filter(val => val.prop === this_prop)[0].value || 0
-            )
-          })
-          summary_item.value = this.evalFunc(text)
-          summary_item.value = Number(summary_item.value.toFixed(2))
-          summary.push(summary_item)
+            );
+          });
+          summary_item.value = this.evalFunc(text);
+          summary_item.value = Number(summary_item.value.toFixed(2));
+          summary.push(summary_item);
         }
-      })
-      self.summaryData = summary.slice()
-      self.summaryData.splice(0, 0)
+      });
+      self.summaryData = summary.slice();
+      self.summaryData.splice(0, 0);
     },
     selectAll() {
-      let self = this
-      let r = true
+      let self = this;
+      let r = true;
       if (
         self.dataTemp.length ===
         self.dataTemp.filter(item => item._eSelected === true).length
       ) {
-        r = false
+        r = false;
       }
       self.dataTemp.forEach(item => {
-        item._eSelected = r
-        let eId = item._eId
+        item._eSelected = r;
+        let eId = item._eId;
         self.dataInitTemp.filter((v, i) => v._eId === item._eId)[0]._eSelected =
-          item._eSelected
-      })
-      self.dataTemp.splice(0, 0)
-      self.dataInitTemp.splice(0, 0)
+          item._eSelected;
+      });
+      self.dataTemp.splice(0, 0);
+      self.dataInitTemp.splice(0, 0);
       self.$emit(
-        'changeSelection',
+        "changeSelection",
         self.dataInitTemp.filter(v => v._eSelected === true)
-      )
+      );
     },
     handleClickItem(item) {
-      let self = this
-      item._eSelected = !item._eSelected && this.selectable
+      let self = this;
+      item._eSelected = !item._eSelected && this.selectable;
       self.dataInitTemp.filter((v, i) => v._eId === item._eId)[0]._eSelected =
-        item._eSelected
+        item._eSelected;
       self.dataTemp.filter((v, i) => v._eId === item._eId)[0]._eSelected =
-        item._eSelected
-      self.dataTemp.splice(0, 0)
-      self.dataInitTemp.splice(0, 0)
+        item._eSelected;
+      self.dataTemp.splice(0, 0);
+      self.dataInitTemp.splice(0, 0);
       self.$emit(
-        'changeSelection',
+        "changeSelection",
         self.dataInitTemp.filter(v => v._eSelected === true)
-      )
+      );
     },
     handleClickConfirmFilter(index) {
-      let self = this
-      let temp = self.deepCopy(self.dataInitTemp)
+      let self = this;
+      let temp = self.deepCopy(self.dataInitTemp);
       self.configTemp.forEach((v, i) => {
-        let prop = v.prop
+        let prop = v.prop;
         if (v.filterSelectedOptions && v.filterSelectedOptions.length) {
           temp = temp.filter(
             item => v.filterSelectedOptions.indexOf(item[prop]) > -1
-          )
+          );
         }
         if (
           v.searchPhrase &&
-          v.searchPhrase.findIndex(v => v.value != '') > -1
+          v.searchPhrase.findIndex(v => v.value != "") > -1
         ) {
-          v.searchPhrase.filter(v => v.value != '').forEach(fp => {
-            if (fp.operator == 'out') {
+          v.searchPhrase.filter(v => v.value != "").forEach(fp => {
+            if (fp.operator == "out") {
               temp = temp.filter(
                 item =>
-                  (item[prop] || '')
+                  (item[prop] || "")
                     .toLowerCase()
                     .indexOf(fp.value.toLowerCase()) === -1
-              )
+              );
             } else {
               temp = temp.filter(
                 item =>
-                  (item[prop] || '')
+                  (item[prop] || "")
                     .toLowerCase()
                     .indexOf(fp.value.toLowerCase()) > -1
-              )
+              );
             }
-          })
+          });
         }
         if (
           v.numberFilterPhrase &&
-          v.numberFilterPhrase.value[0] !== '' &&
-          (v.numberFilterPhrase.operator !== 'bt' ||
-            (v.numberFilterPhrase.value[1] !== '' &&
-              v.numberFilterPhrase.operator === 'bt'))
+          v.numberFilterPhrase.value[0] !== "" &&
+          (v.numberFilterPhrase.operator !== "bt" ||
+            (v.numberFilterPhrase.value[1] !== "" &&
+              v.numberFilterPhrase.operator === "bt"))
         ) {
           switch (v.numberFilterPhrase.operator) {
-            case 'eq':
+            case "eq":
               temp = temp.filter(
                 item =>
                   Number(item[prop]) == Number(v.numberFilterPhrase.value[0])
-              )
-              break
-            case 'neq':
+              );
+              break;
+            case "neq":
               temp = temp.filter(
                 item =>
                   Number(item[prop]) != Number(v.numberFilterPhrase.value[0])
-              )
-              break
-            case 'lt':
+              );
+              break;
+            case "lt":
               temp = temp.filter(
                 item =>
                   Number(item[prop]) < Number(v.numberFilterPhrase.value[0])
-              )
-              break
-            case 'le':
+              );
+              break;
+            case "le":
               temp = temp.filter(
                 item =>
                   Number(item[prop]) <= Number(v.numberFilterPhrase.value[0])
-              )
-              break
-            case 'gt':
+              );
+              break;
+            case "gt":
               temp = temp.filter(
                 item =>
                   Number(item[prop]) > Number(v.numberFilterPhrase.value[0])
-              )
-              break
-            case 'ge':
+              );
+              break;
+            case "ge":
               temp = temp.filter(
                 item =>
                   Number(item[prop]) >= Number(v.numberFilterPhrase.value[0])
-              )
-              break
-            case 'bt':
+              );
+              break;
+            case "bt":
               temp = temp.filter(
                 item =>
                   Number(item[prop]) > Number(v.numberFilterPhrase.value[0]) &&
                   Number(item[prop]) <= Number(v.numberFilterPhrase.value[1])
-              )
-              break
+              );
+              break;
           }
         }
-      })
-      self.dataTemp = temp
+      });
+      self.dataTemp = temp;
       if (index != undefined && self.configTemp[index]) {
-        self.$set(self.configTemp[index], 'filterVisible', false)
+        self.$set(self.configTemp[index], "filterVisible", false);
       }
-      // console.log(self.dataTemp)
-      self.handleClickSort(self.sortParam.col, self.sortParam.direction, true)
-      self.refreshSummary()
+      self.handleClickSort(self.sortParam.col, self.sortParam.direction, true);
+      self.refreshSummary();
     },
     handleClickReverseFilter(index) {
-      let self = this
-      let options = self.configTemp[index].filterOptions.slice()
+      let self = this;
+      let options = self.configTemp[index].filterOptions.slice();
       let selecetedOptions = self.configTemp[
         index
-      ].filterSelectedOptions.slice()
-      console.log(options)
-      console.log(selecetedOptions)
+      ].filterSelectedOptions.slice();
       self.configTemp[index].filterSelectedOptions = options.reduce(
         (prev, curr) => {
           if (selecetedOptions.indexOf(curr) === -1) {
-            prev.push(curr)
+            prev.push(curr);
           }
-          return prev
+          return prev;
         },
         []
-      )
-      console.log(self.configTemp[index].filterSelectedOptions)
+      );
     },
     handleClickEmptyNumberFilter(index) {
-      this.configTemp[index].numberFilterPhrase.value = ['', '']
-      this.handleClickConfirmFilter(index)
-      this.$set(this.configTemp[index], 'numberFilterVisible', false)
+      this.configTemp[index].numberFilterPhrase.value = ["", ""];
+      this.handleClickConfirmFilter(index);
+      this.$set(this.configTemp[index], "numberFilterVisible", false);
     },
     addFilterPhrase(index) {
-      this.configTemp[index].searchPhrase.push({operator: 'in', value: ''})
+      this.configTemp[index].searchPhrase.push({ operator: "in", value: "" });
     },
     removePhraseFilter(index, ph_index) {
-      this.configTemp[index].searchPhrase.splice(ph_index, 1)
-      this.handleClickConfirmFilter(index)
+      this.configTemp[index].searchPhrase.splice(ph_index, 1);
+      this.handleClickConfirmFilter(index);
       // let sp_temp = this.configTemp[index].searchPhrase.slice()
       // sp_temp.splice(ph_index, 1)
       // this.configTemp
     },
     handleClickEmptyPhraseFilter(index) {
-      this.configTemp[index].searchPhrase = [{operator: 'in', value: ''}]
-      this.handleClickConfirmFilter(index)
+      this.configTemp[index].searchPhrase = [{ operator: "in", value: "" }];
+      this.handleClickConfirmFilter(index);
     },
-    handleChangeFilter(val) {
-      console.log(val)
-    },
+    handleChangeFilter(val) {},
     handleClickSort(val, direction, forse) {
-      let self = this
+      let self = this;
       if (
         self.sortParam.col === val &&
         self.sortParam.direction === direction &&
         !forse
       ) {
-        return
+        return;
       }
       if (!self.dataTemp[0] || !val) {
-        return
+        return;
       }
-      self.sortParam.col = val
-      self.sortParam.direction = direction
-      console.log(self.sortParam)
-      let isNumber = false
+      self.sortParam.col = val;
+      self.sortParam.direction = direction;
+      let isNumber = false;
       self.dataTemp.some((v, i) => {
         if (!v[val] && v[val] != 0) {
-          return false
+          return false;
         }
-        if (isNaN(v[val]) && v[val] != 'NaN') {
-          isNumber = false
-          return true
+        if (isNaN(v[val]) && v[val] != "NaN") {
+          isNumber = false;
+          return true;
         } else {
-          isNumber = true
-          return true
+          isNumber = true;
+          return true;
         }
-      })
-      console.log(isNumber)
-      if (direction === 'asc') {
+      });
+      if (direction === "asc") {
         if (!isNumber) {
           // let a_cp = a[val]||'', b_cp = b[val]||''
           self.dataTemp.sort((a, b) =>
-            (a[val] || '').localeCompare(b[val] || '')
-          )
+            (a[val] || "").localeCompare(b[val] || "")
+          );
         } else {
           self.dataTemp.sort((a, b) => {
             if (isNaN(a[val])) {
-              return -b[val] < 0 ? -1 : 1
+              return -b[val] < 0 ? -1 : 1;
             }
             if (isNaN(b[val])) {
-              return a[val] < 0 ? -1 : 1
+              return a[val] < 0 ? -1 : 1;
             }
-            return a[val] - b[val] < 0 ? -1 : 1
-          })
+            return a[val] - b[val] < 0 ? -1 : 1;
+          });
         }
       } else {
         if (!isNumber) {
           // let a_cp = a[val]||'', b_cp = b[val]||''
           self.dataTemp.sort(
-            (a, b) => -(a[val] || '').localeCompare(b[val] || '')
-          )
+            (a, b) => -(a[val] || "").localeCompare(b[val] || "")
+          );
         } else {
           self.dataTemp.sort((a, b) => {
             if (isNaN(a[val])) {
-              return -b[val] > 0 ? -1 : 1
+              return -b[val] > 0 ? -1 : 1;
             }
             if (isNaN(b[val])) {
-              return a[val] > 0 ? -1 : 1
+              return a[val] > 0 ? -1 : 1;
             }
-            return a[val] - b[val] > 0 ? -1 : 1
-          })
+            return a[val] - b[val] > 0 ? -1 : 1;
+          });
         }
       }
     },
     handleClickAction(eve) {
-      eve.stopPropagation()
+      eve.stopPropagation();
     },
     handleClickExpand(eve) {
-      eve.stopPropagation()
+      eve.stopPropagation();
     },
     setSize() {
-      let self = this
-      console.log('resize')
+      let self = this;
       if (!this.$refs || !this.$refs.tContainer) {
-        return
+        return;
       }
       let scrollBarWidth =
         this.$refs.scroller.$el.offsetWidth -
-        this.$refs.scroller.$el.clientWidth
+        this.$refs.scroller.$el.clientWidth;
       let mainWidth = Number(
         this.$refs.mainTable.getBoundingClientRect().width.toFixed(1)
-      )
-      mainWidth = Math.max(mainWidth, this.minWidth)
-      this.mainWidth = this.$refs.mainScroll.getBoundingClientRect().width
+      );
+      mainWidth = Math.max(mainWidth, this.minWidth);
+      this.mainWidth = this.$refs.mainScroll.getBoundingClientRect().width;
       this.$refs.tContainer.setAttribute(
-        'style',
-        'width:' +
+        "style",
+        "width:" +
           mainWidth +
-          'px;height:' +
+          "px;height:" +
           (this.height -
             60 -
             35 * Number(this.enableExport) -
             60 * (this.showSummary ? 1 : 0)) +
-          'px'
-      )
+          "px"
+      );
       this.$refs.tHeaderTable.setAttribute(
-        'style',
-        'width:' + (mainWidth - scrollBarWidth) + 'px'
-      )
+        "style",
+        "width:" + (mainWidth - scrollBarWidth) + "px"
+      );
       if (this.$refs.tBottom) {
         this.$refs.tBottomTable.setAttribute(
-          'style',
-          'width:' + (mainWidth - scrollBarWidth) + 'px'
-        )
+          "style",
+          "width:" + (mainWidth - scrollBarWidth) + "px"
+        );
       }
-      let colNumber = this.configTemp.filter(v => !v.isHidden).length
+      let colNumber = this.configTemp.filter(v => !v.isHidden).length;
       let usedWidth = 0,
-        averageColNum = 0
+        averageColNum = 0;
       this.configTemp.filter(v => !v.isHidden).forEach((v, i) => {
-        if (v.width === 'auto') {
-          averageColNum += 1
+        if (v.width === "auto") {
+          averageColNum += 1;
         } else {
-          usedWidth += Number(v.width)
+          usedWidth += Number(v.width);
         }
-      })
+      });
       let averageWidth = Number(
         ((mainWidth - usedWidth) / averageColNum).toFixed(1)
-      )
+      );
       for (let i = 0; i < colNumber; i++) {
         if (isNaN(this.configTemp.filter(v => !v.isHidden)[i].width)) {
-          this.colWidth[i] = (averageWidth * 100 / mainWidth).toFixed(1)
+          this.colWidth[i] = (averageWidth * 100 / mainWidth).toFixed(1);
         } else {
           this.colWidth[i] = (
             this.configTemp.filter(v => !v.isHidden)[i].width *
             100 /
             mainWidth
-          ).toFixed(1)
+          ).toFixed(1);
         }
       }
-      this.colWidth.splice(0, 0)
+      this.colWidth.splice(0, 0);
       if (
         this.$refs.mainScroll.getBoundingClientRect().width < this.minWidthTemp
       ) {
-        this.$refs.mainScroll.setAttribute('style', 'overflow-x: scroll;')
+        this.$refs.mainScroll.setAttribute("style", "overflow-x: scroll;");
       } else {
-        this.$refs.mainScroll.setAttribute('style', 'overflow-x: hidden;')
+        this.$refs.mainScroll.setAttribute("style", "overflow-x: hidden;");
       }
     },
     _uuid() {
-      var d = Date.now()
+      var d = Date.now();
       if (
-        typeof performance !== 'undefined' &&
-        typeof performance.now === 'function'
+        typeof performance !== "undefined" &&
+        typeof performance.now === "function"
       ) {
-        d += performance.now() //use high-precision timer if available
+        d += performance.now(); //use high-precision timer if available
       }
-      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(
+      return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(
         c
       ) {
-        var r = ((d + Math.random() * 16) % 16) | 0
-        d = Math.floor(d / 16)
-        return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16)
-      })
+        var r = ((d + Math.random() * 16) % 16) | 0;
+        d = Math.floor(d / 16);
+        return (c === "x" ? r : (r & 0x3) | 0x8).toString(16);
+      });
     },
     deepCopy(obj) {
-      let obj_cp = JSON.parse(JSON.stringify(obj))
-      return obj_cp
+      let obj_cp = JSON.parse(JSON.stringify(obj));
+      return obj_cp;
     },
     clearObj(obj) {
-      let obj_cp = JSON.parse(JSON.stringify(obj))
-      delete obj_cp._eClass
-      delete obj_cp._eId
-      delete obj_cp._eSelected
-      return obj_cp
+      let obj_cp = JSON.parse(JSON.stringify(obj));
+      delete obj_cp._eClass;
+      delete obj_cp._eId;
+      delete obj_cp._eSelected;
+      return obj_cp;
     }
   }
-}
+};
 </script>
 <style scoped>
 .main-scroll {
@@ -1321,7 +1310,7 @@ div.item-line.unselectable {
   margin-left: 15px;
 }
 .numberMax:before {
-  content: '~';
+  content: "~";
   position: absolute;
   left: -11px;
   top: 10px;
