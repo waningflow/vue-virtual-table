@@ -2791,7 +2791,6 @@
       self.dataTemp = self.deepCopy(self.dataInitTemp);
     },
     update: function update() {
-      console.log("Data updated!");
       var self = this;
       self.lastConfigTemp = self.deepCopy(self.configTemp);
       self.updateBase();
@@ -2915,7 +2914,6 @@
       var rtn_data = handleConfigData(originConfig, 0, maxLevel);
       // rtn_data = groupby(rtn_data, ['level'])
       var multiConfig = Object.values(rtn_data);
-      console.log(multiConfig);
       return { config: config, width: width, multiConfig: multiConfig };
     },
     clipboardCP: (function() {
@@ -3358,7 +3356,6 @@
       if (index != undefined && self.configTemp[index]) {
         self.$set(self.configTemp[index], "filterVisible", false);
       }
-      // console.log(self.dataTemp)
       self.handleClickSort(self.sortParam.col, self.sortParam.direction, true);
       self.refreshSummary();
     },
@@ -3368,8 +3365,6 @@
       var selecetedOptions = self.configTemp[
         index
       ].filterSelectedOptions.slice();
-      console.log(options);
-      console.log(selecetedOptions);
       self.configTemp[index].filterSelectedOptions = options.reduce(function(
         prev,
         curr
@@ -3380,7 +3375,6 @@
         return prev;
       },
       []);
-      console.log(self.configTemp[index].filterSelectedOptions);
     },
     handleClickEmptyNumberFilter: function handleClickEmptyNumberFilter(index) {
       this.configTemp[index].numberFilterPhrase.value = ["", ""];
@@ -3401,9 +3395,7 @@
       this.configTemp[index].searchPhrase = [{ operator: "in", value: "" }];
       this.handleClickConfirmFilter(index);
     },
-    handleChangeFilter: function handleChangeFilter(val) {
-      console.log(val);
-    },
+    handleChangeFilter: function handleChangeFilter(val) {},
     handleClickSort: function handleClickSort(val, direction, forse) {
       var self = this;
       if (
@@ -3418,7 +3410,6 @@
       }
       self.sortParam.col = val;
       self.sortParam.direction = direction;
-      console.log(self.sortParam);
       var isNumber = false;
       self.dataTemp.some(function(v, i) {
         if (!v[val] && v[val] != 0) {
@@ -3432,7 +3423,6 @@
           return true;
         }
       });
-      console.log(isNumber);
       if (direction === "asc") {
         if (!isNumber) {
           // let a_cp = a[val]||'', b_cp = b[val]||''
@@ -3476,7 +3466,6 @@
       eve.stopPropagation();
     },
     setSize: function setSize() {
-      console.log("resize");
       if (!this.$refs || !this.$refs.tContainer) {
         return;
       }
