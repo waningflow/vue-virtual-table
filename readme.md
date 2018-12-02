@@ -5,7 +5,7 @@ Vue table component with virtual dom and easy api.
 * Keep smooth when the data reachs thousands of rows or even more.
 * Easy to use with a simple config.
 
-[live demo(doing...)]()
+[live demo](http://p.waningflow.com/vue-virtual-table/)
 
 # Usage
 
@@ -44,25 +44,28 @@ export default {
 Every item of the config refers to a column. When you don't set sepcific 'name' of the table column header, it will uses the 'prop' value as default. Or you can set the tableConfig like:
 
 ```js
-tableConfig: [{prop: 'user', name: 'User Name'}, {prop: 'age', name: 'Age'}]
+tableConfig: [
+  { prop: "user", name: "User Name" },
+  { prop: "age", name: "Age" }
+];
 ```
 
 And if you want to search in the 'user' column, set the tableConfig like:
 
 ```js
 tableConfig: [
-  {prop: 'user', name: 'User Name', searchable: true},
-  {prop: 'age', name: 'Age'}
-]
+  { prop: "user", name: "User Name", searchable: true },
+  { prop: "age", name: "Age" }
+];
 ```
 
 For the 'age' column which is a set of number, you'd better use 'numberFilter' to filter numbers with "<", ">", "between" etc.
 
 ```js
 tableConfig: [
-  {prop: 'user', name: 'User Name', searchable: true},
-  {prop: 'age', name: 'Age', numberFilter: true}
-]
+  { prop: "user", name: "User Name", searchable: true },
+  { prop: "age", name: "Age", numberFilter: true }
+];
 ```
 
 There are many convenient features hard to explain one by one.
@@ -108,15 +111,15 @@ export default {
     ]
   },
   methods: {
-  	handleSelectionChange(rows){
+    handleSelectionChange(rows){
       console.log(rows)
-  	},
-  	edit(index, row){
-  	  console.log(index)
-  	},
-  	del(index, row){
-  	  console.log(index)
-  	}
+    },
+    edit(index, row){
+      console.log(index)
+    },
+    del(index, row){
+      console.log(index)
+    }
   }
 }
 </script>
@@ -135,7 +138,7 @@ export default {
 | hoverHighlight | Boolean | Whether to hightlight current row.      | No       | true    |
 | selectable     | Boolean | Whether row is selectable.              | No       | false   |
 | enableExport   | Boolean | Whether to show export-to-table button  | No       | false   |
-| language       | String  | Language from ['en', 'cn']              | No       | 'en'    |
+| language       | String  | Language from ['en', 'cn']              | No       | 'cn'    |
 
 ### Table Events
 

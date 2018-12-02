@@ -559,7 +559,7 @@ var _components, _render$staticRenderF;
     var head = document.head || document.getElementsByTagName("head")[0],
       style = document.createElement("style"),
       css =
-        " .main-scroll[data-v-184ba508] { width: 100%; overflow-y: hidden; border: 1px solid #ebeef5; font-size: 13px; box-sizing: border-box; position: relative; } .item-line[data-v-184ba508], .header-line[data-v-184ba508], .bottom-line[data-v-184ba508] { width: 100%; display: flex; flex-direction: row; } .item-cell[data-v-184ba508], .header-cell[data-v-184ba508], .bottom-cell[data-v-184ba508] { display: flex; padding: 5px; box-sizing: border-box; border-bottom: 1px solid #ebeef5; justify-content: center; align-items: center; } .header-cell[data-v-184ba508], .bottom-cell[data-v-184ba508] { border-bottom-width: 0; } .item-cell-inner[data-v-184ba508] { display: flex; width: 100%; height: 100%; word-break: break-all; text-align: center; overflow: hidden; text-overflow: ellipsis; justify-content: center; align-items: center; flex-wrap: wrap; } .header-cell-inner[data-v-184ba508] { display: inline-block; position: relative; } .header-cell-inner.caret-wrapper[data-v-184ba508] { width: 10px; height: 22px; cursor: pointer; } i.sort-ascending[data-v-184ba508] { width: 0; height: 0; border: 5px solid transparent; border-bottom-color: #c0c4cc; position: absolute; top: 0px; left: 4px; } i.sort-descending[data-v-184ba508] { width: 0; height: 0; border: 5px solid transparent; border-top-color: #c0c4cc; position: absolute; top: 12px; left: 4px; } i.sort-ascending.selected[data-v-184ba508] { border-bottom-color: #3caed2; } i.sort-descending.selected[data-v-184ba508] { border-top-color: #3caed2; } .header-line[data-v-184ba508] { color: #606266; height: 60px; } .bottom-line[data-v-184ba508] { height: 60px; } .bordered .item-cell[data-v-184ba508], .bordered .header-cell[data-v-184ba508], .bordered .bottom-cell[data-v-184ba508] { border-left: 1px solid #ebeef5; } .bordered .item-cell[data-v-184ba508]:nth-child(1), .bordered .header-cell[data-v-184ba508]:nth-child(1), .bordered .bottom-cell[data-v-184ba508]:nth-child(1) { border-left-width: 0; } .t-header[data-v-184ba508] { border-bottom: 1px solid #ebeef5; } .t-bottom[data-v-184ba508] { height: 60px; border-top: 1px solid #ebeef5; background-color: #f5f7fa; } .t-container[data-v-184ba508] { /*height: 800px;*/ box-sizing: border-box; overflow: auto; overflow-x: hidden; } .scroller[data-v-184ba508] { height: 100%; } .search-wrapper[data-v-184ba508] { cursor: pointer; } .filter-wrapper[data-v-184ba508] { cursor: pointer; } .numFiltered-wrapper[data-v-184ba508] { cursor: pointer; } div.item-line.item-line-allow-hightlight[data-v-184ba508]:hover { background-color: #eee; } div.item-line.selected[data-v-184ba508] { background-color: #ddd; } div.item-line.unselectable[data-v-184ba508] { background-color: #fff; } /*----------------*/ .tag[data-v-184ba508] { padding: 0 10px; height: 34px; line-height: 32px; /*font-size: 16px;*/ border-radius: 4px; box-sizing: border-box; color: #3caed2; background-color: rgba(60, 174, 210, 0.1); border: 1px solid rgba(60, 174, 210, 0.2); white-space: nowrap; } .filter-list[data-v-184ba508] { width: 100%; max-height: 300px; overflow-y: scroll; } .filter-list[data-v-184ba508]:hover { cursor: pointer; } .filter-item[data-v-184ba508] { width: 100%; margin: 5px auto; margin-left: 0px !important; } .filter-btn[data-v-184ba508] { overflow: hidden; border-top: 1px solid #ebeef5; padding-top: 6px; margin-top: 6px; } .filter-btn .btn[data-v-184ba508] { float: left; width: 50px; margin: 0 12px; padding: 5px; } .filtered[data-v-184ba508], .searched[data-v-184ba508], .numFiltered[data-v-184ba508] { color: #3caed2; } .warningColor[data-v-184ba508] { color: red; } .greenColor[data-v-184ba508] { color: #84c32e; } .all-select[data-v-184ba508] { cursor: pointer; } .threeLines[data-v-184ba508] { overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; word-break: break-all; white-space: normal; } .alignLeft[data-v-184ba508] { text-align: left; } .tips[data-v-184ba508] { font-size: 17px; } .defaultTag[data-v-184ba508] { color: #3caed2; background-color: rgba(60, 174, 210, 0.1); border-color: rgba(60, 174, 210, 0.2); } .warningTag[data-v-184ba508] { color: #e6a23c; background: #fdf6ec; border-color: #f5dab1; } .successTag[data-v-184ba508] { color: #67c23a; background: #f0f9eb; border-color: #c2e7b0; } .dangerTag[data-v-184ba508] { color: #f56c6c; background: #fef0f0; border-color: #fbc4c4; } .infoTag[data-v-184ba508] { color: #909399; background: #f4f4f5; border-color: #d3d4d6; } .filterSelectNumber[data-v-184ba508] { float: left; width: 120px; } .filterInputNumber[data-v-184ba508] { float: left; width: 90px; margin-left: 5px; } .numberMax[data-v-184ba508] { margin-left: 15px; } .numberMax[data-v-184ba508]:before { content: '~'; position: absolute; left: -11px; top: 10px; } .filterBtnEmpty[data-v-184ba508] { margin-top: 10px; float: right; } .popperCard[data-v-184ba508] { box-sizing: border-box; } .clipboard[data-v-184ba508] { position: absolute; width: 0; height: 0; z-index: -99; opacity: 0; } .clipboard input[data-v-184ba508] { width: 1px; height: 1px; padding: 0; margin: 0; border: 0; } ";
+        ' .main-scroll[data-v-184ba508] { width: 100%; overflow-y: hidden; border: 1px solid #ebeef5; font-size: 13px; box-sizing: border-box; position: relative; } .item-line[data-v-184ba508], .header-line[data-v-184ba508], .bottom-line[data-v-184ba508] { width: 100%; display: flex; flex-direction: row; } .item-cell[data-v-184ba508], .header-cell[data-v-184ba508], .bottom-cell[data-v-184ba508] { display: flex; padding: 5px; box-sizing: border-box; border-bottom: 1px solid #ebeef5; justify-content: center; align-items: center; } .header-cell[data-v-184ba508], .bottom-cell[data-v-184ba508] { border-bottom-width: 0; } .item-cell-inner[data-v-184ba508] { display: flex; width: 100%; height: 100%; word-break: break-all; text-align: center; overflow: hidden; text-overflow: ellipsis; justify-content: center; align-items: center; flex-wrap: wrap; } .header-cell-inner[data-v-184ba508] { display: inline-block; position: relative; } .header-cell-inner.caret-wrapper[data-v-184ba508] { width: 10px; height: 22px; cursor: pointer; } i.sort-ascending[data-v-184ba508] { width: 0; height: 0; border: 5px solid transparent; border-bottom-color: #c0c4cc; position: absolute; top: 0px; left: 4px; } i.sort-descending[data-v-184ba508] { width: 0; height: 0; border: 5px solid transparent; border-top-color: #c0c4cc; position: absolute; top: 12px; left: 4px; } i.sort-ascending.selected[data-v-184ba508] { border-bottom-color: #3caed2; } i.sort-descending.selected[data-v-184ba508] { border-top-color: #3caed2; } .header-line[data-v-184ba508] { color: #606266; height: 60px; } .bottom-line[data-v-184ba508] { height: 60px; } .bordered .item-cell[data-v-184ba508], .bordered .header-cell[data-v-184ba508], .bordered .bottom-cell[data-v-184ba508] { border-left: 1px solid #ebeef5; } .bordered .item-cell[data-v-184ba508]:nth-child(1), .bordered .header-cell[data-v-184ba508]:nth-child(1), .bordered .bottom-cell[data-v-184ba508]:nth-child(1) { border-left-width: 0; } .t-header[data-v-184ba508] { border-bottom: 1px solid #ebeef5; } .t-bottom[data-v-184ba508] { height: 60px; border-top: 1px solid #ebeef5; background-color: #f5f7fa; } .t-container[data-v-184ba508] { /*height: 800px;*/ box-sizing: border-box; overflow: auto; overflow-x: hidden; } .scroller[data-v-184ba508] { height: 100%; } .search-wrapper[data-v-184ba508] { cursor: pointer; } .filter-wrapper[data-v-184ba508] { cursor: pointer; } .numFiltered-wrapper[data-v-184ba508] { cursor: pointer; } div.item-line.item-line-allow-hightlight[data-v-184ba508]:hover { background-color: #eee; } div.item-line.selected[data-v-184ba508] { background-color: #ddd; } div.item-line.unselectable[data-v-184ba508] { background-color: #fff; } /*----------------*/ .tag[data-v-184ba508] { padding: 0 10px; height: 34px; line-height: 32px; /*font-size: 16px;*/ border-radius: 4px; box-sizing: border-box; color: #3caed2; background-color: rgba(60, 174, 210, 0.1); border: 1px solid rgba(60, 174, 210, 0.2); white-space: nowrap; } .filter-list[data-v-184ba508] { width: 100%; max-height: 300px; overflow-y: scroll; } .filter-list[data-v-184ba508]:hover { cursor: pointer; } .filter-item[data-v-184ba508] { width: 100%; margin: 5px auto; margin-left: 0px !important; } .filter-btn[data-v-184ba508] { overflow: hidden; border-top: 1px solid #ebeef5; padding-top: 6px; margin-top: 6px; } .filter-btn .btn[data-v-184ba508] { float: left; width: 50px; margin: 0 12px; padding: 5px; } .filtered[data-v-184ba508], .searched[data-v-184ba508], .numFiltered[data-v-184ba508] { color: #3caed2; } .warningColor[data-v-184ba508] { color: red; } .greenColor[data-v-184ba508] { color: #84c32e; } .all-select[data-v-184ba508] { cursor: pointer; } .threeLines[data-v-184ba508] { overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; word-break: break-all; white-space: normal; } .alignLeft[data-v-184ba508] { text-align: left; } .tips[data-v-184ba508] { font-size: 17px; } .defaultTag[data-v-184ba508] { color: #3caed2; background-color: rgba(60, 174, 210, 0.1); border-color: rgba(60, 174, 210, 0.2); } .warningTag[data-v-184ba508] { color: #e6a23c; background: #fdf6ec; border-color: #f5dab1; } .successTag[data-v-184ba508] { color: #67c23a; background: #f0f9eb; border-color: #c2e7b0; } .dangerTag[data-v-184ba508] { color: #f56c6c; background: #fef0f0; border-color: #fbc4c4; } .infoTag[data-v-184ba508] { color: #909399; background: #f4f4f5; border-color: #d3d4d6; } .filterSelectNumber[data-v-184ba508] { float: left; width: 120px; } .filterInputNumber[data-v-184ba508] { float: left; width: 90px; margin-left: 5px; } .numberMax[data-v-184ba508] { margin-left: 15px; } .numberMax[data-v-184ba508]:before { content: "~"; position: absolute; left: -11px; top: 10px; } .filterBtnEmpty[data-v-184ba508] { margin-top: 10px; float: right; } .popperCard[data-v-184ba508] { box-sizing: border-box; } .clipboard[data-v-184ba508] { position: absolute; width: 0; height: 0; z-index: -99; opacity: 0; } .clipboard input[data-v-184ba508] { width: 1px; height: 1px; padding: 0; margin: 0; border: 0; } ';
     style.type = "text/css";
     if (style.styleSheet) {
       style.styleSheet.cssText = css;
@@ -1789,12 +1789,6 @@ var Component = ((_render$staticRenderF = {
                                                                         }
                                                                       )[0]
                                                                         .prefix &&
-                                                                      !isNaN(
-                                                                        props
-                                                                          .item[
-                                                                          tipProp
-                                                                        ]
-                                                                      ) &&
                                                                       props
                                                                         .item[
                                                                         tipProp
@@ -1854,12 +1848,6 @@ var Component = ((_render$staticRenderF = {
                                                                         }
                                                                       )[0]
                                                                         .suffix &&
-                                                                      !isNaN(
-                                                                        props
-                                                                          .item[
-                                                                          tipProp
-                                                                        ]
-                                                                      ) &&
                                                                       props
                                                                         .item[
                                                                         tipProp
@@ -1924,11 +1912,6 @@ var Component = ((_render$staticRenderF = {
                                                         _vm._v(" "),
                                                         _c("span", [
                                                           item.prefix &&
-                                                          !isNaN(
-                                                            props.item[
-                                                              item.prop
-                                                            ]
-                                                          ) &&
                                                           props.item[item.prop]
                                                             ? _c(
                                                                 "span",
@@ -2026,11 +2009,6 @@ var Component = ((_render$staticRenderF = {
                                                                   ]),
                                                           _vm._v(" "),
                                                           item.suffix &&
-                                                          !isNaN(
-                                                            props.item[
-                                                              item.prop
-                                                            ]
-                                                          ) &&
                                                           props.item[item.prop]
                                                             ? _c(
                                                                 "span",
@@ -2071,9 +2049,6 @@ var Component = ((_render$staticRenderF = {
                                                   },
                                                   [
                                                     item.prefix &&
-                                                    !isNaN(
-                                                      props.item[item.prop]
-                                                    ) &&
                                                     props.item[item.prop]
                                                       ? _c(
                                                           "span",
@@ -2160,9 +2135,6 @@ var Component = ((_render$staticRenderF = {
                                                             ]),
                                                     _vm._v(" "),
                                                     item.suffix &&
-                                                    !isNaN(
-                                                      props.item[item.prop]
-                                                    ) &&
                                                     props.item[item.prop]
                                                       ? _c(
                                                           "span",
@@ -2565,7 +2537,6 @@ _defineProperty(_render$staticRenderF, "methods", {
     self.dataTemp = self.deepCopy(self.dataInitTemp);
   },
   update: function update() {
-    console.log("Data updated!");
     var self = this;
     self.lastConfigTemp = self.deepCopy(self.configTemp);
     self.updateBase();
@@ -2685,7 +2656,6 @@ _defineProperty(_render$staticRenderF, "methods", {
     var rtn_data = handleConfigData(originConfig, 0, maxLevel);
     // rtn_data = groupby(rtn_data, ['level'])
     var multiConfig = Object.values(rtn_data);
-    console.log(multiConfig);
     return { config: config, width: width, multiConfig: multiConfig };
   },
   clipboardCP: (function() {
@@ -2922,6 +2892,7 @@ _defineProperty(_render$staticRenderF, "methods", {
     var self = this;
     var l = self.dataTemp.length;
     var summary = [];
+    self.showSummary = false;
     self.configTemp.forEach(function(v, i) {
       var prop = v.prop;
       if (!v.summary) {
@@ -2976,29 +2947,33 @@ _defineProperty(_render$staticRenderF, "methods", {
     self.summaryData.splice(0, 0);
   },
   selectAll: function selectAll() {
-    var self = this;
     var r = true;
     if (
-      self.dataTemp.length ===
-      self.dataTemp.filter(function(item) {
+      this.dataTemp.length ===
+      this.dataTemp.filter(function(item) {
         return item._eSelected === true;
       }).length
     ) {
       r = false;
     }
-    self.dataTemp.forEach(function(item) {
+    var eIds = [];
+    this.dataTemp.forEach(function(item) {
       item._eSelected = r;
       var eId = item._eId;
-      self.dataInitTemp.filter(function(v, i) {
-        return v._eId === item._eId;
-      })[0]._eSelected =
-        item._eSelected;
+      eIds.push(eId);
     });
-    self.dataTemp.splice(0, 0);
-    self.dataInitTemp.splice(0, 0);
-    self.$emit(
+    this.dataInitTemp
+      .filter(function(v) {
+        return eIds.includes(v._eId);
+      })
+      .map(function(item) {
+        item._eSelected = r;
+      });
+    this.dataTemp.splice(0, 0);
+    this.dataInitTemp.splice(0, 0);
+    this.$emit(
       "changeSelection",
-      self.dataInitTemp.filter(function(v) {
+      this.dataInitTemp.filter(function(v) {
         return v._eSelected === true;
       })
     );
@@ -3124,7 +3099,6 @@ _defineProperty(_render$staticRenderF, "methods", {
     if (index != undefined && self.configTemp[index]) {
       self.$set(self.configTemp[index], "filterVisible", false);
     }
-    // console.log(self.dataTemp)
     self.handleClickSort(self.sortParam.col, self.sortParam.direction, true);
     self.refreshSummary();
   },
@@ -3132,8 +3106,6 @@ _defineProperty(_render$staticRenderF, "methods", {
     var self = this;
     var options = self.configTemp[index].filterOptions.slice();
     var selecetedOptions = self.configTemp[index].filterSelectedOptions.slice();
-    console.log(options);
-    console.log(selecetedOptions);
     self.configTemp[index].filterSelectedOptions = options.reduce(function(
       prev,
       curr
@@ -3144,7 +3116,6 @@ _defineProperty(_render$staticRenderF, "methods", {
       return prev;
     },
     []);
-    console.log(self.configTemp[index].filterSelectedOptions);
   },
   handleClickEmptyNumberFilter: function handleClickEmptyNumberFilter(index) {
     this.configTemp[index].numberFilterPhrase.value = ["", ""];
@@ -3165,9 +3136,7 @@ _defineProperty(_render$staticRenderF, "methods", {
     this.configTemp[index].searchPhrase = [{ operator: "in", value: "" }];
     this.handleClickConfirmFilter(index);
   },
-  handleChangeFilter: function handleChangeFilter(val) {
-    console.log(val);
-  },
+  handleChangeFilter: function handleChangeFilter(val) {},
   handleClickSort: function handleClickSort(val, direction, forse) {
     var self = this;
     if (
@@ -3182,7 +3151,6 @@ _defineProperty(_render$staticRenderF, "methods", {
     }
     self.sortParam.col = val;
     self.sortParam.direction = direction;
-    console.log(self.sortParam);
     var isNumber = false;
     self.dataTemp.some(function(v, i) {
       if (!v[val] && v[val] != 0) {
@@ -3196,7 +3164,6 @@ _defineProperty(_render$staticRenderF, "methods", {
         return true;
       }
     });
-    console.log(isNumber);
     if (direction === "asc") {
       if (!isNumber) {
         // let a_cp = a[val]||'', b_cp = b[val]||''
@@ -3240,7 +3207,6 @@ _defineProperty(_render$staticRenderF, "methods", {
     eve.stopPropagation();
   },
   setSize: function setSize() {
-    console.log("resize");
     if (!this.$refs || !this.$refs.tContainer) {
       return;
     }

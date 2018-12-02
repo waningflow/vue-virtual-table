@@ -111,31 +111,31 @@
 												<span v-for="tipProp in item.eTip" :key="tipProp">
 													<span v-if="item.eTipWithProp">{{configTemp.filter(v=>v.prop===tipProp)[0].name}}: </span>
 													<span>
-														<span v-if="configTemp.filter(v=>v.prop===tipProp)[0].prefix && !isNaN(props.item[tipProp]) && props.item[tipProp]" class="prefix">{{configTemp.filter(v=>v.prop===tipProp)[0].prefix}}</span>
+														<span v-if="configTemp.filter(v=>v.prop===tipProp)[0].prefix && props.item[tipProp]" class="prefix">{{configTemp.filter(v=>v.prop===tipProp)[0].prefix}}</span>
 														<span>{{props.item[tipProp]}}</span>
-														<span v-if="configTemp.filter(v=>v.prop===tipProp)[0].suffix && !isNaN(props.item[tipProp]) && props.item[tipProp]" class="suffix">{{configTemp.filter(v=>v.prop===tipProp)[0].suffix}}</span>
+														<span v-if="configTemp.filter(v=>v.prop===tipProp)[0].suffix && props.item[tipProp]" class="suffix">{{configTemp.filter(v=>v.prop===tipProp)[0].suffix}}</span>
 														<br>
 													</span>
 												</span>
 												<i class="el-icon-document" @click="handleClickCopy(props.item, item.eTip)" style="color: #aaa; cursor: pointer;"></i>
 											</div>
 											<span>
-												<span v-if="item.prefix && !isNaN(props.item[item.prop]) && props.item[item.prop]" :class="props.item._eClass[item.prop]||''" class="prefix">{{item.prefix}}</span>
+												<span v-if="item.prefix && props.item[item.prop]" :class="props.item._eClass[item.prop]||''" class="prefix">{{item.prefix}}</span>
 												<span v-if="item.prop === '_index'">{{props.itemIndex + 1}}</span>
 												<span v-else-if="item.filterable" class="tag" :class="item.filterTag[props.item[item.prop]]||'defaultTag'">{{props.item[item.prop]}}</span>
 												<span v-else-if="item.eClass" :class="props.item._eClass[item.prop]">{{props.item[item.prop]}}</span>
 												<span v-else>{{props.item[item.prop]}}</span>
-												<span v-if="item.suffix && !isNaN(props.item[item.prop]) && props.item[item.prop]" :class="props.item._eClass[item.prop]||''" class="suffix">{{item.suffix}}</span>
+												<span v-if="item.suffix && props.item[item.prop]" :class="props.item._eClass[item.prop]||''" class="suffix">{{item.suffix}}</span>
 											</span>
 										</el-tooltip>
 									</div>
 									<div class="item-cell-inner" v-else :style="{'align-items': item.alignItems||'center'}">
-										<span v-if="item.prefix && !isNaN(props.item[item.prop]) && props.item[item.prop]" :class="props.item._eClass[item.prop]||''" class="prefix">{{item.prefix}}</span>
+										<span v-if="item.prefix && props.item[item.prop]" :class="props.item._eClass[item.prop]||''" class="prefix">{{item.prefix}}</span>
 										<span v-if="item.prop === '_index'">{{props.itemIndex + 1}}</span>
 										<span v-else-if="item.filterable" class="tag" :class="item.filterTag[props.item[item.prop]]||'defaultTag'">{{props.item[item.prop]}}</span>
 										<span v-else-if="item.eClass" :class="props.item._eClass[item.prop]">{{props.item[item.prop]}}</span>
 										<span v-else>{{props.item[item.prop]}}</span>
-										<span v-if="item.suffix && !isNaN(props.item[item.prop]) && props.item[item.prop]" :class="props.item._eClass[item.prop]||''" class="suffix">{{item.suffix}}</span>
+										<span v-if="item.suffix &&  props.item[item.prop]" :class="props.item._eClass[item.prop]||''" class="suffix">{{item.suffix}}</span>
 									</div>
 								</template>
 
@@ -674,6 +674,7 @@ export default {
       let self = this;
       let l = self.dataTemp.length;
       let summary = [];
+      self.showSummary = false;
       self.configTemp.forEach((v, i) => {
         let prop = v.prop;
         if (!v.summary) {
@@ -726,25 +727,27 @@ export default {
       self.summaryData.splice(0, 0);
     },
     selectAll() {
-      let self = this;
       let r = true;
       if (
-        self.dataTemp.length ===
-        self.dataTemp.filter(item => item._eSelected === true).length
+        this.dataTemp.length ===
+        this.dataTemp.filter(item => item._eSelected === true).length
       ) {
         r = false;
       }
-      self.dataTemp.forEach(item => {
+      let eIds = [];
+      this.dataTemp.forEach(item => {
         item._eSelected = r;
         let eId = item._eId;
-        self.dataInitTemp.filter((v, i) => v._eId === item._eId)[0]._eSelected =
-          item._eSelected;
+        eIds.push(eId);
       });
-      self.dataTemp.splice(0, 0);
-      self.dataInitTemp.splice(0, 0);
-      self.$emit(
+      this.dataInitTemp.filter(v => eIds.includes(v._eId)).map(item => {
+        item._eSelected = r;
+      });
+      this.dataTemp.splice(0, 0);
+      this.dataInitTemp.splice(0, 0);
+      this.$emit(
         "changeSelection",
-        self.dataInitTemp.filter(v => v._eSelected === true)
+        this.dataInitTemp.filter(v => v._eSelected === true)
       );
     },
     handleClickItem(item) {
