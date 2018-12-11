@@ -9,19 +9,19 @@
 			</div>
 			<div slot="reference" class="select-box" :style="{'width': width+'px'}">
 					{{selected.label}}
-					<!-- <div class="select-arrow"></div> -->
 				<div class="arrow-side">
-					<i class="arrow_carrot-down select-arrow" :style="{'transform': 'rotate(' +arrowRotate +'deg)'}"></i>
+					<base-icon icon-name="arrowCarrotDown" :style="{'transform': 'rotate(' +arrowRotate +'deg)'}" class="select-arrow" icon-color="#909399" width="16" height="16"></base-icon>
 				</div>
 			</div>
 		</BasePopover>
 </template>
 <script>
 import BasePopover from "./base-popover.vue";
-import "../assets/base.css";
+import BaseIcon from "./base-icon.vue";
 export default {
   components: {
-    BasePopover
+    BasePopover,
+    BaseIcon
   },
   model: {
     prop: "selectedValue",

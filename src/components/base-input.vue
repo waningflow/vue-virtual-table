@@ -35,7 +35,7 @@ $default-color: #3caed2;
   padding: 0 5px;
   outline: none;
   font-size: 12px;
-  transform: translateY(-1px);
+  vertical-align: top;
 
   &:focus {
     border-color: $default-color;

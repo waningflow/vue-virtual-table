@@ -2,17 +2,20 @@
 	<div class="check-box">
 		<div class="check-item" v-for="checkItem in choiceList" @click="clickItem(checkItem)" :class="{'checked': checkedGroup.includes(checkItem)}">
 			<div class="check-icon">
-				<i class="icon_box-checked" v-if="checkedGroup.includes(checkItem)"></i>
-				<i class="icon_box-empty" v-else></i>
+				<base-icon icon-name="boxChecked" icon-color="#3caed2" width="14" height="14" v-if="checkedGroup.includes(checkItem)" ></base-icon>
+				<base-icon icon-name="boxEmpty" icon-color="#dcdfe6" width="14" height="14" v-else></base-icon>
 			</div>
 			<div class="check-label">{{checkItem}}</div>
 		</div>
 	</div>
 </template>
 <script>
-import "../assets/base.css";
+import BaseIcon from "./base-icon.vue";
 
 export default {
+  components: {
+    BaseIcon
+  },
   model: {
     prop: "checkedValue",
     event: "change"

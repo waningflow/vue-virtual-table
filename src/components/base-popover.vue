@@ -1,5 +1,5 @@
 <template>
-	<div style="display: inline-block;">
+	<div style="display: inline-block;vertical-align: top;">
 		<transition :name="animationMode">
 			<div class="pop-card" v-if="isShow" :style="{'left': offset.left +'px', 'top': offset.top+'px','width': width+'px'}" ref="popCard" v-click-out-side="closeCard">
 				<slot></slot>

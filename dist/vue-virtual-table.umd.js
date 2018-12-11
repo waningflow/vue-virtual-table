@@ -595,7 +595,7 @@
       var _c = _vm._self._c || _h;
       return _c(
         "div",
-        { staticStyle: { display: "inline-block" } },
+        { staticStyle: { display: "inline-block", "vertical-align": "top" } },
         [
           _c("transition", { attrs: { name: _vm.animationMode } }, [
             _vm.isShow
@@ -765,7 +765,7 @@
       var head = document.head || document.getElementsByTagName("head")[0],
         style = document.createElement("style"),
         css =
-          ".base-button[data-v-cf8d2664] { font-size: 13px; display: inline-block; min-width: 55px; min-height: 28px; border-radius: 2px; outline: none; focus-outline: none; } .base-button[data-v-cf8d2664]:active { border-style: solid; } .base-button[data-v-cf8d2664]:hover { cursor: pointer; } .base-button.disabled[data-v-cf8d2664] { opacity: 0.5; cursor: not-allowed; } .plain-btn[data-v-cf8d2664] { color: #606266; background: #fff; border-color: #dcdfe6; } .plain-btn[data-v-cf8d2664]:hover { color: #3caed2; background-color: rgba(60, 174, 210, 0.1); border-color: rgba(60, 174, 210, 0.2); } .plain-btn.disabled[data-v-cf8d2664]:hover { color: #606266; background: #fff; border-color: #dcdfe6; } .primary-btn[data-v-cf8d2664] { color: #3caed2; background-color: rgba(60, 174, 210, 0.1); border-color: rgba(60, 174, 210, 0.2); } .primary-btn[data-v-cf8d2664]:hover { color: #fff; background-color: #3caed2; border-color: #3caed2; } .primary-btn.disabled[data-v-cf8d2664]:hover { color: #3caed2; background-color: rgba(60, 174, 210, 0.1); border-color: rgba(60, 174, 210, 0.2); } .danger-btn[data-v-cf8d2664] { color: #f56c6c; background-color: rgba(245, 108, 108, 0.1); border-color: rgba(245, 108, 108, 0.2); } .danger-btn[data-v-cf8d2664]:hover { color: #fff; background-color: #f56c6c; border-color: #f56c6c; } .danger-btn.disabled[data-v-cf8d2664]:hover { color: #f56c6c; background-color: rgba(245, 108, 108, 0.1); border-color: rgba(245, 108, 108, 0.2); } ";
+          ".base-button[data-v-cf8d2664] { font-size: 13px; display: inline-block; vertical-align: top; min-width: 55px; min-height: 28px; border-radius: 2px; outline: none; focus-outline: none; } .base-button[data-v-cf8d2664]:active { border-style: solid; } .base-button[data-v-cf8d2664]:hover { cursor: pointer; } .base-button.disabled[data-v-cf8d2664] { opacity: 0.5; cursor: not-allowed; } .plain-btn[data-v-cf8d2664] { color: #606266; background: #fff; border-color: #dcdfe6; } .plain-btn[data-v-cf8d2664]:hover { color: #3caed2; background-color: rgba(60, 174, 210, 0.1); border-color: rgba(60, 174, 210, 0.2); } .plain-btn.disabled[data-v-cf8d2664]:hover { color: #606266; background: #fff; border-color: #dcdfe6; } .primary-btn[data-v-cf8d2664] { color: #3caed2; background-color: rgba(60, 174, 210, 0.1); border-color: rgba(60, 174, 210, 0.2); } .primary-btn[data-v-cf8d2664]:hover { color: #fff; background-color: #3caed2; border-color: #3caed2; } .primary-btn.disabled[data-v-cf8d2664]:hover { color: #3caed2; background-color: rgba(60, 174, 210, 0.1); border-color: rgba(60, 174, 210, 0.2); } .danger-btn[data-v-cf8d2664] { color: #f56c6c; background-color: rgba(245, 108, 108, 0.1); border-color: rgba(245, 108, 108, 0.2); } .danger-btn[data-v-cf8d2664]:hover { color: #fff; background-color: #f56c6c; border-color: #f56c6c; } .danger-btn.disabled[data-v-cf8d2664]:hover { color: #f56c6c; background-color: rgba(245, 108, 108, 0.1); border-color: rgba(245, 108, 108, 0.2); } ";
       style.type = "text/css";
       if (style.styleSheet) {
         style.styleSheet.cssText = css;
@@ -810,38 +810,293 @@
     }
   };
 
-  function styleInject(css, ref) {
-    if (ref === void 0) ref = {};
-    var insertAt = ref.insertAt;
-
-    if (!css || typeof document === "undefined") {
-      return;
-    }
-
-    var head = document.head || document.getElementsByTagName("head")[0];
-    var style = document.createElement("style");
-    style.type = "text/css";
-
-    if (insertAt === "top") {
-      if (head.firstChild) {
-        head.insertBefore(style, head.firstChild);
+  (function() {
+    if (typeof document !== "undefined") {
+      var head = document.head || document.getElementsByTagName("head")[0],
+        style = document.createElement("style"),
+        css = "";
+      style.type = "text/css";
+      if (style.styleSheet) {
+        style.styleSheet.cssText = css;
       } else {
-        head.appendChild(style);
+        style.appendChild(document.createTextNode(css));
       }
-    } else {
       head.appendChild(style);
     }
+  })();
 
-    if (style.styleSheet) {
-      style.styleSheet.cssText = css;
-    } else {
-      style.appendChild(document.createTextNode(css));
+  var arrowCarrotDown = {
+    render: function render() {
+      var _vm = this;
+      var _h = _vm.$createElement;
+      var _c = _vm._self._c || _h;
+      return _c("path", {
+        attrs: {
+          d:
+            "M 22.782,13.8L 17,19.582L 11.218,13.8c-0.39-0.39-1.024-0.39-1.414,0c-0.39,0.39-0.39,1.024,0,1.414 l 6.486,6.486c 0.196,0.196, 0.454,0.294, 0.71,0.292c 0.258,0, 0.514-0.096, 0.71-0.292l 6.486-6.486c 0.39-0.39, 0.39-1.024,0-1.414 C 23.806,13.41, 23.172,13.41, 22.782,13.8z"
+        }
+      });
+    },
+    staticRenderFns: []
+  };
+
+  (function() {
+    if (typeof document !== "undefined") {
+      var head = document.head || document.getElementsByTagName("head")[0],
+        style = document.createElement("style"),
+        css = "";
+      style.type = "text/css";
+      if (style.styleSheet) {
+        style.styleSheet.cssText = css;
+      } else {
+        style.appendChild(document.createTextNode(css));
+      }
+      head.appendChild(style);
     }
-  }
+  })();
 
-  var css =
-    '@font-face {\n\tfont-family: \'ElegantIcons\';\n\tsrc:url(\'fonts/ElegantIcons.ttf\') format(\'truetype\');\n\tfont-weight: normal;\n\tfont-style: normal;\n}\n\n/* Use the following CSS code if you want to have a class per icon */\n/*\nInstead of a list of all class selectors,\nyou can use the generic selector below, but it\'s slower:\n[class*="your-class-prefix"] {\n*/\n.arrow_carrot-down, .icon_close_alt2, .icon_box-empty, .icon_box-checked, .arrow_carrot-right, .icon_cloud-download_alt, .icon_documents_alt{\n\tfont-family: \'ElegantIcons\';\n\tspeak: none;\n\tfont-style: normal;\n\tfont-weight: normal;\n\tfont-variant: normal;\n\ttext-transform: none;\n\tline-height: 1;\n\t-webkit-font-smoothing: antialiased;\n}\n\n.arrow_carrot-down:before {\n\tcontent: "\\33";\n}\n.icon_close_alt2:before {\n\tcontent: "\\51";\n}\n.icon_box-empty:before {\n\tcontent: "\\56";\n}\n.icon_box-checked:before {\n\tcontent: "\\5a";\n}\n.arrow_carrot-right:before {\n\tcontent: "\\35";\n}\n.icon_cloud-download_alt:before {\n\tcontent: "\\e004";\n}\n.icon_documents_alt:before {\n\tcontent: "\\69";\n}\n\n\n\t\n';
-  styleInject(css);
+  var arrowCarrotRight = {
+    render: function render() {
+      var _vm = this;
+      var _h = _vm.$createElement;
+      var _c = _vm._self._c || _h;
+      return _c("path", {
+        attrs: {
+          d:
+            "M 13.8,24.196c 0.39,0.39, 1.024,0.39, 1.414,0l 6.486-6.486c 0.196-0.196, 0.294-0.454, 0.292-0.71 c0-0.258-0.096-0.514-0.292-0.71L 15.214,9.804c-0.39-0.39-1.024-0.39-1.414,0c-0.39,0.39-0.39,1.024,0,1.414L 19.582,17 L 13.8,22.782C 13.41,23.172, 13.41,23.806, 13.8,24.196z"
+        }
+      });
+    },
+    staticRenderFns: []
+  };
+
+  (function() {
+    if (typeof document !== "undefined") {
+      var head = document.head || document.getElementsByTagName("head")[0],
+        style = document.createElement("style"),
+        css = "";
+      style.type = "text/css";
+      if (style.styleSheet) {
+        style.styleSheet.cssText = css;
+      } else {
+        style.appendChild(document.createTextNode(css));
+      }
+      head.appendChild(style);
+    }
+  })();
+
+  var boxChecked = {
+    render: function render() {
+      var _vm = this;
+      var _h = _vm.$createElement;
+      var _c = _vm._self._c || _h;
+      return _c("path", {
+        attrs: {
+          d:
+            "M 26,26L 6,26 L 6,6 l 14.752,0 L 22,4L 6,4 C 4.896,4, 4,4.896, 4,6l0,20 c0,1.104, 0.896,2, 2,2l 20,0 c 1.104,0, 2-0.896, 2-2L 28,12.794 L 26,16L 26,26 zM 29.366,2.228C 29.13,2.074, 28.864,2, 28.602,2c-0.456,0-0.904,0.224-1.172,0.634L 16.558,18.318l-4.206-4.8 C 11.782,12.992, 10.898,13.026, 10.372,13.594S 9.882,15.048, 10.45,15.572l 5.056,5.77c 0.032,0.052, 0.082,0.092, 0.122,0.14l 0.128,0.146 c 0.016,0.014, 0.036,0.018, 0.052,0.032c 0.040,0.032, 0.064,0.076, 0.106,0.106c 0.086,0.056, 0.18,0.092, 0.274,0.126 c 0.022,0.008, 0.040,0.022, 0.062,0.028c 0.14,0.046, 0.286,0.074, 0.43,0.074c 0.006,0, 0.012-0.004, 0.018-0.004 c 0.38,0.002, 0.758-0.138, 1.036-0.438c 0.052-0.056, 0.072-0.124, 0.114-0.186c 0.002-0.002, 0.004-0.004, 0.006-0.006l 11.918-17.194 C 30.194,3.52, 30.014,2.652, 29.366,2.228z"
+        }
+      });
+    },
+    staticRenderFns: []
+  };
+
+  (function() {
+    if (typeof document !== "undefined") {
+      var head = document.head || document.getElementsByTagName("head")[0],
+        style = document.createElement("style"),
+        css = "";
+      style.type = "text/css";
+      if (style.styleSheet) {
+        style.styleSheet.cssText = css;
+      } else {
+        style.appendChild(document.createTextNode(css));
+      }
+      head.appendChild(style);
+    }
+  })();
+
+  var boxEmpty = {
+    render: function render() {
+      var _vm = this;
+      var _h = _vm.$createElement;
+      var _c = _vm._self._c || _h;
+      return _c("path", {
+        attrs: {
+          d:
+            "M 26,4L 6,4 C 4.896,4, 4,4.896, 4,6l0,20 c0,1.104, 0.896,2, 2,2l 20,0 c 1.104,0, 2-0.896, 2-2L 28,6 C 28,4.896, 27.104,4, 26,4z M 26,26L 6,26 L 6,6 l 20,0 L 26,26 z"
+        }
+      });
+    },
+    staticRenderFns: []
+  };
+
+  (function() {
+    if (typeof document !== "undefined") {
+      var head = document.head || document.getElementsByTagName("head")[0],
+        style = document.createElement("style"),
+        css = "";
+      style.type = "text/css";
+      if (style.styleSheet) {
+        style.styleSheet.cssText = css;
+      } else {
+        style.appendChild(document.createTextNode(css));
+      }
+      head.appendChild(style);
+    }
+  })();
+
+  var closeAlt2 = {
+    render: function render() {
+      var _vm = this;
+      var _h = _vm.$createElement;
+      var _c = _vm._self._c || _h;
+      return _c("path", {
+        attrs: {
+          d:
+            "M 17,2C 8.716,2, 2,8.716, 2,17S 8.716,32, 17,32S 32,25.284, 32,17S 25.284,2, 17,2z M 17,30 C 9.832,30, 4,24.168, 4,17S 9.832,4, 17,4S 30,9.832, 30,17S 24.168,30, 17,30zM 22.536,10.050L 17.038,15.548L 12.108,10.050c-0.39-0.39-1.024-0.39-1.414,0c-0.39,0.39-0.39,1.024,0,1.414 l 4.932,5.498l-5.574,5.574c-0.39,0.39-0.39,1.024,0,1.414c 0.39,0.39, 1.024,0.39, 1.414,0l 5.498-5.498l 4.932,5.498 c 0.39,0.39, 1.024,0.39, 1.414,0s 0.39-1.024,0-1.414L 18.376,17.038l 5.574-5.574c 0.39-0.39, 0.39-1.024,0-1.414 C 23.56,9.66, 22.926,9.66, 22.536,10.050z"
+        }
+      });
+    },
+    staticRenderFns: []
+  };
+
+  (function() {
+    if (typeof document !== "undefined") {
+      var head = document.head || document.getElementsByTagName("head")[0],
+        style = document.createElement("style"),
+        css = "";
+      style.type = "text/css";
+      if (style.styleSheet) {
+        style.styleSheet.cssText = css;
+      } else {
+        style.appendChild(document.createTextNode(css));
+      }
+      head.appendChild(style);
+    }
+  })();
+
+  var cloudDownloadAlt = {
+    render: function render() {
+      var _vm = this;
+      var _h = _vm.$createElement;
+      var _c = _vm._self._c || _h;
+      return _c("path", {
+        attrs: {
+          d:
+            "M 26.166,16c 1.868-4.29, 0.716-7.018-0.222-8.332c-1.424-1.994-4.018-3.088-6.296-2.65 C 15.688,5.774, 14,8.458, 14,14l0,4.628 L 11.684,16.312c-0.39-0.39-1.024-0.39-1.414,0s-0.39,1.024,0,1.414l 4.024,4.022 c 0.202,0.202, 0.468,0.294, 0.732,0.288c 0.264,0.006, 0.53-0.086, 0.732-0.288l 4.044-4.042c 0.39-0.39, 0.39-1.024,0-1.414 s-1.024-0.39-1.414,0L 16,18.678L 16,14 c0-5.768, 1.986-6.628, 4.020-7.018c 1.306-0.24, 3.196,0.308, 4.294,1.848 c 1.344,1.878, 1.086,4.664-0.726,7.84c-0.192,0.338-0.172,0.756, 0.052,1.072s 0.618,0.476, 0.992,0.408 c 0.242-0.042, 0.964-0.152, 1.42-0.152C 28.23,17.998, 30,19.792, 30,22c0,2.206-1.794,4-4,4l-19.854,0.012C 3.822,25.668, 2,23.466, 2,21 c0-2.456, 1.844-4.57, 4.292-4.92l 0.86-0.124c 0.492-0.070, 0.858-0.492, 0.858-0.99L 7.994,13.902C 8,10.32, 10.208,7.376, 13.25,6.902 C 13.794,6.816, 14.168,6.306, 14.084,5.76C 13.998,5.214, 13.5,4.844, 12.94,4.926C 8.92,5.552, 6,9.326, 5.994,13.898 c0,0.002, 0.016,0.202, 0.016,0.202l0,0 C 2.584,14.59,0,17.556,0,21c0,3.492, 2.516,6.496, 6,7l 20,0 c 3.308,0, 6-2.692, 6-6 C 32,18.728, 29.392,16.060, 26.166,16z"
+        }
+      });
+    },
+    staticRenderFns: []
+  };
+
+  (function() {
+    if (typeof document !== "undefined") {
+      var head = document.head || document.getElementsByTagName("head")[0],
+        style = document.createElement("style"),
+        css = "";
+      style.type = "text/css";
+      if (style.styleSheet) {
+        style.styleSheet.cssText = css;
+      } else {
+        style.appendChild(document.createTextNode(css));
+      }
+      head.appendChild(style);
+    }
+  })();
+
+  var documentsAlt = {
+    render: function render() {
+      var _vm = this;
+      var _h = _vm.$createElement;
+      var _c = _vm._self._c || _h;
+      return _c("path", {
+        attrs: {
+          d:
+            "M 4,28l 2,0 l0,2 c0,1.104, 0.896,2, 2,2l 20,0 c 1.104,0, 2-0.896, 2-2L 30,6 c0-1.104-0.896-2-2-2l-2,0 L 26,2 c0-1.104-0.896-2-2-2L 4,0 C 2.896,0, 2,0.896, 2,2l0,24 C 2,27.104, 2.896,28, 4,28z M 24,26L 4,26 L 4,2 l 20,0 L 24,26 z M 28,6l0,24 L 8,30 l0-2 l 16,0 c 1.104,0, 2-0.896, 2-2L 26,6 L 28,6 zM 10,7C 10,7.552, 10.448,8, 11,8l 10,0 C 21.552,8, 22,7.552, 22,7C 22,6.448, 21.552,6, 21,6l-10,0 C 10.448,6, 10,6.448, 10,7zM 7,14l 14,0 C 21.552,14, 22,13.552, 22,13C 22,12.448, 21.552,12, 21,12l-14,0 C 6.448,12, 6,12.448, 6,13 C 6,13.552, 6.448,14, 7,14zM 7,18l 14,0 C 21.552,18, 22,17.552, 22,17C 22,16.448, 21.552,16, 21,16l-14,0 C 6.448,16, 6,16.448, 6,17 C 6,17.552, 6.448,18, 7,18zM 7,22l 14,0 c 0.552,0, 1-0.448, 1-1c0-0.552-0.448-1-1-1l-14,0 C 6.448,20, 6,20.448, 6,21 C 6,21.552, 6.448,22, 7,22z"
+        }
+      });
+    },
+    staticRenderFns: []
+  };
+
+  (function() {
+    if (typeof document !== "undefined") {
+      var head = document.head || document.getElementsByTagName("head")[0],
+        style = document.createElement("style"),
+        css =
+          " svg[data-v-04d5b795] { display: inline-block; vertical-align: baseline; margin-bottom: -2px; /* yes, I'm that particular about formatting */ } ";
+      style.type = "text/css";
+      if (style.styleSheet) {
+        style.styleSheet.cssText = css;
+      } else {
+        style.appendChild(document.createTextNode(css));
+      }
+      head.appendChild(style);
+    }
+  })();
+
+  var BaseIcon = {
+    render: function render() {
+      var _vm = this;
+      var _h = _vm.$createElement;
+      var _c = _vm._self._c || _h;
+      return _c(
+        "svg",
+        {
+          attrs: {
+            xmlns: "http://www.w3.org/2000/svg",
+            width: _vm.width,
+            height: _vm.height,
+            viewBox: "0 0 32 32",
+            "aria-labelledby": _vm.iconName,
+            role: "presentation"
+          }
+        },
+        [
+          _c("title", { attrs: { id: _vm.iconName, lang: "en" } }, [
+            _vm._v(_vm._s(_vm.iconName) + " icon")
+          ]),
+          _vm._v(" "),
+          _c(
+            "g",
+            { attrs: { fill: _vm.iconColor } },
+            [_c(_vm.iconName, { tag: "component" })],
+            1
+          )
+        ]
+      );
+    },
+    staticRenderFns: [],
+    _scopeId: "data-v-04d5b795",
+    components: {
+      arrowCarrotDown: arrowCarrotDown,
+      arrowCarrotRight: arrowCarrotRight,
+      boxChecked: boxChecked,
+      boxEmpty: boxEmpty,
+      closeAlt2: closeAlt2,
+      cloudDownloadAlt: cloudDownloadAlt,
+      documentsAlt: documentsAlt
+    },
+    props: {
+      iconName: {
+        type: String,
+        default: "box"
+      },
+      width: {
+        type: [Number, String],
+        default: 18
+      },
+      height: {
+        type: [Number, String],
+        default: 18
+      },
+      iconColor: {
+        type: String,
+        default: "currentColor"
+      }
+    }
+  };
 
   (function() {
     if (typeof document !== "undefined") {
@@ -904,12 +1159,23 @@
             },
             [
               _vm._v(" " + _vm._s(_vm.selected.label) + " "),
-              _c("div", { staticClass: "arrow-side" }, [
-                _c("i", {
-                  staticClass: "arrow_carrot-down select-arrow",
-                  style: { transform: "rotate(" + _vm.arrowRotate + "deg)" }
-                })
-              ])
+              _c(
+                "div",
+                { staticClass: "arrow-side" },
+                [
+                  _c("base-icon", {
+                    staticClass: "select-arrow",
+                    style: { transform: "rotate(" + _vm.arrowRotate + "deg)" },
+                    attrs: {
+                      "icon-name": "arrowCarrotDown",
+                      "icon-color": "#909399",
+                      width: "16",
+                      height: "16"
+                    }
+                  })
+                ],
+                1
+              )
             ]
           )
         ]
@@ -918,7 +1184,8 @@
     staticRenderFns: [],
     _scopeId: "data-v-20268598",
     components: {
-      BasePopover: BasePopover
+      BasePopover: BasePopover,
+      BaseIcon: BaseIcon
     },
     model: {
       prop: "selectedValue",
@@ -975,7 +1242,7 @@
       var head = document.head || document.getElementsByTagName("head")[0],
         style = document.createElement("style"),
         css =
-          ".input-box[data-v-512008de] { display: inline-block; box-sizing: border-box; height: 32px; border: 1px solid #d3d4d6; border-radius: 4px; padding: 0 5px; outline: none; font-size: 12px; transform: translateY(-1px); } .input-box[data-v-512008de]:focus { border-color: #3caed2; outline: none; } ";
+          ".input-box[data-v-512008de] { display: inline-block; box-sizing: border-box; height: 32px; border: 1px solid #d3d4d6; border-radius: 4px; padding: 0 5px; outline: none; font-size: 12px; vertical-align: top; } .input-box[data-v-512008de]:focus { border-color: #3caed2; outline: none; } ";
       style.type = "text/css";
       if (style.styleSheet) {
         style.styleSheet.cssText = css;
@@ -1061,11 +1328,30 @@
               }
             },
             [
-              _c("div", { staticClass: "check-icon" }, [
-                _vm.checkedGroup.includes(checkItem)
-                  ? _c("i", { staticClass: "icon_box-checked" })
-                  : _c("i", { staticClass: "icon_box-empty" })
-              ]),
+              _c(
+                "div",
+                { staticClass: "check-icon" },
+                [
+                  _vm.checkedGroup.includes(checkItem)
+                    ? _c("base-icon", {
+                        attrs: {
+                          "icon-name": "boxChecked",
+                          "icon-color": "#3caed2",
+                          width: "14",
+                          height: "14"
+                        }
+                      })
+                    : _c("base-icon", {
+                        attrs: {
+                          "icon-name": "boxEmpty",
+                          "icon-color": "#dcdfe6",
+                          width: "14",
+                          height: "14"
+                        }
+                      })
+                ],
+                1
+              ),
               _vm._v(" "),
               _c("div", { staticClass: "check-label" }, [
                 _vm._v(_vm._s(checkItem))
@@ -1077,6 +1363,9 @@
     },
     staticRenderFns: [],
     _scopeId: "data-v-f26d20da",
+    components: {
+      BaseIcon: BaseIcon
+    },
     model: {
       prop: "checkedValue",
       event: "change"
@@ -1143,7 +1432,10 @@
       var _c = _vm._self._c || _h;
       return _c(
         "div",
-        { staticClass: "mainCard", staticStyle: { display: "inline-block" } },
+        {
+          staticClass: "mainCard",
+          staticStyle: { display: "inline-block", "vertical-align": "top" }
+        },
         [
           _c("transition", { attrs: { name: _vm.animationMode } }, [
             _c(
@@ -1329,11 +1621,22 @@
                       }
                     },
                     [
-                      _c("i", {
-                        staticClass: "icon_cloud-download_alt download-icon",
-                        on: { click: _vm.handleExportTable }
+                      _c("base-icon", {
+                        staticClass: "download-icon",
+                        attrs: {
+                          "icon-name": "cloudDownloadAlt",
+                          "icon-color": "#bbbbbb",
+                          width: "20",
+                          height: "20"
+                        },
+                        nativeOn: {
+                          click: function click($event) {
+                            return _vm.handleExportTable($event);
+                          }
+                        }
                       })
-                    ]
+                    ],
+                    1
                   )
                 : _vm._e(),
               _vm._v(" "),
@@ -1476,7 +1779,7 @@
                                                             }
                                                           }),
                                                           _vm._v(" "),
-                                                          _c("i", {
+                                                          _c("base-icon", {
                                                             directives: [
                                                               {
                                                                 name: "show",
@@ -1488,13 +1791,15 @@
                                                                   "ph_index > 0"
                                                               }
                                                             ],
-                                                            staticClass:
-                                                              "icon_close_alt2",
-                                                            staticStyle: {
-                                                              "font-size":
-                                                                "13px"
+                                                            attrs: {
+                                                              "icon-name":
+                                                                "closeAlt2",
+                                                              "icon-color":
+                                                                "#c0c4cc",
+                                                              width: "13",
+                                                              height: "13"
                                                             },
-                                                            on: {
+                                                            nativeOn: {
                                                               click: function click(
                                                                 $event
                                                               ) {
@@ -1866,11 +2171,18 @@
                                                             ]
                                                           ),
                                                       _vm._v(" "),
-                                                      _c("i", {
-                                                        staticClass:
-                                                          "arrow_carrot-down"
+                                                      _c("base-icon", {
+                                                        attrs: {
+                                                          "icon-name":
+                                                            "arrowCarrotDown",
+                                                          "icon-color":
+                                                            "#c0c4cc",
+                                                          width: "16",
+                                                          height: "16"
+                                                        }
                                                       })
-                                                    ]
+                                                    ],
+                                                    1
                                                   )
                                                 ]
                                               )
@@ -2447,22 +2759,32 @@
                                                           2
                                                         ),
                                                         _vm._v(" "),
-                                                        _c("i", {
-                                                          staticClass:
-                                                            "arrow_carrot-right",
+                                                        _c("base-icon", {
                                                           staticStyle: {
                                                             cursor: "pointer"
                                                           },
                                                           attrs: {
-                                                            slot: "reference"
+                                                            slot: "reference",
+                                                            "icon-name":
+                                                              "arrowCarrotRight",
+                                                            "icon-color":
+                                                              "#c0c4cc",
+                                                            width: "16",
+                                                            height: "16"
                                                           },
-                                                          on: {
-                                                            click:
-                                                              _vm.handleClickExpand
+                                                          nativeOn: {
+                                                            click: function click(
+                                                              $event
+                                                            ) {
+                                                              return _vm.handleClickExpand(
+                                                                $event
+                                                              );
+                                                            }
                                                           },
                                                           slot: "reference"
                                                         })
-                                                      ]
+                                                      ],
+                                                      1
                                                     )
                                                   ],
                                                   1
@@ -2637,15 +2959,20 @@
                                                               }
                                                             ),
                                                             _vm._v(" "),
-                                                            _c("i", {
-                                                              staticClass:
-                                                                "icon_documents_alt",
+                                                            _c("base-icon", {
                                                               staticStyle: {
-                                                                color: "#aaa",
                                                                 cursor:
                                                                   "pointer"
                                                               },
-                                                              on: {
+                                                              attrs: {
+                                                                "icon-name":
+                                                                  "documentsAlt",
+                                                                "icon-color":
+                                                                  "#c0c4cc",
+                                                                width: "13",
+                                                                height: "13"
+                                                              },
+                                                              nativeOn: {
                                                                 click: function click(
                                                                   $event
                                                                 ) {
@@ -2988,12 +3315,21 @@
                                             data: _vm.dataTemp
                                           }),
                                           _vm._v(" "),
-                                          _c("i", {
-                                            staticClass: "arrow_carrot-right",
+                                          _c("base-icon", {
                                             staticStyle: { cursor: "pointer" },
-                                            attrs: { slot: "reference" },
-                                            on: {
-                                              click: _vm.handleClickExpand
+                                            attrs: {
+                                              slot: "reference",
+                                              "icon-name": "arrowCarrotRight",
+                                              "icon-color": "#c0c4cc",
+                                              width: "16",
+                                              height: "16"
+                                            },
+                                            nativeOn: {
+                                              click: function click($event) {
+                                                return _vm.handleClickExpand(
+                                                  $event
+                                                );
+                                              }
                                             },
                                             slot: "reference"
                                           })
@@ -3055,7 +3391,8 @@
       BaseSelect: BaseSelect,
       BaseInput: BaseInput,
       BaseCheckgroup: BaseCheckgroup,
-      BaseTooltip: BaseTooltip
+      BaseTooltip: BaseTooltip,
+      BaseIcon: BaseIcon
     },
     props: {
       config: {
@@ -4171,9 +4508,9 @@
   // Create module definition for Vue.use()
   var plugin = {
     install: install
-
-    // To auto-install when vue is found
   };
+
+  // To auto-install when vue is found
   var GlobalVue = null;
   if (typeof window !== "undefined") {
     GlobalVue = window.Vue;

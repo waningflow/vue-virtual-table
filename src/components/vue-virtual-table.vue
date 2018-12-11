@@ -2,7 +2,7 @@
 	<div class="main-scroll" ref="mainScroll">
 		<div ref="mainTable" :style="{'min-width': minWidthTemp+'px','position': 'relative'}" :class="{'bordered': bordered}">
 			<div style="text-align: right; position: absolute;right: 5px;top: 5px;" v-if="enableExport" >
-        <i class="icon_cloud-download_alt download-icon" @click="handleExportTable"></i>
+        <base-icon icon-name="cloudDownloadAlt" icon-color="#bbbbbb" width="20" height="20" @click.native="handleExportTable" class="download-icon"></base-icon>
 			</div>
 			<div class="t-header">
 				<div ref="tHeaderTable">
@@ -15,7 +15,7 @@
 										  <template v-for="(phrase, ph_index) in item.searchPhrase">
                         <base-select v-model="phrase.operator" @change="handleClickConfirmFilter(configIndex)" :choice-list="allPhraseOperator.map(v=>({value: v.value, label: languageOptions[language].phraseFilter[v.value]}))"></base-select>
                         <base-input v-model="phrase.value" @change="handleClickConfirmFilter(configIndex)" style="margin:0 5px 6px 5px;width: 210px" :placeholder="languageOptions[language].phraseFilter['ph']"></base-input>
-                        <i class="icon_close_alt2" style="font-size: 13px" v-show="ph_index > 0" @click="removePhraseFilter(configIndex, ph_index)"></i>
+                        <base-icon icon-name="closeAlt2" icon-color="#c0c4cc" width="13" height="13" v-show="ph_index > 0" @click.native="removePhraseFilter(configIndex, ph_index)"></base-icon>
   										</template>
   										<div style="display: flex">
                         <base-button class="btn filterBtnEmpty" type="primary" @click.native="addFilterPhrase(configIndex)" :disabled="item.searchPhrase.length >= phraseLimit">{{languageOptions[language].phraseFilter['and_btn']}}</base-button>
@@ -42,7 +42,7 @@
                     <span slot="reference">
                       <span v-if="item.name" :class="{filtered: item.filterSelectedOptions && item.filterSelectedOptions.length}">{{item.name}}</span>
                       <span v-else :class="{filtered: item.filterSelectedOptions && item.filterSelectedOptions.length}">{{item.prop}}</span>
-                      <i class="arrow_carrot-down"></i>
+                      <base-icon icon-name="arrowCarrotDown" icon-color="#c0c4cc" width="16" height="16"></base-icon>
                     </span>
                   </base-popover>
 								</div>
@@ -98,7 +98,7 @@
                       <div >
                         <slot :index="props.itemIndex" :row="clearObj(props.item)" name="expand" />
                       </div>
-                      <i class="arrow_carrot-right" slot="reference" style="cursor:pointer" @click="handleClickExpand"></i>
+                      <base-icon icon-name="arrowCarrotRight" icon-color="#c0c4cc" width="16" height="16" slot="reference" style="cursor:pointer" @click.native="handleClickExpand"></base-icon>
                     </base-popover>
 									</div>
 									<div class="item-cell-inner" v-else-if="item.eTip" :style="{'align-items': item.alignItems||'center'}">
@@ -113,7 +113,7 @@
 														<br>
 													</span>
 												</span>
-												<i class="icon_documents_alt" @click="handleClickCopy(props.item, item.eTip)" style="color: #aaa; cursor: pointer;"></i>
+                        <base-icon icon-name="documentsAlt" icon-color="#c0c4cc" width="13" height="13" style="cursor:pointer" @click.native="handleClickCopy(props.item, item.eTip)"></base-icon>
 											</div>
 											<span slot="reference">
 												<span v-if="item.prefix && props.item[item.prop]" :class="props.item._eClass[item.prop]||''" class="prefix">{{item.prefix}}</span>
@@ -147,7 +147,7 @@
 							<span v-if="item.prop === '_expand' && item.expandSummary">
                 <base-popover :width="mainWidth-54">
                   <slot :data="dataTemp" name="summary" />
-                  <i class="arrow_carrot-right" slot="reference" style="cursor:pointer" @click="handleClickExpand"></i>
+                  <base-icon icon-name="arrowCarrotRight" icon-color="#c0c4cc" width="16" height="16" slot="reference" style="cursor:pointer" @click.native="handleClickExpand"></base-icon>
                 </base-popover>
 							</span>
 							<span v-if="item.prefix">{{item.prefix}}</span>
@@ -174,7 +174,7 @@ import BaseSelect from "./base-select.vue";
 import BaseInput from "./base-input.vue";
 import BaseCheckgroup from "./base-checkgroup.vue";
 import BaseTooltip from "./base-tooltip.vue";
-import "../assets/base.css";
+import BaseIcon from "./base-icon.vue";
 
 export default {
   name: "VueVirtualTable",
@@ -186,7 +186,8 @@ export default {
     BaseSelect,
     BaseInput,
     BaseCheckgroup,
-    BaseTooltip
+    BaseTooltip,
+    BaseIcon
   },
   props: {
     config: {

@@ -24,6 +24,7 @@ $danger-color: #f56c6c;
 .base-button {
   font-size: 13px;
   display: inline-block;
+  vertical-align: top;
   min-width: 55px;
   min-height: 28px;
   border-radius: 2px;

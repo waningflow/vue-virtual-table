@@ -1,5 +1,5 @@
 <template>
-	<div style="display: inline-block;" class="mainCard">
+	<div style="display: inline-block;vertical-align: top;" class="mainCard">
 		<transition :name="animationMode">
 			<div class="pop-card" :style="{'left': offset.left +'px', 'top': offset.top+'px','width': width+'px'}" ref="popCard" @click="handleClick">
 				<slot></slot>
