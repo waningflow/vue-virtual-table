@@ -508,7 +508,7 @@ var VirtualScroller = {
     var head = document.head || document.getElementsByTagName("head")[0],
       style = document.createElement("style"),
       css =
-        ' .pop-handler[data-v-3059898e]{ display: inline-block; } .pop-card[data-v-3059898e] { /*width: 150px;*/ min-width: 10px; min-height: 10px; border: 1px solid #ebeef5; box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1); position: absolute; top: 60px; z-index: 2001; background-color: #fff; border-radius: 5px; box-sizing: border-box; transform-origin: 0 0; } .pop-arrow[data-v-3059898e], .pop-arrow[data-v-3059898e]::after{ top: -6px; position: absolute; display: block; width: 0; height: 0; border-color: transparent; border-style: solid; border-width: 6px; filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.03)); margin-right: 3px; border-top-width: 0; border-bottom-color: #ebeef5; } .pop-arrow[data-v-3059898e]{ left: 50px; } .pop-arrow[data-v-3059898e]::after{ content: " "; margin-left: -6px; top: 1px; /*margin-left: -6px;*/ /*border-top-width: 0;*/ border-bottom-color: #fff; } .fade-enter-active[data-v-3059898e], .fade-leave-active[data-v-3059898e], .slidedown-enter-active[data-v-3059898e], .slidedown-leave-active[data-v-3059898e]{ transition: all ease .2s; } .fade-enter[data-v-3059898e], .fade-leave-to[data-v-3059898e]{ opacity: 0; } .slidedown-enter[data-v-3059898e], .slidedown-leave-to[data-v-3059898e]{ transform: scaleY(0); } ';
+        ' .pop-handler[data-v-3059898e] { display: inline-block; } .pop-card[data-v-3059898e] { /*width: 150px;*/ min-width: 10px; min-height: 10px; border: 1px solid #ebeef5; box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1); position: absolute; top: 60px; z-index: 2001; background-color: #fff; border-radius: 5px; box-sizing: border-box; transform-origin: 0 0; } .pop-arrow[data-v-3059898e], .pop-arrow[data-v-3059898e]::after { top: -6px; position: absolute; display: block; width: 0; height: 0; border-color: transparent; border-style: solid; border-width: 6px; filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.03)); margin-right: 3px; border-top-width: 0; border-bottom-color: #ebeef5; } .pop-arrow[data-v-3059898e] { left: 50px; } .pop-arrow[data-v-3059898e]::after { content: " "; margin-left: -6px; top: 1px; /*margin-left: -6px;*/ /*border-top-width: 0;*/ border-bottom-color: #fff; } .fade-enter-active[data-v-3059898e], .fade-leave-active[data-v-3059898e], .slidedown-enter-active[data-v-3059898e], .slidedown-leave-active[data-v-3059898e] { transition: all ease 0.2s; } .fade-enter[data-v-3059898e], .fade-leave-to[data-v-3059898e] { opacity: 0; } .slidedown-enter[data-v-3059898e], .slidedown-leave-to[data-v-3059898e] { transform: scaleY(0); } ';
     style.type = "text/css";
     if (style.styleSheet) {
       style.styleSheet.cssText = css;
@@ -1034,7 +1034,7 @@ var BaseIcon = {
     var head = document.head || document.getElementsByTagName("head")[0],
       style = document.createElement("style"),
       css =
-        ".select-box[data-v-20268598] { font-size: 13px; height: 32px; line-height: 32px; border-radius: 4px; outline: none; background-color: #f5f7fa; color: #909399; position: relative; border: 1px solid #dcdfe6; white-space: nowrap; padding-left: 5px; padding-right: 20px; box-sizing: border-box; text-align: center; } .select-box[data-v-20268598]:hover { cursor: pointer; } .option-list[data-v-20268598] { font-size: 13px; text-align: center; padding: 5px 0; } .option-list .option-item[data-v-20268598] { padding: 5px; } .option-list .option-item[data-v-20268598]:hover { cursor: pointer; background-color: #f5f7fa; } .option-list .option-item.selected[data-v-20268598] { color: #3caed2; } .arrow-side[data-v-20268598] { position: absolute; right: 0; top: 0; width: 20px; height: 100%; display: flex; justify-content: center; align-items: center; } .arrow-side .select-arrow[data-v-20268598] { color: #909399; font-size: 16px; transition: all ease .2s; } ";
+        ".select-box[data-v-20268598] { font-size: 13px; height: 32px; line-height: 32px; border-radius: 4px; outline: none; background-color: #f5f7fa; color: #909399; position: relative; border: 1px solid #dcdfe6; white-space: nowrap; padding-left: 5px; padding-right: 20px; box-sizing: border-box; text-align: center; } .select-box[data-v-20268598]:hover { cursor: pointer; } .option-list[data-v-20268598] { font-size: 13px; text-align: center; padding: 5px 0; } .option-list .option-item[data-v-20268598] { padding: 5px; } .option-list .option-item[data-v-20268598]:hover { cursor: pointer; background-color: #f5f7fa; } .option-list .option-item.selected[data-v-20268598] { color: #3caed2; } .arrow-side[data-v-20268598] { position: absolute; right: 0; top: 0; width: 20px; height: 100%; display: flex; justify-content: center; align-items: center; } .arrow-side .select-arrow[data-v-20268598] { color: #909399; font-size: 16px; transition: all ease 0.2s; } ";
     style.type = "text/css";
     if (style.styleSheet) {
       style.styleSheet.cssText = css;
@@ -1149,7 +1149,10 @@ var BaseSelect = {
     updateSelected: function updateSelected(val) {
       this.selected = this.choiceList.find(function(v) {
         return v.value == val;
-      }) || { value: val, label: val };
+      }) || {
+        value: val,
+        label: val
+      };
     },
     handlePopoverChange: function handlePopoverChange(isShow) {
       if (isShow) {
@@ -1190,6 +1193,15 @@ var BaseInput = {
     var _h = _vm.$createElement;
     var _c = _vm._self._c || _h;
     return _c("input", {
+      directives: [
+        {
+          name: "observe-visibility",
+          rawName: "v-observe-visibility",
+          value: _vm.handleVisible,
+          expression: "handleVisible"
+        }
+      ],
+      ref: "input",
       staticClass: "input-box",
       attrs: { type: _vm.type, name: "", placeholder: _vm.placeholder },
       domProps: { value: _vm.inputValue },
@@ -1202,6 +1214,9 @@ var BaseInput = {
   },
   staticRenderFns: [],
   _scopeId: "data-v-512008de",
+  directives: {
+    ObserveVisibility: ObserveVisibility
+  },
   model: {
     prop: "inputValue",
     event: "change"
@@ -1215,10 +1230,22 @@ var BaseInput = {
     placeholder: {
       type: String,
       default: ""
+    },
+    autoFocus: {
+      type: Boolean,
+      default: false
     }
   },
   data: function data() {
     return {};
+  },
+
+  methods: {
+    handleVisible: function handleVisible(visible) {
+      if (visible && this.autoFocus) {
+        this.$refs.input.focus();
+      }
+    }
   }
 };
 
@@ -1345,7 +1372,7 @@ var BaseCheckgroup = {
     var head = document.head || document.getElementsByTagName("head")[0],
       style = document.createElement("style"),
       css =
-        ' .mainCard:hover .pop-card[data-v-0c68cd97]{ display: block; } .pop-handler[data-v-0c68cd97]{ display: inline-block; } .pop-card[data-v-0c68cd97] { /*width: 150px;*/ min-width: 10px; min-height: 10px; border: 1px solid #ebeef5; box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1); position: absolute; top: 60px; z-index: 2001; background-color: #fff; border-radius: 5px; box-sizing: border-box; transform-origin: 0 0; padding: 5px; display: none; font-size: 13px; } .pop-card[data-v-0c68cd97]:hover{ display: block; } .pop-arrow[data-v-0c68cd97], .pop-arrow[data-v-0c68cd97]::after{ top: -6px; position: absolute; display: block; width: 0; height: 0; border-color: transparent; border-style: solid; border-width: 6px; filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.03)); margin-right: 3px; border-top-width: 0; border-bottom-color: #ebeef5; } .pop-arrow[data-v-0c68cd97]{ left: 50px; } .pop-arrow[data-v-0c68cd97]::after{ content: " "; margin-left: -6px; top: 1px; /*margin-left: -6px;*/ /*border-top-width: 0;*/ border-bottom-color: #fff; } .fade-enter-active[data-v-0c68cd97], .fade-leave-active[data-v-0c68cd97], .slidedown-enter-active[data-v-0c68cd97], .slidedown-leave-active[data-v-0c68cd97]{ transition: all ease .2s; } .fade-enter[data-v-0c68cd97], .fade-leave-to[data-v-0c68cd97]{ opacity: 0; } .slidedown-enter[data-v-0c68cd97], .slidedown-leave-to[data-v-0c68cd97]{ transform: scaleY(0); } ';
+        ' .mainCard:hover .pop-card[data-v-0c68cd97] { display: block; } .pop-handler[data-v-0c68cd97] { display: inline-block; } .pop-card[data-v-0c68cd97] { /*width: 150px;*/ min-width: 10px; min-height: 10px; border: 1px solid #ebeef5; box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1); position: absolute; top: 60px; z-index: 2001; background-color: #fff; border-radius: 5px; box-sizing: border-box; transform-origin: 0 0; padding: 5px; display: none; font-size: 13px; } .pop-card[data-v-0c68cd97]:hover { display: block; } .pop-arrow[data-v-0c68cd97], .pop-arrow[data-v-0c68cd97]::after { top: -6px; position: absolute; display: block; width: 0; height: 0; border-color: transparent; border-style: solid; border-width: 6px; filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.03)); margin-right: 3px; border-top-width: 0; border-bottom-color: #ebeef5; } .pop-arrow[data-v-0c68cd97] { left: 50px; } .pop-arrow[data-v-0c68cd97]::after { content: " "; margin-left: -6px; top: 1px; /*margin-left: -6px;*/ /*border-top-width: 0;*/ border-bottom-color: #fff; } .fade-enter-active[data-v-0c68cd97], .fade-leave-active[data-v-0c68cd97], .slidedown-enter-active[data-v-0c68cd97], .slidedown-leave-active[data-v-0c68cd97] { transition: all ease 0.2s; } .fade-enter[data-v-0c68cd97], .fade-leave-to[data-v-0c68cd97] { opacity: 0; } .slidedown-enter[data-v-0c68cd97], .slidedown-leave-to[data-v-0c68cd97] { transform: scaleY(0); } ';
     style.type = "text/css";
     if (style.styleSheet) {
       style.styleSheet.cssText = css;
@@ -1679,7 +1706,8 @@ var Component = ((_render$staticRenderF = {
                                                                 _vm.language
                                                               ].phraseFilter[
                                                                 "ph"
-                                                              ]
+                                                              ],
+                                                            "auto-focus": ""
                                                           },
                                                           on: {
                                                             change: function change(
@@ -1717,6 +1745,9 @@ var Component = ((_render$staticRenderF = {
                                                                 "ph_index > 0"
                                                             }
                                                           ],
+                                                          staticStyle: {
+                                                            "margin-top": "9px"
+                                                          },
                                                           attrs: {
                                                             "icon-name":
                                                               "closeAlt2",
@@ -2186,7 +2217,8 @@ var Component = ((_render$staticRenderF = {
                                                           "margin-left": "5px"
                                                         },
                                                         attrs: {
-                                                          type: "number"
+                                                          type: "number",
+                                                          "auto-focus": ""
                                                         },
                                                         on: {
                                                           change: function change(
@@ -3737,33 +3769,6 @@ _defineProperty(_render$staticRenderF, "methods", {
     data.unshift(header);
     var title = new Date().toLocaleDateString() + ".csv";
     this.exportCsv(data, title);
-  },
-  saveAs: function saveAs(obj, fileName) {
-    //自定义简单的下载文件实现方式
-    var tmpa = document.createElement("a");
-    tmpa.download = fileName || "下载";
-    tmpa.href = URL.createObjectURL(obj); //绑定a标签
-    tmpa.click(); //模拟点击实现下载
-    setTimeout(function() {
-      //延时释放
-      URL.revokeObjectURL(obj);
-    }, 100);
-  },
-  s2ab: function s2ab(s) {
-    if (typeof ArrayBuffer !== "undefined") {
-      var buf = new ArrayBuffer(s.length);
-      var view = new Uint8Array(buf);
-      for (var i = 0; i != s.length; ++i) {
-        view[i] = s.charCodeAt(i) & 0xff;
-      }
-      return buf;
-    } else {
-      var buf = new Array(s.length);
-      for (var i = 0; i != s.length; ++i) {
-        buf[i] = s.charCodeAt(i) & 0xff;
-      }
-      return buf;
-    }
   },
   parseConfig: function parseConfig() {
     var self = this;

@@ -1,8 +1,13 @@
 <template>
-		<input :type="type" name="" :value="inputValue" @change="$emit('change', $event.target.value)" class="input-box" :placeholder="placeholder">
+		<input :type="type" name="" :value="inputValue" @change="$emit('change', $event.target.value)" class="input-box" :placeholder="placeholder" ref="input" v-observe-visibility="handleVisible">
 </template>
 <script>
+import { ObserveVisibility } from "vue-observe-visibility";
+
 export default {
+  directives: {
+    ObserveVisibility
+  },
   model: {
     prop: "inputValue",
     event: "change"
@@ -16,10 +21,21 @@ export default {
     placeholder: {
       type: String,
       default: ""
+    },
+    autoFocus: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
     return {};
+  },
+  methods: {
+    handleVisible(visible) {
+      if (visible && this.autoFocus) {
+        this.$refs.input.focus();
+      }
+    }
   }
 };
 </script>

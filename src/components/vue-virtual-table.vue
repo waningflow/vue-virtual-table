@@ -14,8 +14,8 @@
                     <div style="padding: 10px;text-align: left;font-size: 0">
 										  <template v-for="(phrase, ph_index) in item.searchPhrase">
                         <base-select v-model="phrase.operator" @change="handleClickConfirmFilter(configIndex)" :choice-list="allPhraseOperator.map(v=>({value: v.value, label: languageOptions[language].phraseFilter[v.value]}))"></base-select>
-                        <base-input v-model="phrase.value" @change="handleClickConfirmFilter(configIndex)" style="margin:0 5px 6px 5px;width: 210px" :placeholder="languageOptions[language].phraseFilter['ph']"></base-input>
-                        <base-icon icon-name="closeAlt2" icon-color="#c0c4cc" width="13" height="13" v-show="ph_index > 0" @click.native="removePhraseFilter(configIndex, ph_index)"></base-icon>
+                        <base-input v-model="phrase.value" @change="handleClickConfirmFilter(configIndex)" style="margin:0 5px 6px 5px;width: 210px" :placeholder="languageOptions[language].phraseFilter['ph']" auto-focus></base-input>
+                        <base-icon icon-name="closeAlt2" icon-color="#c0c4cc" style="margin-top: 9px" width="13" height="13" v-show="ph_index > 0" @click.native="removePhraseFilter(configIndex, ph_index)"></base-icon>
   										</template>
   										<div style="display: flex">
                         <base-button class="btn filterBtnEmpty" type="primary" @click.native="addFilterPhrase(configIndex)" :disabled="item.searchPhrase.length >= phraseLimit">{{languageOptions[language].phraseFilter['and_btn']}}</base-button>
@@ -50,7 +50,7 @@
                   <base-popover :width="item.numberFilterPhrase.operator==='bt'?298:198">
                     <div style="padding: 10px;text-align: left;font-size: 0">
                       <base-select v-model="item.numberFilterPhrase.operator" :choice-list="allOperatorType.map(v=>({value: v.value, label: languageOptions[language].numberFilter[v.value]}))" placeholder="" @change="handleClickConfirmFilter(configIndex)"></base-select>
-                      <base-input style="width: 90px;margin-left: 5px" type="number" v-model="item.numberFilterPhrase.value[0]" @change="handleClickConfirmFilter(configIndex)"> </base-input>
+                      <base-input style="width: 90px;margin-left: 5px" type="number" v-model="item.numberFilterPhrase.value[0]" @change="handleClickConfirmFilter(configIndex)" auto-focus> </base-input>
                         <div style="display: inline-block;font-size: 13px" v-show="item.numberFilterPhrase.operator === 'bt'">~</div>
                         <base-input style="width: 90px;margin-left: 1px;" type="number" v-model="item.numberFilterPhrase.value[1]" v-show="item.numberFilterPhrase.operator === 'bt'" @change="handleClickConfirmFilter(configIndex)"></base-input>
                        <div style="text-align: right;">
@@ -542,29 +542,6 @@ export default {
       data.unshift(header);
       let title = new Date().toLocaleDateString() + ".csv";
       this.exportCsv(data, title);
-    },
-    saveAs(obj, fileName) {
-      //自定义简单的下载文件实现方式
-      var tmpa = document.createElement("a");
-      tmpa.download = fileName || "下载";
-      tmpa.href = URL.createObjectURL(obj); //绑定a标签
-      tmpa.click(); //模拟点击实现下载
-      setTimeout(function() {
-        //延时释放
-        URL.revokeObjectURL(obj);
-      }, 100);
-    },
-    s2ab(s) {
-      if (typeof ArrayBuffer !== "undefined") {
-        var buf = new ArrayBuffer(s.length);
-        var view = new Uint8Array(buf);
-        for (var i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xff;
-        return buf;
-      } else {
-        var buf = new Array(s.length);
-        for (var i = 0; i != s.length; ++i) buf[i] = s.charCodeAt(i) & 0xff;
-        return buf;
-      }
     },
     parseConfig() {
       let self = this;
