@@ -1323,10 +1323,11 @@ div.item-line.unselectable {
   opacity: 0;
 }
 .clipboard input {
+  display: block;
   width: 1px;
   height: 1px;
   padding: 0;
-  margin: 0;
+  margin: -1px;
   border: 0;
 }
 </style>
