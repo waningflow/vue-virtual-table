@@ -1242,6 +1242,7 @@ div.item-line.unselectable {
   margin-top: 6px;
   text-align: left;
   padding: 10px 5px 5px 5px;
+  font-size: 0;
 }
 
 .filtered,
