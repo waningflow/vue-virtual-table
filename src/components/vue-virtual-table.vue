@@ -540,8 +540,9 @@ export default {
         return item;
       });
       data.unshift(header);
+      let columns = Object.keys(header);
       let title = new Date().toLocaleDateString() + ".csv";
-      this.exportCsv(data, title);
+      this.exportCsv(data, columns, title);
     },
     parseConfig() {
       let self = this;
@@ -1034,12 +1035,25 @@ export default {
       }
       return str;
     },
-    exportCsv(data, title) {
-      let csv = this.json2csv(data);
+    JSONtoCSV(arr, columns, delimiter = ",") {
+      return [
+        ...arr.map(obj =>
+          columns.reduce(
+            (acc, key) =>
+              `${acc}${!acc.length ? "" : delimiter}"${
+                !obj[key] ? "" : obj[key]
+              }"`,
+            ""
+          )
+        )
+      ].join("\n");
+    },
+    exportCsv(data, columns, title) {
+      let csv = this.JSONtoCSV(data, columns);
 
       let createAndDownloadFile = (fileName, content) => {
         let aTag = document.createElement("a");
-        let blob = new Blob([content], { type: "text/csv;charset=utf-8;" });
+        let blob = new Blob(["\uFEFF", content]);
         aTag.download = fileName;
         aTag.href = URL.createObjectURL(blob);
         aTag.click();

@@ -3767,8 +3767,9 @@ _defineProperty(_render$staticRenderF, "methods", {
       return item;
     });
     data.unshift(header);
+    var columns = Object.keys(header);
     var title = new Date().toLocaleDateString() + ".csv";
-    this.exportCsv(data, title);
+    this.exportCsv(data, columns, title);
   },
   parseConfig: function parseConfig() {
     var self = this;
@@ -4338,15 +4339,38 @@ _defineProperty(_render$staticRenderF, "methods", {
 
     return str;
   },
-  exportCsv: function exportCsv(data, title) {
-    var csv = this.json2csv(data);
+  JSONtoCSV: function JSONtoCSV(arr, columns) {
+    var delimiter =
+      arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : ",";
+
+    return []
+      .concat(
+        _toConsumableArray(
+          arr.map(function(obj) {
+            return columns.reduce(function(acc, key) {
+              return (
+                "" +
+                acc +
+                (!acc.length ? "" : delimiter) +
+                '"' +
+                (!obj[key] ? "" : obj[key]) +
+                '"'
+              );
+            }, "");
+          })
+        )
+      )
+      .join("\n");
+  },
+  exportCsv: function exportCsv(data, columns, title) {
+    var csv = this.JSONtoCSV(data, columns);
 
     var createAndDownloadFile = function createAndDownloadFile(
       fileName,
       content
     ) {
       var aTag = document.createElement("a");
-      var blob = new Blob([content], { type: "text/csv;charset=utf-8;" });
+      var blob = new Blob(["\uFEFF", content]);
       aTag.download = fileName;
       aTag.href = URL.createObjectURL(blob);
       aTag.click();
