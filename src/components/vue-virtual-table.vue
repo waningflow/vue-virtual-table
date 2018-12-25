@@ -1,35 +1,35 @@
 <template>
-	<div class="main-scroll" ref="mainScroll">
-		<div ref="mainTable" :style="{'min-width': minWidthTemp+'px','position': 'relative'}" :class="{'bordered': bordered}">
-			<div style="text-align: right; position: absolute;right: 5px;top: 5px;" v-if="enableExport" >
+  <div class="main-scroll" ref="mainScroll">
+    <div ref="mainTable" :style="{'min-width': minWidthTemp+'px','position': 'relative'}" :class="{'bordered': bordered}">
+      <div style="text-align: right; position: absolute;right: 5px;top: 5px;" v-if="enableExport" >
         <base-icon icon-name="cloudDownloadAlt" icon-color="#bbbbbb" width="20" height="20" @click.native="handleExportTable" class="download-icon"></base-icon>
-			</div>
-			<div class="t-header">
-				<div ref="tHeaderTable">
-					<template v-if="!enableMultiHeader">
-						<div class="header-line">
-							<div class="header-cell" v-for="(item, configIndex) in configTemp.filter(v=>!v.isHidden)" :key="configIndex" :style="{flex: colWidth[configIndex]}">
-								<div class="header-cell-inner search-wrapper" v-if="item.searchable">
+      </div>
+      <div class="t-header">
+        <div ref="tHeaderTable">
+          <template v-if="!enableMultiHeader">
+            <div class="header-line">
+              <div class="header-cell" v-for="(item, configIndex) in configTemp.filter(v=>!v.isHidden)" :key="configIndex" :style="{flex: colWidth[configIndex]}">
+                <div class="header-cell-inner search-wrapper" v-if="item.searchable">
                   <base-popover :width="340">
                     <div style="padding: 10px;text-align: left;font-size: 0">
-										  <template v-for="(phrase, ph_index) in item.searchPhrase">
+                      <template v-for="(phrase, ph_index) in item.searchPhrase">
                         <base-select v-model="phrase.operator" @change="handleClickConfirmFilter(configIndex)" :choice-list="allPhraseOperator.map(v=>({value: v.value, label: languageOptions[language].phraseFilter[v.value]}))"></base-select>
                         <base-input v-model="phrase.value" @change="handleClickConfirmFilter(configIndex)" style="margin:0 5px 6px 5px;width: 210px" :placeholder="languageOptions[language].phraseFilter['ph']" auto-focus></base-input>
                         <base-icon icon-name="closeAlt2" icon-color="#c0c4cc" style="margin-top: 9px" width="13" height="13" v-show="ph_index > 0" @click.native="removePhraseFilter(configIndex, ph_index)"></base-icon>
-  										</template>
-  										<div style="display: flex">
+                      </template>
+                      <div style="display: flex">
                         <base-button class="btn filterBtnEmpty" type="primary" @click.native="addFilterPhrase(configIndex)" :disabled="item.searchPhrase.length >= phraseLimit">{{languageOptions[language].phraseFilter['and_btn']}}</base-button>
                         <base-button class="btn filterBtnEmpty" style="margin-left: 5px" type="danger" @click.native="handleClickEmptyPhraseFilter(configIndex)">{{languageOptions[language].phraseFilter['clear_btn']}}</base-button>
-  										</div>
+                      </div>
                     </div>
 
-										<span slot="reference">
-											<span v-if="item.name" :class="{searched: item.searchPhrase.findIndex(v => v.value != '') > -1}">{{item.name}}</span>
-											<span v-else :class="{searched: item.searchPhrase.findIndex(v => v.value != '') > -1}">{{item.prop}}</span>
-										</span>
+                    <span slot="reference">
+                      <span v-if="item.name" :class="{searched: item.searchPhrase.findIndex(v => v.value != '') > -1}">{{item.name}}</span>
+                      <span v-else :class="{searched: item.searchPhrase.findIndex(v => v.value != '') > -1}">{{item.prop}}</span>
+                    </span>
                 </base-popover>
-								</div>
-								<div class="header-cell-inner filter-wrapper" v-else-if="item.filterable">
+                </div>
+                <div class="header-cell-inner filter-wrapper" v-else-if="item.filterable">
                   <base-popover :width="240">
                     <div style="padding: 5px;">
                       <base-checkgroup v-model="item.filterSelectedOptions" @change="handleChangeFilter" :choice-list="item.filterOptions" class="filter-list"></base-checkgroup>
@@ -45,8 +45,8 @@
                       <base-icon icon-name="arrowCarrotDown" icon-color="#c0c4cc" width="16" height="16"></base-icon>
                     </span>
                   </base-popover>
-								</div>
-								<div class="header-cell-inner numFiltered-wrapper" v-else-if="item.numberFilter">
+                </div>
+                <div class="header-cell-inner numFiltered-wrapper" v-else-if="item.numberFilter">
                   <base-popover :width="item.numberFilterPhrase.operator==='bt'?298:198">
                     <div style="padding: 10px;text-align: left;font-size: 0">
                       <base-select v-model="item.numberFilterPhrase.operator" :choice-list="allOperatorType.map(v=>({value: v.value, label: languageOptions[language].numberFilter[v.value]}))" placeholder="" @change="handleClickConfirmFilter(configIndex)"></base-select>
@@ -62,107 +62,107 @@
                       <span v-else :class="{numFiltered: item.numberFilterPhrase.value[0] !== ''}">{{item.prop}}</span>
                     </span>
                   </base-popover>
-								</div>
-								<div class="header-cell-inner" v-else>
-									<span v-if="item.name" :class="{filtered: item.filterSelectedOptions && item.filterSelectedOptions.length}">{{item.name}}</span>
-									<span v-else :class="{filtered: item.filterSelectedOptions && item.filterSelectedOptions.length}">{{item.prop}}</span>
-								</div>
-								<div class="header-cell-inner all-select" v-if="selectable && item.prop==='_index'" @click="selectAll()">{{languageOptions[language].selectAll}}</div>
-								<div class="header-cell-inner caret-wrapper" v-if="item.sortable">
-									<i class="sort-ascending" @click="handleClickSort(item.prop, 'asc')" :class="{selected: sortParam.col === item.prop&&sortParam.direction === 'asc'}"></i>
-									<i class="sort-descending" @click="handleClickSort(item.prop, 'desc')" :class="{selected: sortParam.col === item.prop&&sortParam.direction === 'desc'}"></i>
-								</div>
-							</div>
-						</div>
-					</template>
-					<template v-if="enableMultiHeader" class="multi-header-contain">
-						<div class="header-line" v-for="(hItem, hIndex) in multiConfigTemp" :key="hIndex">
-							<div class="header-cell" v-for="(hdSet, hdName, hdIndex) in hItem" :colspan="hdSet.colspan" :rowspan="hdSet.rowspan" :key="hdName">{{hdSet.name}}</div>
-						</div>
-					</template>
-				</div>
-			</div>
-			<div class="t-container" ref="tContainer">
-				<virtual-scroller class="scroller" :items="dataTemp" :item-height="itemHeight" content-tag="div" pool-size="500" ref="scroller">
-					<template slot-scope="props">
-						<div class="item-line" @click="handleClickItem(props.item)" :class="{selected: props.item._eSelected, unselectable: !selectable, 'item-line-allow-hightlight': hoverHighlight}" :style="{height: itemHeight+'px'}">
-							<div class="item-cell" v-for="(item, configIndex) in configTemp.filter(v=>!v.isHidden)" :style="{flex: colWidth[configIndex]}" :class="props.item._eClass[item.prop]||''" :key="configIndex">
-								<template v-if="item.prop === '_action'">
-									<div class="item-cell-inner rowSlot" :style="{height: (itemHeight-12)+'px', 'align-items': item.alignItems||'center'}" @click="handleClickAction">
-										<slot :index="props.itemIndex" :row="clearObj(props.item)" :name="item.actionName||'action'" />
-									</div>
-								</template>
-								<template v-else>
-									<div class="item-cell-inner" v-if="item.prop === '_expand'">
+                </div>
+                <div class="header-cell-inner" v-else>
+                  <span v-if="item.name" :class="{filtered: item.filterSelectedOptions && item.filterSelectedOptions.length}">{{item.name}}</span>
+                  <span v-else :class="{filtered: item.filterSelectedOptions && item.filterSelectedOptions.length}">{{item.prop}}</span>
+                </div>
+                <div class="header-cell-inner all-select" v-if="selectable && item.prop==='_index'" @click="selectAll()">{{languageOptions[language].selectAll}}</div>
+                <div class="header-cell-inner caret-wrapper" v-if="item.sortable">
+                  <i class="sort-ascending" @click="handleClickSort(item.prop, 'asc')" :class="{selected: sortParam.col === item.prop&&sortParam.direction === 'asc'}"></i>
+                  <i class="sort-descending" @click="handleClickSort(item.prop, 'desc')" :class="{selected: sortParam.col === item.prop&&sortParam.direction === 'desc'}"></i>
+                </div>
+              </div>
+            </div>
+          </template>
+          <template v-if="enableMultiHeader" class="multi-header-contain">
+            <div class="header-line" v-for="(hItem, hIndex) in multiConfigTemp" :key="hIndex">
+              <div class="header-cell" v-for="(hdSet, hdName, hdIndex) in hItem" :colspan="hdSet.colspan" :rowspan="hdSet.rowspan" :key="hdName">{{hdSet.name}}</div>
+            </div>
+          </template>
+        </div>
+      </div>
+      <div class="t-container" ref="tContainer">
+        <virtual-scroller class="scroller" :items="dataTemp" :item-height="itemHeight" content-tag="div" pool-size="500" ref="scroller">
+          <template slot-scope="props">
+            <div class="item-line" @click="handleClickItem(props.item)" :class="{selected: props.item._eSelected, unselectable: !selectable, 'item-line-allow-hightlight': hoverHighlight}" :style="{height: itemHeight+'px'}">
+              <div class="item-cell" v-for="(item, configIndex) in configTemp.filter(v=>!v.isHidden)" :style="{flex: colWidth[configIndex]}" :class="props.item._eClass[item.prop]||''" :key="configIndex">
+                <template v-if="item.prop === '_action'">
+                  <div class="item-cell-inner rowSlot" :style="{height: (itemHeight-12)+'px', 'align-items': item.alignItems||'center'}" @click="handleClickAction">
+                    <slot :index="props.itemIndex" :row="clearObj(props.item)" :name="item.actionName||'action'" />
+                  </div>
+                </template>
+                <template v-else>
+                  <div class="item-cell-inner" v-if="item.prop === '_expand'">
                     <base-popover :width="mainWidth-54">
                       <div >
                         <slot :index="props.itemIndex" :row="clearObj(props.item)" name="expand" />
                       </div>
                       <base-icon icon-name="arrowCarrotRight" icon-color="#c0c4cc" width="16" height="16" slot="reference" style="cursor:pointer" @click.native="handleClickExpand"></base-icon>
                     </base-popover>
-									</div>
-									<div class="item-cell-inner" v-else-if="item.eTip" :style="{'align-items': item.alignItems||'center'}">
-										<base-tooltip >
-											<div style="text-align: left;font-size: 13px">
-												<span v-for="tipProp in item.eTip" :key="tipProp">
-													<span v-if="item.eTipWithProp">{{configTemp.filter(v=>v.prop===tipProp)[0].name}}: </span>
-													<span>
-														<span v-if="configTemp.filter(v=>v.prop===tipProp)[0].prefix && props.item[tipProp]" class="prefix">{{configTemp.filter(v=>v.prop===tipProp)[0].prefix}}</span>
-														<span>{{props.item[tipProp]}}</span>
-														<span v-if="configTemp.filter(v=>v.prop===tipProp)[0].suffix && props.item[tipProp]" class="suffix">{{configTemp.filter(v=>v.prop===tipProp)[0].suffix}}</span>
-														<br>
-													</span>
-												</span>
+                  </div>
+                  <div class="item-cell-inner" v-else-if="item.eTip" :style="{'align-items': item.alignItems||'center'}">
+                    <base-tooltip >
+                      <div style="text-align: left;font-size: 13px">
+                        <span v-for="tipProp in item.eTip" :key="tipProp">
+                          <span v-if="item.eTipWithProp">{{configTemp.filter(v=>v.prop===tipProp)[0].name}}: </span>
+                          <span>
+                            <span v-if="configTemp.filter(v=>v.prop===tipProp)[0].prefix && props.item[tipProp]" class="prefix">{{configTemp.filter(v=>v.prop===tipProp)[0].prefix}}</span>
+                            <span>{{props.item[tipProp]}}</span>
+                            <span v-if="configTemp.filter(v=>v.prop===tipProp)[0].suffix && props.item[tipProp]" class="suffix">{{configTemp.filter(v=>v.prop===tipProp)[0].suffix}}</span>
+                            <br>
+                          </span>
+                        </span>
                         <base-icon icon-name="documentsAlt" icon-color="#c0c4cc" width="13" height="13" style="cursor:pointer" @click.native="handleClickCopy(props.item, item.eTip)"></base-icon>
-											</div>
-											<span slot="reference">
-												<span v-if="item.prefix && props.item[item.prop]" :class="props.item._eClass[item.prop]||''" class="prefix">{{item.prefix}}</span>
-												<span v-if="item.prop === '_index'">{{props.itemIndex + 1}}</span>
-												<span v-else-if="item.filterable" class="tag" :class="item.filterTag[props.item[item.prop]]||'defaultTag'">{{props.item[item.prop]}}</span>
-												<span v-else-if="item.eClass" :class="props.item._eClass[item.prop]">{{props.item[item.prop]}}</span>
-												<span v-else>{{props.item[item.prop]}}</span>
-												<span v-if="item.suffix && props.item[item.prop]" :class="props.item._eClass[item.prop]||''" class="suffix">{{item.suffix}}</span>
-											</span>
-										</base-tooltip>
-									</div>
-									<div class="item-cell-inner" v-else :style="{'align-items': item.alignItems||'center'}">
-										<span v-if="item.prefix && props.item[item.prop]" :class="props.item._eClass[item.prop]||''" class="prefix">{{item.prefix}}</span>
-										<span v-if="item.prop === '_index'">{{props.itemIndex + 1}}</span>
-										<span v-else-if="item.filterable" class="tag" :class="item.filterTag[props.item[item.prop]]||'defaultTag'">{{props.item[item.prop]}}</span>
-										<span v-else-if="item.eClass" :class="props.item._eClass[item.prop]">{{props.item[item.prop]}}</span>
-										<span v-else>{{props.item[item.prop]}}</span>
-										<span v-if="item.suffix &&  props.item[item.prop]" :class="props.item._eClass[item.prop]||''" class="suffix">{{item.suffix}}</span>
-									</div>
-								</template>
+                      </div>
+                      <span slot="reference">
+                        <span v-if="item.prefix && props.item[item.prop]" :class="props.item._eClass[item.prop]||''" class="prefix">{{item.prefix}}</span>
+                        <span v-if="item.prop === '_index'">{{props.itemIndex + 1}}</span>
+                        <span v-else-if="item.filterable" class="tag" :class="item.filterTag[props.item[item.prop]]||'defaultTag'">{{props.item[item.prop]}}</span>
+                        <span v-else-if="item.eClass" :class="props.item._eClass[item.prop]">{{props.item[item.prop]}}</span>
+                        <span v-else>{{props.item[item.prop]}}</span>
+                        <span v-if="item.suffix && props.item[item.prop]" :class="props.item._eClass[item.prop]||''" class="suffix">{{item.suffix}}</span>
+                      </span>
+                    </base-tooltip>
+                  </div>
+                  <div class="item-cell-inner" v-else :style="{'align-items': item.alignItems||'center'}">
+                    <span v-if="item.prefix && props.item[item.prop]" :class="props.item._eClass[item.prop]||''" class="prefix">{{item.prefix}}</span>
+                    <span v-if="item.prop === '_index'">{{props.itemIndex + 1}}</span>
+                    <span v-else-if="item.filterable" class="tag" :class="item.filterTag[props.item[item.prop]]||'defaultTag'">{{props.item[item.prop]}}</span>
+                    <span v-else-if="item.eClass" :class="props.item._eClass[item.prop]">{{props.item[item.prop]}}</span>
+                    <span v-else>{{props.item[item.prop]}}</span>
+                    <span v-if="item.suffix &&  props.item[item.prop]" :class="props.item._eClass[item.prop]||''" class="suffix">{{item.suffix}}</span>
+                  </div>
+                </template>
 
-							</div>
-						</div>
-					</template>
-				</virtual-scroller>
-			</div>
-			<div class="t-bottom" ref="tBottom" v-show="showSummary">
-				<div ref="tBottomTable">
-					<div class="bottom-line">
-						<div class="bottom-cell" v-for="(item, configIndex) in configTemp.filter(v=>!v.isHidden)" :key="configIndex" :style="{flex: colWidth[configIndex]}">
-							<span v-if="item.prop === '_expand' && item.expandSummary">
+              </div>
+            </div>
+          </template>
+        </virtual-scroller>
+      </div>
+      <div class="t-bottom" ref="tBottom" v-show="showSummary">
+        <div ref="tBottomTable">
+          <div class="bottom-line">
+            <div class="bottom-cell" v-for="(item, configIndex) in configTemp.filter(v=>!v.isHidden)" :key="configIndex" :style="{flex: colWidth[configIndex]}">
+              <span v-if="item.prop === '_expand' && item.expandSummary">
                 <base-popover :width="mainWidth-54">
                   <slot :data="dataTemp" name="summary" />
                   <base-icon icon-name="arrowCarrotRight" icon-color="#c0c4cc" width="16" height="16" slot="reference" style="cursor:pointer" @click.native="handleClickExpand"></base-icon>
                 </base-popover>
-							</span>
-							<span v-if="item.prefix">{{item.prefix}}</span>
-							<span v-if="item.summary">{{summaryData.filter(v => v.prop === item.prop)[0].value}}</span>
-							<span v-if="item.suffix">{{item.suffix}}</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="clipboard">
-			<input type="text" ref="clipboardInput">
-		</div>
-		<resize-observer @notify="setSize" />
-	</div>
+              </span>
+              <span v-if="item.prefix">{{item.prefix}}</span>
+              <span v-if="item.summary">{{summaryData.filter(v => v.prop === item.prop)[0].value}}</span>
+              <span v-if="item.suffix">{{item.suffix}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="clipboard">
+      <input type="text" ref="clipboardInput">
+    </div>
+    <resize-observer @notify="setSize" />
+  </div>
 
 </template>
 <script>
@@ -175,6 +175,7 @@ import BaseInput from "./base-input.vue";
 import BaseCheckgroup from "./base-checkgroup.vue";
 import BaseTooltip from "./base-tooltip.vue";
 import BaseIcon from "./base-icon.vue";
+import "vue-resize/dist/vue-resize.css";
 
 export default {
   name: "VueVirtualTable",

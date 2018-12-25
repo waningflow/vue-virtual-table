@@ -1,6 +1,6 @@
 {
   "name": "vue-virtual-table",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "vue table component with virtual dom",
   "author": "https://github.com/waningflow",
   "license": "MIT",
@@ -34,7 +34,7 @@
   "dependencies": {
     "babel-runtime": "^6.26.0",
     "vue-observe-visibility": "^0.4.3",
-    "vue-resize": "^0.4.4"
+    "vue-resize": "0.4.5"
   },
   "devDependencies": {
     "@storybook/vue": "^3.4.10",

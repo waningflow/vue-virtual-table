@@ -9,7 +9,8 @@
         require("babel-runtime/helpers/asyncToGenerator"),
         require("babel-runtime/helpers/toConsumableArray"),
         require("babel-runtime/helpers/slicedToArray"),
-        require("babel-runtime/helpers/typeof")
+        require("babel-runtime/helpers/typeof"),
+        require("vue-resize/dist/vue-resize.css")
       )
     : typeof define === "function" && define.amd
       ? define([
@@ -21,7 +22,8 @@
           "babel-runtime/helpers/asyncToGenerator",
           "babel-runtime/helpers/toConsumableArray",
           "babel-runtime/helpers/slicedToArray",
-          "babel-runtime/helpers/typeof"
+          "babel-runtime/helpers/typeof",
+          "vue-resize/dist/vue-resize.css"
         ], factory)
       : factory(
           (global.VueVirtualTable = {}),

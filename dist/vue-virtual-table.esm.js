@@ -6,6 +6,7 @@ import _asyncToGenerator from "babel-runtime/helpers/asyncToGenerator";
 import _toConsumableArray from "babel-runtime/helpers/toConsumableArray";
 import _slicedToArray from "babel-runtime/helpers/slicedToArray";
 import _typeof from "babel-runtime/helpers/typeof";
+import "vue-resize/dist/vue-resize.css";
 
 (function() {
   if (typeof document !== "undefined") {
