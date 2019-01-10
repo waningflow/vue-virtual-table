@@ -1,5 +1,8 @@
 # vue-virtual-table
 
+[![npm version](https://badge.fury.io/js/vue-virtual-table.svg)](https://badge.fury.io/js/vue-virtual-table)
+[![downloads](https://img.shields.io/npm/dm/vue-virtual-table.svg)](https://www.npmjs.com/package/vue-virtual-table)
+
 Vue table component with virtual dom and easy api.
 
 * Keep smooth when the data reachs thousands of rows or even more.

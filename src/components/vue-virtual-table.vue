@@ -948,10 +948,7 @@ export default {
         "width:" +
           mainWidth +
           "px;height:" +
-          (this.height -
-            50 -
-            35 * Number(this.enableExport) -
-            50 * (this.showSummary ? 1 : 0)) +
+          (this.height - 50 - 50 * (this.showSummary ? 1 : 0)) +
           "px"
       );
       this.$refs.tHeaderTable.setAttribute(
