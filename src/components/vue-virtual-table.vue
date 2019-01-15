@@ -1092,6 +1092,7 @@ $default-color: #3caed2;
 
   justify-content: center;
   align-items: center;
+  min-width: 0;
 }
 .header-cell,
 .bottom-cell {
@@ -1114,6 +1115,7 @@ $default-color: #3caed2;
 .header-cell-inner {
   display: inline-block;
   position: relative;
+  word-break: break-all;
 }
 
 .header-cell-inner.caret-wrapper {
