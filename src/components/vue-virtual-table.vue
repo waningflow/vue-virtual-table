@@ -1,5 +1,5 @@
 <template>
-  <div class="main-scroll" ref="mainScroll">
+  <div class="main-scroll" ref="mainScroll" v-observe-visibility="setSize">
     <div ref="mainTable" :style="{'min-width': minWidthTemp+'px','position': 'relative'}" :class="{'bordered': bordered}">
       <div style="text-align: right; position: absolute;right: 5px;top: 5px;" v-if="enableExport" >
         <base-icon icon-name="cloudDownloadAlt" icon-color="#bbbbbb" width="20" height="20" @click.native="handleExportTable" class="download-icon"></base-icon>
@@ -167,6 +167,7 @@
 </template>
 <script>
 import VirtualScroller from "./virtual-scroller.vue";
+import { ObserveVisibility } from "vue-observe-visibility";
 import { ResizeObserver } from "vue-resize";
 import BasePopover from "./base-popover.vue";
 import BaseButton from "./base-button.vue";
@@ -179,6 +180,9 @@ import "vue-resize/dist/vue-resize.css";
 
 export default {
   name: "VueVirtualTable",
+  directives: {
+    ObserveVisibility
+  },
   components: {
     VirtualScroller,
     ResizeObserver,

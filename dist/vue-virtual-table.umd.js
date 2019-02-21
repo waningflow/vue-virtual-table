@@ -1625,7 +1625,18 @@
       var _c = _vm._self._c || _h;
       return _c(
         "div",
-        { ref: "mainScroll", staticClass: "main-scroll" },
+        {
+          directives: [
+            {
+              name: "observe-visibility",
+              rawName: "v-observe-visibility",
+              value: _vm.setSize,
+              expression: "setSize"
+            }
+          ],
+          ref: "mainScroll",
+          staticClass: "main-scroll"
+        },
         [
           _c(
             "div",
@@ -3418,6 +3429,9 @@
     staticRenderFns: [],
     _scopeId: "data-v-a6686fb6",
     name: "VueVirtualTable",
+    directives: {
+      ObserveVisibility: vueObserveVisibility.ObserveVisibility
+    },
     components: {
       VirtualScroller: VirtualScroller,
       ResizeObserver: vueResize.ResizeObserver,
