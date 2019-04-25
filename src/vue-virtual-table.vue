@@ -1,140 +1,357 @@
 <template>
   <div class="main-scroll" ref="mainScroll" v-observe-visibility="setSize">
-    <div ref="mainTable" :style="{'min-width': minWidthTemp+'px','position': 'relative'}" :class="{'bordered': bordered}">
-      <div style="text-align: right; position: absolute;right: 5px;top: 5px;" v-if="enableExport" >
-        <base-icon icon-name="cloudDownloadAlt" icon-color="#bbbbbb" width="20" height="20" @click.native="handleExportTable" class="download-icon"></base-icon>
+    <div
+      ref="mainTable"
+      :style="{'min-width': minWidthTemp+'px','position': 'relative'}"
+      :class="{'bordered': bordered}"
+    >
+      <div style="text-align: right; position: absolute;right: 5px;top: 5px;" v-if="enableExport">
+        <base-icon
+          icon-name="cloudDownloadAlt"
+          icon-color="#bbbbbb"
+          width="20"
+          height="20"
+          @click.native="handleExportTable"
+          class="download-icon"
+        ></base-icon>
       </div>
       <div class="t-header">
         <div ref="tHeaderTable">
           <template v-if="!enableMultiHeader">
             <div class="header-line">
-              <div class="header-cell" v-for="(item, configIndex) in configTemp.filter(v=>!v.isHidden)" :key="configIndex" :style="{flex: colWidth[configIndex]}">
+              <div
+                class="header-cell"
+                v-for="(item, configIndex) in configTemp.filter(v=>!v.isHidden)"
+                :key="configIndex"
+                :style="{flex: colWidth[configIndex]}"
+              >
                 <div class="header-cell-inner search-wrapper" v-if="item.searchable">
                   <base-popover :width="340">
                     <div style="padding: 10px;text-align: left;font-size: 0">
                       <template v-for="(phrase, ph_index) in item.searchPhrase">
-                        <base-select v-model="phrase.operator" @change="handleClickConfirmFilter(configIndex)" :choice-list="allPhraseOperator.map(v=>({value: v.value, label: languageOptions[language].phraseFilter[v.value]}))"></base-select>
-                        <base-input v-model="phrase.value" @change="handleClickConfirmFilter(configIndex)" style="margin:0 5px 6px 5px;width: 210px" :placeholder="languageOptions[language].phraseFilter['ph']" auto-focus></base-input>
-                        <base-icon icon-name="closeAlt2" icon-color="#c0c4cc" style="margin-top: 9px" width="13" height="13" v-show="ph_index > 0" @click.native="removePhraseFilter(configIndex, ph_index)"></base-icon>
+                        <base-select
+                          v-model="phrase.operator"
+                          @change="handleClickConfirmFilter(configIndex)"
+                          :choice-list="allPhraseOperator.map(v=>({value: v.value, label: languageOptions[language].phraseFilter[v.value]}))"
+                        ></base-select>
+                        <base-input
+                          v-model="phrase.value"
+                          @change="handleClickConfirmFilter(configIndex)"
+                          style="margin:0 5px 6px 5px;width: 210px"
+                          :placeholder="languageOptions[language].phraseFilter['ph']"
+                          auto-focus
+                        ></base-input>
+                        <base-icon
+                          icon-name="closeAlt2"
+                          icon-color="#c0c4cc"
+                          style="margin-top: 9px"
+                          width="13"
+                          height="13"
+                          v-show="ph_index > 0"
+                          @click.native="removePhraseFilter(configIndex, ph_index)"
+                        ></base-icon>
                       </template>
                       <div style="display: flex">
-                        <base-button class="btn filterBtnEmpty" type="primary" @click.native="addFilterPhrase(configIndex)" :disabled="item.searchPhrase.length >= phraseLimit">{{languageOptions[language].phraseFilter['and_btn']}}</base-button>
-                        <base-button class="btn filterBtnEmpty" style="margin-left: 5px" type="danger" @click.native="handleClickEmptyPhraseFilter(configIndex)">{{languageOptions[language].phraseFilter['clear_btn']}}</base-button>
+                        <base-button
+                          class="btn filterBtnEmpty"
+                          type="primary"
+                          @click.native="addFilterPhrase(configIndex)"
+                          :disabled="item.searchPhrase.length >= phraseLimit"
+                        >{{languageOptions[language].phraseFilter['and_btn']}}</base-button>
+                        <base-button
+                          class="btn filterBtnEmpty"
+                          style="margin-left: 5px"
+                          type="danger"
+                          @click.native="handleClickEmptyPhraseFilter(configIndex)"
+                        >{{languageOptions[language].phraseFilter['clear_btn']}}</base-button>
                       </div>
                     </div>
 
                     <span slot="reference">
-                      <span v-if="item.name" :class="{searched: item.searchPhrase.findIndex(v => v.value != '') > -1}">{{item.name}}</span>
-                      <span v-else :class="{searched: item.searchPhrase.findIndex(v => v.value != '') > -1}">{{item.prop}}</span>
+                      <span
+                        v-if="item.name"
+                        :class="{searched: item.searchPhrase.findIndex(v => v.value != '') > -1}"
+                      >{{item.name}}</span>
+                      <span
+                        v-else
+                        :class="{searched: item.searchPhrase.findIndex(v => v.value != '') > -1}"
+                      >{{item.prop}}</span>
                     </span>
-                </base-popover>
+                  </base-popover>
                 </div>
                 <div class="header-cell-inner filter-wrapper" v-else-if="item.filterable">
                   <base-popover :width="240">
                     <div style="padding: 5px;">
-                      <base-checkgroup v-model="item.filterSelectedOptions" @change="handleChangeFilter" :choice-list="item.filterOptions" class="filter-list"></base-checkgroup>
+                      <base-checkgroup
+                        v-model="item.filterSelectedOptions"
+                        @change="handleChangeFilter"
+                        :choice-list="item.filterOptions"
+                        class="filter-list"
+                      ></base-checkgroup>
                       <div class="filter-btn">
-                        <base-button type="primary" @click.native="handleClickConfirmFilter(configIndex)">{{languageOptions[language].selectFilter['confirm_btn']}}</base-button>
-                        <base-button type="primary" style="margin-left: 5px;" @click.native="handleClickReverseFilter(configIndex)">{{languageOptions[language].selectFilter['reverse_btn']}}</base-button>
-                        <base-button type="danger" style="margin-left: 5px;" @click.native="handleClickClearFilter(configIndex)">{{languageOptions[language].selectFilter['clear_btn']}}</base-button>
+                        <base-button
+                          type="primary"
+                          @click.native="handleClickConfirmFilter(configIndex)"
+                        >{{languageOptions[language].selectFilter['confirm_btn']}}</base-button>
+                        <base-button
+                          type="primary"
+                          style="margin-left: 5px;"
+                          @click.native="handleClickReverseFilter(configIndex)"
+                        >{{languageOptions[language].selectFilter['reverse_btn']}}</base-button>
+                        <base-button
+                          type="danger"
+                          style="margin-left: 5px;"
+                          @click.native="handleClickClearFilter(configIndex)"
+                        >{{languageOptions[language].selectFilter['clear_btn']}}</base-button>
                       </div>
                     </div>
                     <span slot="reference">
-                      <span v-if="item.name" :class="{filtered: item.filterSelectedOptions && item.filterSelectedOptions.length}">{{item.name}}</span>
-                      <span v-else :class="{filtered: item.filterSelectedOptions && item.filterSelectedOptions.length}">{{item.prop}}</span>
-                      <base-icon icon-name="arrowCarrotDown" icon-color="#c0c4cc" width="16" height="16"></base-icon>
+                      <span
+                        v-if="item.name"
+                        :class="{filtered: item.filterSelectedOptions && item.filterSelectedOptions.length}"
+                      >{{item.name}}</span>
+                      <span
+                        v-else
+                        :class="{filtered: item.filterSelectedOptions && item.filterSelectedOptions.length}"
+                      >{{item.prop}}</span>
+                      <base-icon
+                        icon-name="arrowCarrotDown"
+                        icon-color="#c0c4cc"
+                        width="16"
+                        height="16"
+                      ></base-icon>
                     </span>
                   </base-popover>
                 </div>
                 <div class="header-cell-inner numFiltered-wrapper" v-else-if="item.numberFilter">
                   <base-popover :width="item.numberFilterPhrase.operator==='bt'?298:198">
                     <div style="padding: 10px;text-align: left;font-size: 0">
-                      <base-select v-model="item.numberFilterPhrase.operator" :choice-list="allOperatorType.map(v=>({value: v.value, label: languageOptions[language].numberFilter[v.value]}))" placeholder="" @change="handleClickConfirmFilter(configIndex)"></base-select>
-                      <base-input style="width: 90px;margin-left: 5px" type="number" v-model="item.numberFilterPhrase.value[0]" @change="handleClickConfirmFilter(configIndex)" auto-focus> </base-input>
-                        <div style="display: inline-block;font-size: 13px" v-show="item.numberFilterPhrase.operator === 'bt'">~</div>
-                        <base-input style="width: 90px;margin-left: 1px;" type="number" v-model="item.numberFilterPhrase.value[1]" v-show="item.numberFilterPhrase.operator === 'bt'" @change="handleClickConfirmFilter(configIndex)"></base-input>
-                       <div style="text-align: right;">
-                        <base-button style="margin-top: 10px" type="danger" @click.native="handleClickEmptyNumberFilter(configIndex)">{{languageOptions[language].numberFilter['clear_btn']}}</base-button>
-                        </div>
+                      <base-select
+                        v-model="item.numberFilterPhrase.operator"
+                        :choice-list="allOperatorType.map(v=>({value: v.value, label: languageOptions[language].numberFilter[v.value]}))"
+                        placeholder
+                        @change="handleClickConfirmFilter(configIndex)"
+                      ></base-select>
+                      <base-input
+                        style="width: 90px;margin-left: 5px"
+                        type="number"
+                        v-model="item.numberFilterPhrase.value[0]"
+                        @change="handleClickConfirmFilter(configIndex)"
+                        auto-focus
+                      ></base-input>
+                      <div
+                        style="display: inline-block;font-size: 13px"
+                        v-show="item.numberFilterPhrase.operator === 'bt'"
+                      >~</div>
+                      <base-input
+                        style="width: 90px;margin-left: 1px;"
+                        type="number"
+                        v-model="item.numberFilterPhrase.value[1]"
+                        v-show="item.numberFilterPhrase.operator === 'bt'"
+                        @change="handleClickConfirmFilter(configIndex)"
+                      ></base-input>
+                      <div style="text-align: right;">
+                        <base-button
+                          style="margin-top: 10px"
+                          type="danger"
+                          @click.native="handleClickEmptyNumberFilter(configIndex)"
+                        >{{languageOptions[language].numberFilter['clear_btn']}}</base-button>
+                      </div>
                     </div>
                     <span slot="reference">
-                      <span v-if="item.name" :class="{numFiltered: item.numberFilterPhrase.value[0] !== ''}">{{item.name}}</span>
-                      <span v-else :class="{numFiltered: item.numberFilterPhrase.value[0] !== ''}">{{item.prop}}</span>
+                      <span
+                        v-if="item.name"
+                        :class="{numFiltered: item.numberFilterPhrase.value[0] !== ''}"
+                      >{{item.name}}</span>
+                      <span
+                        v-else
+                        :class="{numFiltered: item.numberFilterPhrase.value[0] !== ''}"
+                      >{{item.prop}}</span>
                     </span>
                   </base-popover>
                 </div>
                 <div class="header-cell-inner" v-else>
-                  <span v-if="item.name" :class="{filtered: item.filterSelectedOptions && item.filterSelectedOptions.length}">{{item.name}}</span>
-                  <span v-else :class="{filtered: item.filterSelectedOptions && item.filterSelectedOptions.length}">{{item.prop}}</span>
+                  <span
+                    v-if="item.name"
+                    :class="{filtered: item.filterSelectedOptions && item.filterSelectedOptions.length}"
+                  >{{item.name}}</span>
+                  <span
+                    v-else
+                    :class="{filtered: item.filterSelectedOptions && item.filterSelectedOptions.length}"
+                  >{{item.prop}}</span>
                 </div>
-                <div class="header-cell-inner all-select" v-if="selectable && item.prop==='_index'" @click="selectAll()">{{languageOptions[language].selectAll}}</div>
+                <div
+                  class="header-cell-inner all-select"
+                  v-if="selectable && item.prop==='_index'"
+                  @click="selectAll()"
+                >{{languageOptions[language].selectAll}}</div>
                 <div class="header-cell-inner caret-wrapper" v-if="item.sortable">
-                  <i class="sort-ascending" @click="handleClickSort(item.prop, 'asc')" :class="{selected: sortParam.col === item.prop&&sortParam.direction === 'asc'}"></i>
-                  <i class="sort-descending" @click="handleClickSort(item.prop, 'desc')" :class="{selected: sortParam.col === item.prop&&sortParam.direction === 'desc'}"></i>
+                  <i
+                    class="sort-ascending"
+                    @click="handleClickSort(item.prop, 'asc')"
+                    :class="{selected: sortParam.col === item.prop&&sortParam.direction === 'asc'}"
+                  ></i>
+                  <i
+                    class="sort-descending"
+                    @click="handleClickSort(item.prop, 'desc')"
+                    :class="{selected: sortParam.col === item.prop&&sortParam.direction === 'desc'}"
+                  ></i>
                 </div>
               </div>
             </div>
           </template>
           <template v-if="enableMultiHeader" class="multi-header-contain">
             <div class="header-line" v-for="(hItem, hIndex) in multiConfigTemp" :key="hIndex">
-              <div class="header-cell" v-for="(hdSet, hdName, hdIndex) in hItem" :colspan="hdSet.colspan" :rowspan="hdSet.rowspan" :key="hdName">{{hdSet.name}}</div>
+              <div
+                class="header-cell"
+                v-for="(hdSet, hdName, hdIndex) in hItem"
+                :colspan="hdSet.colspan"
+                :rowspan="hdSet.rowspan"
+                :key="hdName"
+              >{{hdSet.name}}</div>
             </div>
           </template>
         </div>
       </div>
       <div class="t-container" ref="tContainer">
-        <virtual-scroller class="scroller" :items="dataTemp" :item-height="itemHeight" content-tag="div" pool-size="500" ref="scroller">
+        <virtual-scroller
+          class="scroller"
+          :items="dataTemp"
+          :item-height="itemHeight"
+          content-tag="div"
+          pool-size="500"
+          ref="scroller"
+        >
           <template slot-scope="props">
-            <div class="item-line" @click="handleClickItem(props.item)" :class="{selected: props.item._eSelected, unselectable: !selectable, 'item-line-allow-hightlight': hoverHighlight}" :style="{height: itemHeight+'px'}">
-              <div class="item-cell" v-for="(item, configIndex) in configTemp.filter(v=>!v.isHidden)" :style="{flex: colWidth[configIndex]}" :class="props.item._eClass[item.prop]||''" :key="configIndex">
+            <div
+              class="item-line"
+              @click="handleClickItem(props.item)"
+              :class="{selected: props.item._eSelected, unselectable: !selectable, 'item-line-allow-hightlight': hoverHighlight}"
+              :style="{height: itemHeight+'px'}"
+            >
+              <div
+                class="item-cell"
+                v-for="(item, configIndex) in configTemp.filter(v=>!v.isHidden)"
+                :style="{flex: colWidth[configIndex]}"
+                :class="props.item._eClass[item.prop]||''"
+                :key="configIndex"
+              >
                 <template v-if="item.prop === '_action'">
-                  <div class="item-cell-inner rowSlot" :style="{height: (itemHeight-12)+'px', 'align-items': item.alignItems||'center'}" @click="handleClickAction">
-                    <slot :index="props.itemIndex" :row="clearObj(props.item)" :name="item.actionName||'action'" />
+                  <div
+                    class="item-cell-inner rowSlot"
+                    :style="{height: (itemHeight-12)+'px', 'align-items': item.alignItems||'center'}"
+                    @click="handleClickAction"
+                  >
+                    <slot
+                      :index="props.itemIndex"
+                      :row="clearObj(props.item)"
+                      :name="item.actionName||'action'"
+                    />
                   </div>
                 </template>
                 <template v-else>
                   <div class="item-cell-inner" v-if="item.prop === '_expand'">
                     <base-popover :width="mainWidth-54">
-                      <div >
-                        <slot :index="props.itemIndex" :row="clearObj(props.item)" name="expand" />
+                      <div>
+                        <slot :index="props.itemIndex" :row="clearObj(props.item)" name="expand"/>
                       </div>
-                      <base-icon icon-name="arrowCarrotRight" icon-color="#c0c4cc" width="16" height="16" slot="reference" style="cursor:pointer" @click.native="handleClickExpand"></base-icon>
+                      <base-icon
+                        icon-name="arrowCarrotRight"
+                        icon-color="#c0c4cc"
+                        width="16"
+                        height="16"
+                        slot="reference"
+                        style="cursor:pointer"
+                        @click.native="handleClickExpand"
+                      ></base-icon>
                     </base-popover>
                   </div>
-                  <div class="item-cell-inner" v-else-if="item.eTip" :style="{'align-items': item.alignItems||'center'}">
-                    <base-tooltip >
+                  <div
+                    class="item-cell-inner"
+                    v-else-if="item.eTip"
+                    :style="{'align-items': item.alignItems||'center'}"
+                  >
+                    <base-tooltip>
                       <div style="text-align: left;font-size: 13px">
                         <span v-for="tipProp in item.eTip" :key="tipProp">
-                          <span v-if="item.eTipWithProp">{{configTemp.filter(v=>v.prop===tipProp)[0].name}}: </span>
+                          <span
+                            v-if="item.eTipWithProp"
+                          >{{configTemp.filter(v=>v.prop===tipProp)[0].name}}:</span>
                           <span>
-                            <span v-if="configTemp.filter(v=>v.prop===tipProp)[0].prefix && props.item[tipProp]" class="prefix">{{configTemp.filter(v=>v.prop===tipProp)[0].prefix}}</span>
+                            <span
+                              v-if="configTemp.filter(v=>v.prop===tipProp)[0].prefix && props.item[tipProp]"
+                              class="prefix"
+                            >{{configTemp.filter(v=>v.prop===tipProp)[0].prefix}}</span>
                             <span>{{props.item[tipProp]}}</span>
-                            <span v-if="configTemp.filter(v=>v.prop===tipProp)[0].suffix && props.item[tipProp]" class="suffix">{{configTemp.filter(v=>v.prop===tipProp)[0].suffix}}</span>
+                            <span
+                              v-if="configTemp.filter(v=>v.prop===tipProp)[0].suffix && props.item[tipProp]"
+                              class="suffix"
+                            >{{configTemp.filter(v=>v.prop===tipProp)[0].suffix}}</span>
                             <br>
                           </span>
                         </span>
-                        <base-icon icon-name="documentsAlt" icon-color="#c0c4cc" width="13" height="13" style="cursor:pointer" @click.native="handleClickCopy(props.item, item.eTip)"></base-icon>
+                        <base-icon
+                          icon-name="documentsAlt"
+                          icon-color="#c0c4cc"
+                          width="13"
+                          height="13"
+                          style="cursor:pointer"
+                          @click.native="handleClickCopy(props.item, item.eTip)"
+                        ></base-icon>
                       </div>
                       <span slot="reference">
-                        <span v-if="item.prefix && props.item[item.prop]" :class="props.item._eClass[item.prop]||''" class="prefix">{{item.prefix}}</span>
+                        <span
+                          v-if="item.prefix && props.item[item.prop]"
+                          :class="props.item._eClass[item.prop]||''"
+                          class="prefix"
+                        >{{item.prefix}}</span>
                         <span v-if="item.prop === '_index'">{{props.itemIndex + 1}}</span>
-                        <span v-else-if="item.filterable" class="tag" :class="item.filterTag[props.item[item.prop]]||'defaultTag'">{{props.item[item.prop]}}</span>
-                        <span v-else-if="item.eClass" :class="props.item._eClass[item.prop]">{{props.item[item.prop]}}</span>
+                        <span
+                          v-else-if="item.filterable"
+                          class="tag"
+                          :class="item.filterTag[props.item[item.prop]]||'defaultTag'"
+                        >{{props.item[item.prop]}}</span>
+                        <span
+                          v-else-if="item.eClass"
+                          :class="props.item._eClass[item.prop]"
+                        >{{props.item[item.prop]}}</span>
                         <span v-else>{{props.item[item.prop]}}</span>
-                        <span v-if="item.suffix && props.item[item.prop]" :class="props.item._eClass[item.prop]||''" class="suffix">{{item.suffix}}</span>
+                        <span
+                          v-if="item.suffix && props.item[item.prop]"
+                          :class="props.item._eClass[item.prop]||''"
+                          class="suffix"
+                        >{{item.suffix}}</span>
                       </span>
                     </base-tooltip>
                   </div>
-                  <div class="item-cell-inner" v-else :style="{'align-items': item.alignItems||'center'}">
-                    <span v-if="item.prefix && props.item[item.prop]" :class="props.item._eClass[item.prop]||''" class="prefix">{{item.prefix}}</span>
+                  <div
+                    class="item-cell-inner"
+                    v-else
+                    :style="{'align-items': item.alignItems||'center'}"
+                  >
+                    <span
+                      v-if="item.prefix && props.item[item.prop]"
+                      :class="props.item._eClass[item.prop]||''"
+                      class="prefix"
+                    >{{item.prefix}}</span>
                     <span v-if="item.prop === '_index'">{{props.itemIndex + 1}}</span>
-                    <span v-else-if="item.filterable" class="tag" :class="item.filterTag[props.item[item.prop]]||'defaultTag'">{{props.item[item.prop]}}</span>
-                    <span v-else-if="item.eClass" :class="props.item._eClass[item.prop]">{{props.item[item.prop]}}</span>
+                    <span
+                      v-else-if="item.filterable"
+                      class="tag"
+                      :class="item.filterTag[props.item[item.prop]]||'defaultTag'"
+                    >{{props.item[item.prop]}}</span>
+                    <span
+                      v-else-if="item.eClass"
+                      :class="props.item._eClass[item.prop]"
+                    >{{props.item[item.prop]}}</span>
                     <span v-else>{{props.item[item.prop]}}</span>
-                    <span v-if="item.suffix &&  props.item[item.prop]" :class="props.item._eClass[item.prop]||''" class="suffix">{{item.suffix}}</span>
+                    <span
+                      v-if="item.suffix &&  props.item[item.prop]"
+                      :class="props.item._eClass[item.prop]||''"
+                      class="suffix"
+                    >{{item.suffix}}</span>
                   </div>
                 </template>
-
               </div>
             </div>
           </template>
@@ -143,11 +360,24 @@
       <div class="t-bottom" ref="tBottom" v-show="showSummary">
         <div ref="tBottomTable">
           <div class="bottom-line">
-            <div class="bottom-cell" v-for="(item, configIndex) in configTemp.filter(v=>!v.isHidden)" :key="configIndex" :style="{flex: colWidth[configIndex]}">
+            <div
+              class="bottom-cell"
+              v-for="(item, configIndex) in configTemp.filter(v=>!v.isHidden)"
+              :key="configIndex"
+              :style="{flex: colWidth[configIndex]}"
+            >
               <span v-if="item.prop === '_expand' && item.expandSummary">
                 <base-popover :width="mainWidth-54">
-                  <slot :data="dataTemp" name="summary" />
-                  <base-icon icon-name="arrowCarrotRight" icon-color="#c0c4cc" width="16" height="16" slot="reference" style="cursor:pointer" @click.native="handleClickExpand"></base-icon>
+                  <slot :data="dataTemp" name="summary"/>
+                  <base-icon
+                    icon-name="arrowCarrotRight"
+                    icon-color="#c0c4cc"
+                    width="16"
+                    height="16"
+                    slot="reference"
+                    style="cursor:pointer"
+                    @click.native="handleClickExpand"
+                  ></base-icon>
                 </base-popover>
               </span>
               <span v-if="item.prefix">{{item.prefix}}</span>
@@ -161,22 +391,22 @@
     <div class="clipboard">
       <input type="text" ref="clipboardInput">
     </div>
-    <resize-observer @notify="setSize" />
+    <resize-observer @notify="setSize"/>
   </div>
-
 </template>
 <script>
-import VirtualScroller from "./virtual-scroller.vue";
+import VirtualScroller from "./components/virtual-scroller.vue";
 import { ObserveVisibility } from "vue-observe-visibility";
 import { ResizeObserver } from "vue-resize";
-import BasePopover from "./base-popover.vue";
-import BaseButton from "./base-button.vue";
-import BaseSelect from "./base-select.vue";
-import BaseInput from "./base-input.vue";
-import BaseCheckgroup from "./base-checkgroup.vue";
-import BaseTooltip from "./base-tooltip.vue";
-import BaseIcon from "./base-icon.vue";
+import BasePopover from "./components/base-popover.vue";
+import BaseButton from "./components/base-button.vue";
+import BaseSelect from "./components/base-select.vue";
+import BaseInput from "./components/base-input.vue";
+import BaseCheckgroup from "./components/base-checkgroup.vue";
+import BaseTooltip from "./components/base-tooltip.vue";
+import BaseIcon from "./components/base-icon.vue";
 import "vue-resize/dist/vue-resize.css";
+import { _uuid, exportCsv, deepCopy } from "./utils/index.js";
 
 export default {
   name: "VueVirtualTable",
@@ -415,22 +645,17 @@ export default {
   methods: {
     updateBase() {
       let self = this;
-      self.configTemp = self.deepCopy(self.config);
-      self.dataInitTemp = self.deepCopy(self.data);
+      self.configTemp = deepCopy(self.config);
+      self.dataInitTemp = deepCopy(self.data);
       this.minWidthTemp = this.minWidth;
-      if (this.enableMultiHeader) {
-        let { config, width, multiConfig } = this.countLevel(this.multiHeader);
-        this.configTemp = self.deepCopy(config);
-        this.minWidthTemp = width;
-        this.multiConfigTemp = self.deepCopy(multiConfig);
-      }
+
       self.parseConfig();
       self.updateInitData();
-      self.dataTemp = self.deepCopy(self.dataInitTemp);
+      self.dataTemp = deepCopy(self.dataInitTemp);
     },
     update() {
       let self = this;
-      self.lastConfigTemp = self.deepCopy(self.configTemp);
+      self.lastConfigTemp = deepCopy(self.configTemp);
       self.updateBase();
       self.handleClickConfirmFilter();
       self.refreshSummary();
@@ -440,66 +665,7 @@ export default {
         self.dataInitTemp.filter(v => v._eSelected === true)
       );
     },
-    countLevel(originConfig) {
-      const separate_code = ".";
-      const flattenObject = (obj, prefix = "", depth = 10) => {
-        depth--;
-        return Object.keys(obj).reduce((acc, k) => {
-          const pre = prefix.length ? prefix + separate_code : "";
-          if (
-            typeof obj[k] === "object" &&
-            !Array.isArray(obj[k]) &&
-            depth >= 1
-          )
-            Object.assign(acc, flattenObject(obj[k], pre + k, depth));
-          else acc[pre + k] = obj[k];
-          return acc;
-        }, {});
-      };
-      const handleConfigData = (config, index = 0, depth) => {
-        let rtn_data = [];
-        for (let [name, data] of Object.entries(config)) {
-          let item = {};
-          if (typeof data == "object" && Object.keys(data).length) {
-            let l = 0;
-            let temp = handleConfigData(data, index + 1, depth - 1);
-            temp = temp.map(v => {
-              v.path = name + "." + v.path;
-              if (v.level == index + 2) {
-                l += v.colspan;
-              }
-              return v;
-            });
-            rtn_data = rtn_data.concat(temp);
-            item.rowspan = 1;
-            item.colspan = l;
-          } else {
-            item.rowspan = depth;
-            item.colspan = 1;
-          }
-          item.path = name;
-          item.name = name;
-          item.level = index + 1;
-          rtn_data.push(item);
-        }
-        return rtn_data;
-      };
-      let config_pain = flattenObject(originConfig, "");
-      let width = 0;
-      let config = Object.keys(config_pain).map(v => {
-        width += 100;
-        return { prop: v, name: v };
-      });
-      let allLevels = Object.keys(config_pain).map(
-        v => v.split(separate_code).length
-      );
-      let maxLevel = Math.max(...allLevels);
-      let rtn_data = handleConfigData(originConfig, 0, maxLevel);
-      // rtn_data = groupby(rtn_data, ['level'])
-      let multiConfig = Object.values(rtn_data);
-      return { config, width, multiConfig };
-    },
-    async clipboardCP(text) {
+    clipboardCP(text) {
       if (navigator.clipboard) {
         return navigator.clipboard.writeText(text);
       } else {
@@ -524,19 +690,15 @@ export default {
         }
       }
       this.clipboardCP(text)
-        .then(result => {})
-        .catch(err => {
-          console.log(err);
-        });
     },
     handleExportTable() {
       let header = {};
-      for (let v of this.configTemp) {
+      this.configTemp.forEach(v => {
         if (!["_index", "_action", "_expand"].includes(v.prop)) {
           header[v.prop] = v.name || v.prop;
         }
-      }
-      let data = this.deepCopy(this.dataTemp);
+      });
+      let data = deepCopy(this.dataTemp);
       data = data.map(v => {
         let item = {};
         for (let prop in header) {
@@ -547,7 +709,7 @@ export default {
       data.unshift(header);
       let columns = Object.keys(header);
       let title = new Date().toLocaleDateString() + ".csv";
-      this.exportCsv(data, columns, title);
+      exportCsv(data, columns, title);
     },
     parseConfig() {
       let self = this;
@@ -604,7 +766,7 @@ export default {
     updateInitData() {
       let self = this;
       self.dataInitTemp.forEach((v, i) => {
-        v._eId = self._uuid();
+        v._eId = _uuid();
         v._eSelected = false;
         if (this.defaultSelect && this.defaultSelect.indexOf(i) > -1) {
           v._eSelected = true;
@@ -705,9 +867,11 @@ export default {
         let eId = item._eId;
         eIds.push(eId);
       });
-      this.dataInitTemp.filter(v => eIds.includes(v._eId)).map(item => {
-        item._eSelected = r;
-      });
+      this.dataInitTemp
+        .filter(v => eIds.includes(v._eId))
+        .map(item => {
+          item._eSelected = r;
+        });
       this.dataTemp.splice(0, 0);
       this.dataInitTemp.splice(0, 0);
       this.$emit(
@@ -731,7 +895,7 @@ export default {
     },
     handleClickConfirmFilter(index) {
       let self = this;
-      let temp = self.deepCopy(self.dataInitTemp);
+      let temp = deepCopy(self.dataInitTemp);
       self.configTemp.forEach((v, i) => {
         let prop = v.prop;
         if (v.filterSelectedOptions && v.filterSelectedOptions.length) {
@@ -743,23 +907,25 @@ export default {
           v.searchPhrase &&
           v.searchPhrase.findIndex(v => v.value != "") > -1
         ) {
-          v.searchPhrase.filter(v => v.value != "").forEach(fp => {
-            if (fp.operator == "out") {
-              temp = temp.filter(
-                item =>
-                  (item[prop] || "")
-                    .toLowerCase()
-                    .indexOf(fp.value.toLowerCase()) === -1
-              );
-            } else {
-              temp = temp.filter(
-                item =>
-                  (item[prop] || "")
-                    .toLowerCase()
-                    .indexOf(fp.value.toLowerCase()) > -1
-              );
-            }
-          });
+          v.searchPhrase
+            .filter(v => v.value != "")
+            .forEach(fp => {
+              if (fp.operator == "out") {
+                temp = temp.filter(
+                  item =>
+                    (item[prop] || "")
+                      .toLowerCase()
+                      .indexOf(fp.value.toLowerCase()) === -1
+                );
+              } else {
+                temp = temp.filter(
+                  item =>
+                    (item[prop] || "")
+                      .toLowerCase()
+                      .indexOf(fp.value.toLowerCase()) > -1
+                );
+              }
+            });
         }
         if (
           v.numberFilterPhrase &&
@@ -968,23 +1134,24 @@ export default {
       let colNumber = this.configTemp.filter(v => !v.isHidden).length;
       let usedWidth = 0,
         averageColNum = 0;
-      this.configTemp.filter(v => !v.isHidden).forEach((v, i) => {
-        if (v.width === "auto") {
-          averageColNum += 1;
-        } else {
-          usedWidth += Number(v.width);
-        }
-      });
+      this.configTemp
+        .filter(v => !v.isHidden)
+        .forEach((v, i) => {
+          if (v.width === "auto") {
+            averageColNum += 1;
+          } else {
+            usedWidth += Number(v.width);
+          }
+        });
       let averageWidth = Number(
         ((mainWidth - usedWidth) / averageColNum).toFixed(1)
       );
       for (let i = 0; i < colNumber; i++) {
         if (isNaN(this.configTemp.filter(v => !v.isHidden)[i].width)) {
-          this.colWidth[i] = (averageWidth * 100 / mainWidth).toFixed(1);
+          this.colWidth[i] = ((averageWidth * 100) / mainWidth).toFixed(1);
         } else {
           this.colWidth[i] = (
-            this.configTemp.filter(v => !v.isHidden)[i].width *
-            100 /
+            (this.configTemp.filter(v => !v.isHidden)[i].width * 100) /
             mainWidth
           ).toFixed(1);
         }
@@ -998,70 +1165,12 @@ export default {
         this.$refs.mainScroll.setAttribute("style", "overflow-x: hidden;");
       }
     },
-    _uuid() {
-      var d = Date.now();
-      if (
-        typeof performance !== "undefined" &&
-        typeof performance.now === "function"
-      ) {
-        d += performance.now(); //use high-precision timer if available
-      }
-      return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(
-        c
-      ) {
-        var r = ((d + Math.random() * 16) % 16) | 0;
-        d = Math.floor(d / 16);
-        return (c === "x" ? r : (r & 0x3) | 0x8).toString(16);
-      });
-    },
-    deepCopy(obj) {
-      let obj_cp = JSON.parse(JSON.stringify(obj));
-      return obj_cp;
-    },
     clearObj(obj) {
       let obj_cp = JSON.parse(JSON.stringify(obj));
       delete obj_cp._eClass;
       delete obj_cp._eId;
       delete obj_cp._eSelected;
       return obj_cp;
-    },
-    json2csv(array) {
-      let str = "";
-      for (let item of array) {
-        let line = "";
-        for (let index in item) {
-          if (line != "") line += ",";
-          line += item[index];
-        }
-        str += line + "\r\n";
-      }
-      return str;
-    },
-    JSONtoCSV(arr, columns, delimiter = ",") {
-      return [
-        ...arr.map(obj =>
-          columns.reduce(
-            (acc, key) =>
-              `${acc}${!acc.length ? "" : delimiter}"${
-                !obj[key] ? "" : obj[key]
-              }"`,
-            ""
-          )
-        )
-      ].join("\n");
-    },
-    exportCsv(data, columns, title) {
-      let csv = this.JSONtoCSV(data, columns);
-
-      let createAndDownloadFile = (fileName, content) => {
-        let aTag = document.createElement("a");
-        let blob = new Blob(["\uFEFF", content]);
-        aTag.download = fileName;
-        aTag.href = URL.createObjectURL(blob);
-        aTag.click();
-        URL.revokeObjectURL(blob);
-      };
-      createAndDownloadFile(title, csv);
     }
   }
 };

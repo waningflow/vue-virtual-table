@@ -1,15 +1,21 @@
 <template>
-	<div style="display: inline-block;vertical-align: top;">
-		<transition :name="animationMode">
-			<div class="pop-card" v-if="isShow" :style="{'left': offset.left +'px', 'top': offset.top+'px','width': width+'px'}" ref="popCard" v-click-out-side="closeCard">
-				<slot></slot>
-				<div class="pop-arrow" :style="{'left': offset.arrowLeft+'px'}"></div>
-			</div>
-		</transition>
-		<div @click="togglePop" class="pop-handler" ref="popHandler" v-observe-visibility="setSize">
-			<slot name="reference"></slot>
-		</div>
-	</div>
+  <div style="display: inline-block;vertical-align: top;">
+    <transition :name="animationMode">
+      <div
+        class="pop-card"
+        v-if="isShow"
+        :style="{'left': offset.left +'px', 'top': offset.top+'px','width': width+'px'}"
+        ref="popCard"
+        v-click-out-side="closeCard"
+      >
+        <slot></slot>
+        <div class="pop-arrow" :style="{'left': offset.arrowLeft+'px'}"></div>
+      </div>
+    </transition>
+    <div @click="togglePop" class="pop-handler" ref="popHandler" v-observe-visibility="setSize">
+      <slot name="reference"></slot>
+    </div>
+  </div>
 </template>
 <script>
 import { ObserveVisibility } from "vue-observe-visibility";
@@ -21,13 +27,19 @@ export default {
       bind(el, binding, vnode) {
         el.clickOutsideEvent = event => {
           if (
-            !(el == event.target || el.contains(event.target)) ||
+            !(
+              el == event.target ||
+              el.contains(event.target) ||
+              !vnode.context.isShow
+            ) ||
             vnode.context.clickToClose
           ) {
             vnode.context[binding.expression](event);
           }
         };
-        document.body.addEventListener("click", el.clickOutsideEvent);
+        setTimeout(_ => {
+          document.body.addEventListener("click", el.clickOutsideEvent);
+        }, 0);
       },
       unbind(el) {
         document.body.removeEventListener("click", el.clickOutsideEvent);
