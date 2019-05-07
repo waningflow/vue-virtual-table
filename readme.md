@@ -10,6 +10,16 @@ Vue table component with virtual dom and easy api.
 
 [live demo](http://p.waningflow.com/vue-virtual-table/)
 
+# Installation
+
+```
+yarn add vue-virtual-table
+
+or
+
+npm install --save vue-virtual-table
+```
+
 # Usage
 
 A simplest example:
