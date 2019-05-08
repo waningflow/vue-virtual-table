@@ -1,15 +1,20 @@
 <template>
-	<div style="display: inline-block;vertical-align: top;" class="mainCard">
-		<transition :name="animationMode">
-			<div class="pop-card" :style="{'left': offset.left +'px', 'top': offset.top+'px','width': width+'px'}" ref="popCard" @click="handleClick">
-				<slot></slot>
-				<div class="pop-arrow" :style="{'left': offset.arrowLeft+'px'}"></div>
-			</div>
-		</transition>
-		<div class="pop-handler" ref="popHandler" v-observe-visibility="setSize">
-			<slot name="reference"></slot>
-		</div>
-	</div>
+  <div style="display: inline-block;vertical-align: top;" class="mainCard">
+    <transition :name="animationMode">
+      <div
+        class="pop-card"
+        :style="{'left': offset.left +'px', 'top': offset.top+'px','width': width+'px'}"
+        ref="popCard"
+        @click="handleClick"
+      >
+        <slot></slot>
+        <div class="pop-arrow" :style="{'left': offset.arrowLeft+'px'}"></div>
+      </div>
+    </transition>
+    <div class="pop-handler" ref="popHandler" v-observe-visibility="setSize">
+      <slot name="reference"></slot>
+    </div>
+  </div>
 </template>
 <script>
 import { ObserveVisibility } from "vue-observe-visibility";
@@ -34,6 +39,9 @@ export default {
     visible: {
       type: Boolean,
       default: true
+    },
+    boundary: {
+      default: () => document.body
     }
   },
   data() {
@@ -72,19 +80,26 @@ export default {
         return;
       }
       let {
-        offsetLeft,
-        offsetTop,
-        offsetHeight,
-        offsetWidth
-      } = this.$refs.popHandler;
-      let moveLeft = 0;
-      if (offsetLeft + this.width > window.innerWidth) {
-        moveLeft = offsetLeft + this.width - window.innerWidth;
-      }
-      this.offset.left = offsetLeft - moveLeft;
+        x,
+        y,
+        width,
+        height
+      } = this.$refs.popHandler.getBoundingClientRect();
+      let {
+        x: bx,
+        y: by,
+        width: bwidth,
+        height: bheight
+      } = this.boundary.getBoundingClientRect();
 
-      this.offset.top = offsetTop + offsetHeight;
-      this.offset.arrowLeft = offsetWidth / 2 - 6 + moveLeft;
+      let moveLeft = 0;
+      if (x + this.width > bx + bwidth) {
+        moveLeft = x + this.width - (bx + bwidth);
+      }
+      this.offset.left = -moveLeft;
+
+      this.offset.top = height;
+      this.offset.arrowLeft = width / 2 - 6 + moveLeft;
     }
   },
   mounted() {
@@ -92,9 +107,10 @@ export default {
       return;
     }
     this.setSize();
-    window.addEventListener("resize", _ => {
-      this.setSize();
-    });
+    window.addEventListener("resize", this.setSize);
+  },
+  unmounted() {
+    window.removeEventListener("resize", this.setSize);
   }
 };
 </script>

@@ -43,3 +43,18 @@ export function deepCopy(obj) {
   let obj_cp = JSON.parse(JSON.stringify(obj))
   return obj_cp
 }
+
+export function debounce(fun, t = 0) {
+  let st
+  if (typeof fun !== 'function') {
+    throw new TypeError('Not a function')
+  }
+  return function() {
+    if (st) {
+      clearTimeout(st)
+    }
+    st = setTimeout(_ => {
+      fun.apply(this, arguments)
+    }, t)
+  }
+}

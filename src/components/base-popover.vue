@@ -68,6 +68,9 @@ export default {
     visible: {
       type: Boolean,
       default: true
+    },
+    boundary: {
+      default: () => document.body
     }
   },
   data() {
@@ -103,19 +106,26 @@ export default {
         return;
       }
       let {
-        offsetLeft,
-        offsetTop,
-        offsetHeight,
-        offsetWidth
-      } = this.$refs.popHandler;
-      let moveLeft = 0;
-      if (offsetLeft + this.width > window.innerWidth) {
-        moveLeft = offsetLeft + this.width - window.innerWidth;
-      }
-      this.offset.left = offsetLeft - moveLeft;
+        x,
+        y,
+        width,
+        height
+      } = this.$refs.popHandler.getBoundingClientRect();
+      let {
+        x: bx,
+        y: by,
+        width: bwidth,
+        height: bheight
+      } = this.boundary.getBoundingClientRect();
 
-      this.offset.top = offsetTop + offsetHeight + 10;
-      this.offset.arrowLeft = offsetWidth / 2 - 6 + moveLeft;
+      let moveLeft = 0;
+      if (x + this.width > bx + bwidth) {
+        moveLeft = x + this.width - (bx + bwidth);
+      }
+      this.offset.left = -moveLeft;
+
+      this.offset.top = height + 10;
+      this.offset.arrowLeft = width / 2 - 6 + moveLeft;
     }
   },
   mounted() {
@@ -123,9 +133,10 @@ export default {
       return;
     }
     this.setSize();
-    window.addEventListener("resize", _ => {
-      this.setSize();
-    });
+    window.addEventListener("resize", this.setSize);
+  },
+  unmounted() {
+    window.removeEventListener("resize", this.setSize);
   }
 };
 </script>

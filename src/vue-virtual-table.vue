@@ -26,7 +26,7 @@
                 :style="{flex: colWidth[configIndex]}"
               >
                 <div class="header-cell-inner search-wrapper" v-if="item.searchable">
-                  <base-popover :width="340">
+                  <base-popover :width="340" :boundary="$refs.mainScroll">
                     <div style="padding: 10px;text-align: left;font-size: 0">
                       <template v-for="(phrase, ph_index) in item.searchPhrase">
                         <base-select
@@ -80,7 +80,7 @@
                   </base-popover>
                 </div>
                 <div class="header-cell-inner filter-wrapper" v-else-if="item.filterable">
-                  <base-popover :width="240">
+                  <base-popover :width="240" :boundary="$refs.mainScroll">
                     <div style="padding: 5px;">
                       <base-checkgroup
                         v-model="item.filterSelectedOptions"
@@ -124,7 +124,10 @@
                   </base-popover>
                 </div>
                 <div class="header-cell-inner numFiltered-wrapper" v-else-if="item.numberFilter">
-                  <base-popover :width="item.numberFilterPhrase.operator==='bt'?298:198">
+                  <base-popover
+                    :width="item.numberFilterPhrase.operator==='bt'?298:198"
+                    :boundary="$refs.mainScroll"
+                  >
                     <div style="padding: 10px;text-align: left;font-size: 0">
                       <base-select
                         v-model="item.numberFilterPhrase.operator"
@@ -251,7 +254,7 @@
                 </template>
                 <template v-else>
                   <div class="item-cell-inner" v-if="item.prop === '_expand'">
-                    <base-popover :width="mainWidth-54">
+                    <base-popover :width="mainWidth-54" :boundary="$refs.mainScroll">
                       <div>
                         <slot :index="props.itemIndex" :row="clearObj(props.item)" name="expand"/>
                       </div>
@@ -367,7 +370,7 @@
               :style="{flex: colWidth[configIndex]}"
             >
               <span v-if="item.prop === '_expand' && item.expandSummary">
-                <base-popover :width="mainWidth-54">
+                <base-popover :width="mainWidth-54" :boundary="$refs.mainScroll">
                   <slot :data="dataTemp" name="summary"/>
                   <base-icon
                     icon-name="arrowCarrotRight"
@@ -406,7 +409,7 @@ import BaseCheckgroup from "./components/base-checkgroup.vue";
 import BaseTooltip from "./components/base-tooltip.vue";
 import BaseIcon from "./components/base-icon.vue";
 import "vue-resize/dist/vue-resize.css";
-import { _uuid, exportCsv, deepCopy } from "./utils/index.js";
+import { _uuid, exportCsv, deepCopy, debounce } from "./utils/index.js";
 
 export default {
   name: "VueVirtualTable",
@@ -626,43 +629,47 @@ export default {
   },
   watch: {
     data() {
-      this.update();
+      this.updateDebounce();
     },
     config() {
-      this.update();
+      this.updateDebounce();
     },
     multiHeader() {
-      this.update();
+      this.updateDebounce();
     },
     defaultSelect() {
-      this.update();
+      this.updateDebounce();
     },
     height() {
       this.setSize();
     }
   },
-  computed: {},
   methods: {
     updateBase() {
-      let self = this;
-      self.configTemp = deepCopy(self.config);
-      self.dataInitTemp = deepCopy(self.data);
+      this.configTemp = deepCopy(this.config);
+      this.dataInitTemp = deepCopy(this.data);
       this.minWidthTemp = this.minWidth;
 
-      self.parseConfig();
-      self.updateInitData();
-      self.dataTemp = deepCopy(self.dataInitTemp);
+      this.parseConfig();
+      this.updateInitData();
+      this.dataTemp = deepCopy(this.dataInitTemp);
+    },
+    updateDebounce() {
+      if (!this.updateDebounceMethod) {
+        this.updateDebounceMethod = debounce(this.update.bind(this), 100);
+      }
+      this.updateDebounceMethod();
     },
     update() {
-      let self = this;
-      self.lastConfigTemp = deepCopy(self.configTemp);
-      self.updateBase();
-      self.handleClickConfirmFilter();
-      self.refreshSummary();
-      self.setSize();
-      self.$emit(
+      console.log("table updated!");
+      this.lastConfigTemp = deepCopy(this.configTemp);
+      this.updateBase();
+      this.handleClickConfirmFilter();
+      this.refreshSummary();
+      this.setSize();
+      this.$emit(
         "changeSelection",
-        self.dataInitTemp.filter(v => v._eSelected === true)
+        this.dataInitTemp.filter(v => v._eSelected === true)
       );
     },
     clipboardCP(text) {
@@ -689,7 +696,7 @@ export default {
           text += "\n";
         }
       }
-      this.clipboardCP(text)
+      this.clipboardCP(text);
     },
     handleExportTable() {
       let header = {};
@@ -1339,9 +1346,8 @@ div.item-line.unselectable {
 
 .tag {
   padding: 0 10px;
-  height: 34px;
-  line-height: 32px;
-  /*font-size: 16px;*/
+  height: 28px;
+  line-height: 28px;
   border-radius: 4px;
   box-sizing: border-box;
   color: $default-color;

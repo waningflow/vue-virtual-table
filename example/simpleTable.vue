@@ -52,7 +52,7 @@ export default {
       ],
       tableAttribute: {
         height: 650,
-        itemHeight: 55,
+        itemHeight: 42,
         minWidth: 1000,
         selectable: true,
         enableExport: true,
