@@ -1,5 +1,5 @@
 <template>
-  <div style="display: inline-block;vertical-align: top;" class="mainCard">
+  <div style="display: inline-block;vertical-align: top" class="mainCard">
     <transition :name="animationMode">
       <div
         class="pop-card"

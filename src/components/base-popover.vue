@@ -1,5 +1,5 @@
 <template>
-  <div style="display: inline-block;vertical-align: top;">
+  <div style="display: inline-block;vertical-align: top;position: relative">
     <transition :name="animationMode">
       <div
         class="pop-card"
@@ -93,6 +93,9 @@ export default {
       }
       this.isShow = !this.isShow;
       this.$emit("showChange", this.isShow);
+      if(this.isShow){
+        this.setSize()
+      }
     },
     closeCard() {
       if (!this.visible) {
