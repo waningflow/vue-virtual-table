@@ -1,6 +1,6 @@
 {
   "name": "vue-virtual-table",
-  "version": "0.2.11",
+  "version": "0.2.12",
   "description": "vue table component with virtual dom",
   "author": "https://github.com/waningflow",
   "license": "MIT",
