@@ -15,7 +15,9 @@ Vue table component with virtual dom and easy api.
 ```
 yarn add vue-virtual-table
 ```
+
 or
+
 ```
 npm install --save vue-virtual-table
 ```
@@ -36,15 +38,12 @@ A simplest example:
     components: {
       VueVirtualTable
     },
-    data() => ({
-      tableConfig: [
-        {prop: 'user'},
-        {prop: 'age'}
-      ],
+    data: () => ({
+      tableConfig: [{ prop: 'user' }, { prop: 'age' }],
       tableData: [
-        {user: 'a1', age: 20},
-        {user: 'a2', age: 21},
-        {user: 'a3', age: 23}
+        { user: 'a1', age: 20 },
+        { user: 'a2', age: 21 },
+        { user: 'a3', age: 23 }
       ]
     })
   }
@@ -103,7 +102,7 @@ Here is a complex example and you can get more info in the tables below the exam
     components: {
       VueVirtualTable
     },
-    data() => ({
+    data: () => ({
       tableConfig: [
         { prop: '_index', name: '#', width: 80 },
         {

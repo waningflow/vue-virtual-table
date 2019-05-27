@@ -15,8 +15,12 @@
         v-on:changeSelection="handleSelectionChange"
       >
         <template slot-scope="scope" slot="actionCommon">
-          <button size="mini" @click="edit(scope.index, scope.row)">Edit</button>
-          <button size="mini" @click="del(scope.index, scope.row)">Delete</button>
+          <button size="mini" @click="edit(scope.index, scope.row)">
+            Edit
+          </button>
+          <button size="mini" @click="del(scope.index, scope.row)">
+            Delete
+          </button>
         </template>
       </vue-virtual-table>
     </div>
@@ -29,66 +33,64 @@ import { _uuid } from "../src/utils/index.js";
 
 export default {
   name: "app",
-  data() {
-    return {
-      tableConfig: [
-        { prop: "_index", name: "#", width: 80 },
-        {
-          prop: "user",
-          name: "User",
-          searchable: true,
-          sortable: true,
-          summary: "COUNT"
-        },
-        { prop: "age", name: "Age", numberFilter: true },
-        { prop: "city", name: "City", filterable: true },
-        { prop: "_action", name: "Action", actionName: "actionCommon" },
-        { prop: "city", name: "City", filterable: true }
-      ],
-      tableData: [
-        { user: "a1", age: 20, city: "a" },
-        { user: "a2", age: 21, city: "b" },
-        { user: "a3", age: 23, city: "a" }
-      ],
-      tableAttribute: {
-        height: 650,
-        itemHeight: 42,
-        minWidth: 1000,
-        selectable: true,
-        enableExport: true,
-        bordered: false,
-        hoverHighlight: true,
-        language: "en"
-      },
-      lineNum: 1000,
-      userConfig: {
+  data: () => ({
+    tableConfig: [
+      { prop: "_index", name: "#", width: 80 },
+      {
         prop: "user",
         name: "User",
         searchable: true,
         sortable: true,
-        summary: "COUNT",
-        alignItems: "center",
-        isHidden: false
+        summary: "COUNT"
       },
-      ageConfig: {
-        prop: "age",
-        name: "Age",
-        numberFilter: true,
-        sortable: false,
-        summary: "",
-        alignItems: "center",
-        isHidden: false
-      },
-      cityConfig: {
-        prop: "city",
-        name: "City",
-        filterable: true,
-        summary: "",
-        alignItems: "center",
-        isHidden: false
-      }
-    };
-  },
+      { prop: "age", name: "Age", numberFilter: true },
+      { prop: "city", name: "City", filterable: true },
+      { prop: "_action", name: "Action", actionName: "actionCommon" },
+      { prop: "city", name: "City", filterable: true }
+    ],
+    tableData: [
+      { user: "a1", age: 20, city: "a" },
+      { user: "a2", age: 21, city: "b" },
+      { user: "a3", age: 23, city: "a" }
+    ],
+    tableAttribute: {
+      height: 650,
+      itemHeight: 42,
+      minWidth: 1000,
+      selectable: true,
+      enableExport: true,
+      bordered: false,
+      hoverHighlight: true,
+      language: "en"
+    },
+    lineNum: 1000,
+    userConfig: {
+      prop: "user",
+      name: "User",
+      searchable: true,
+      sortable: true,
+      summary: "COUNT",
+      alignItems: "center",
+      isHidden: false
+    },
+    ageConfig: {
+      prop: "age",
+      name: "Age",
+      numberFilter: true,
+      sortable: false,
+      summary: "",
+      alignItems: "center",
+      isHidden: false
+    },
+    cityConfig: {
+      prop: "city",
+      name: "City",
+      filterable: true,
+      summary: "",
+      alignItems: "center",
+      isHidden: false
+    }
+  }),
   components: {
     VueVirtualTable
   },
