@@ -161,8 +161,7 @@ export default {
   components: {
     VueVirtualTable
   },
-  mounted() {
-  },
+  mounted() {},
   methods: {
     handleSelectionChange(rows) {
       console.log(rows);

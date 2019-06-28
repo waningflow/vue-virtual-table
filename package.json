@@ -1,6 +1,6 @@
 {
   "name": "vue-virtual-table",
-  "version": "0.2.13",
+  "version": "0.2.14",
   "description": "vue table component with virtual dom",
   "author": "https://github.com/waningflow",
   "license": "MIT",
@@ -33,6 +33,7 @@
     "build:unpkg": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format iife"
   },
   "dependencies": {
+    "v-tooltip": "2.0.2",
     "vue-observe-visibility": "^0.4.3",
     "vue-resize": "^0.4.5"
   },

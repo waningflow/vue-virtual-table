@@ -406,52 +406,8 @@
                     v-else-if="item.eTip"
                     :style="{ 'align-items': item.alignItems || 'center' }"
                   >
-                    <base-tooltip>
-                      <div style="text-align: left;font-size: 13px">
-                        <span v-for="tipProp in item.eTip" :key="tipProp">
-                          <span v-if="item.eTipWithProp"
-                            >{{
-                              configTemp.filter(v => v.prop === tipProp)[0]
-                                .name
-                            }}:</span
-                          >
-                          <span>
-                            <span
-                              v-if="
-                                configTemp.filter(v => v.prop === tipProp)[0]
-                                  .prefix && props.item[tipProp]
-                              "
-                              class="prefix"
-                              >{{
-                                configTemp.filter(v => v.prop === tipProp)[0]
-                                  .prefix
-                              }}</span
-                            >
-                            <span>{{ props.item[tipProp] }}</span>
-                            <span
-                              v-if="
-                                configTemp.filter(v => v.prop === tipProp)[0]
-                                  .suffix && props.item[tipProp]
-                              "
-                              class="suffix"
-                              >{{
-                                configTemp.filter(v => v.prop === tipProp)[0]
-                                  .suffix
-                              }}</span
-                            >
-                            <br />
-                          </span>
-                        </span>
-                        <base-icon
-                          icon-name="documentsAlt"
-                          icon-color="#c0c4cc"
-                          width="13"
-                          height="13"
-                          style="cursor:pointer"
-                          @click.native="handleClickCopy(props.item, item.eTip)"
-                        ></base-icon>
-                      </div>
-                      <span slot="reference">
+                    <VPopover trigger="hover" placement="right">
+                      <span>
                         <span
                           v-if="item.prefix && props.item[item.prop]"
                           :class="props.item._eClass[item.prop] || ''"
@@ -483,7 +439,58 @@
                           >{{ item.suffix }}</span
                         >
                       </span>
-                    </base-tooltip>
+                      <template #popover>
+                        <div
+                          style="text-align: left;font-size: 13px"
+                          class="pop-card"
+                        >
+                          <span v-for="tipProp in item.eTip" :key="tipProp">
+                            <span v-if="item.eTipWithProp"
+                              >{{
+                                configTemp.filter(v => v.prop === tipProp)[0]
+                                  .name
+                              }}:</span
+                            >
+                            <span>
+                              <span
+                                v-if="
+                                  configTemp.filter(v => v.prop === tipProp)[0]
+                                    .prefix && props.item[tipProp]
+                                "
+                                class="prefix"
+                                >{{
+                                  configTemp.filter(v => v.prop === tipProp)[0]
+                                    .prefix
+                                }}</span
+                              >
+                              <span>{{ props.item[tipProp] }}</span>
+                              <span
+                                v-if="
+                                  configTemp.filter(v => v.prop === tipProp)[0]
+                                    .suffix && props.item[tipProp]
+                                "
+                                class="suffix"
+                                >{{
+                                  configTemp.filter(v => v.prop === tipProp)[0]
+                                    .suffix
+                                }}</span
+                              >
+                              <br />
+                            </span>
+                          </span>
+                          <base-icon
+                            icon-name="documentsAlt"
+                            icon-color="#c0c4cc"
+                            width="13"
+                            height="13"
+                            style="cursor:pointer"
+                            @click.native="
+                              handleClickCopy(props.item, item.eTip)
+                            "
+                          ></base-icon>
+                        </div>
+                      </template>
+                    </VPopover>
                   </div>
                   <div
                     class="item-cell-inner"
@@ -581,6 +588,7 @@ import BaseTooltip from "./components/base-tooltip.vue";
 import BaseIcon from "./components/base-icon.vue";
 import "vue-resize/dist/vue-resize.css";
 import { _uuid, exportCsv, deepCopy, debounce } from "./utils/index.js";
+import { VPopover } from "v-tooltip";
 
 export default {
   name: "VueVirtualTable",
@@ -596,7 +604,8 @@ export default {
     BaseInput,
     BaseCheckgroup,
     BaseTooltip,
-    BaseIcon
+    BaseIcon,
+    VPopover
   },
   props: {
     config: {
@@ -1634,5 +1643,18 @@ div.item-line.unselectable {
   padding: 0;
   margin: -1px;
   border: 0;
+}
+.pop-card {
+  min-width: 10px;
+  min-height: 10px;
+  border: 1px solid #ebeef5;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  border-radius: 5px;
+  box-sizing: border-box;
+  padding: 5px;
+  font-size: 13px;
+  word-break: break-all;
+  max-width: 400px;
 }
 </style>
