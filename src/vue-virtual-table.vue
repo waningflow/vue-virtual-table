@@ -967,6 +967,7 @@ export default {
       });
     },
     parseClass(eClass, item) {
+      let self = this;
       let result = {};
       for (let cl in eClass) {
         let text = eClass[cl];
@@ -976,7 +977,7 @@ export default {
           let this_prop = v.replace(/\${([\w-_]+)}/, "$1");
           text = text.replace(v, item[this_prop] || 0);
         });
-        result[cl] = this.evalFunc(text);
+        result[cl] = self.evalFunc(text);
       }
       return result;
     },
