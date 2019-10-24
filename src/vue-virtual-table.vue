@@ -1233,11 +1233,11 @@ export default {
       self.sortParam.col = val;
       self.sortParam.direction = direction;
       let isNumber = false;
-      self.dataTemp.some((v, i) => {
-        if (!v[val] && v[val] != 0) {
+      self.dataTemp.forEach((v, i) => {
+        if (!v[val] && v[val] !== 0) {
           return false;
         }
-        if (isNaN(v[val]) && v[val] != "NaN") {
+        if ((isNaN(v[val]) && v[val] != "NaN") || v[val] === "") {
           isNumber = false;
           return true;
         } else {
