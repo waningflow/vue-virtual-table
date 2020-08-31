@@ -344,7 +344,8 @@
           <template slot-scope="props">
             <div
               class="item-line"
-              @click="handleClickItem(props.item)"
+              @click="handleClickItem(props.item, $event)"
+              @contextmenu="$emit('contextmenu', props.item, $event)"
               :class="{
                 selected: props.item._eSelected,
                 unselectable: !selectable,
@@ -1066,7 +1067,7 @@ export default {
         this.dataInitTemp.filter(v => v._eSelected === true)
       );
     },
-    handleClickItem(item) {
+    handleClickItem(item, event) {
       let self = this;
       item._eSelected = !item._eSelected && this.selectable;
       self.dataInitTemp.filter((v, i) => v._eId === item._eId)[0]._eSelected =
@@ -1079,6 +1080,9 @@ export default {
         "changeSelection",
         self.dataInitTemp.filter(v => v._eSelected === true)
       );
+
+      // Emit 'click' event when a row is clicked
+      self.$emit("click", item, event)
     },
     handleClickConfirmFilter(index) {
       let self = this;

@@ -150,6 +150,8 @@ Here is a complex example and you can get more info in the tables below the exam
 | name            | parameters | description                   |
 | --------------- | ---------- | ----------------------------- |
 | changeSelection | rows       | When the selected rows change |
+| click           | row, $event| When row is clicked           |
+| contextmenu     | row, $event| When row is right-clicked     |
 
 ### Table Config
 
