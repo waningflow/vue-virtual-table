@@ -53,7 +53,7 @@ export function debounce(fun, t = 0) {
     if (st) {
       clearTimeout(st)
     }
-    st = setTimeout(_ => {
+    st = setTimeout(() => {
       fun.apply(this, arguments)
     }, t)
   }

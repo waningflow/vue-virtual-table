@@ -13,6 +13,8 @@
         :hoverHighlight="tableAttribute.hoverHighlight"
         :language="tableAttribute.language"
         v-on:changeSelection="handleSelectionChange"
+        v-on:click="handleClickRow"
+        v-on:contextmenu="handleContextmenu"
       >
         <template slot-scope="scope" slot="actionCommon">
           <button size="mini" @click="edit(scope.index, scope.row)">
@@ -104,6 +106,12 @@ export default {
     },
     handleSelectionChange(rows) {
       console.log(rows);
+    },
+    handleClickRow(row, e) {
+      console.log(row, e);
+    },
+    handleContextmenu(row, e) {
+      console.log(row, e);
     },
     edit(index, row) {
       console.log(index);
