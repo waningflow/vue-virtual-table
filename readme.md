@@ -8,7 +8,7 @@ Vue table component with virtual dom and easy api.
 - Keep smooth when the data reachs thousands of rows or even more.
 - Easy to use with a simple config.
 
-[live demo](http://p.waningflow.com/vue-virtual-table/)
+[live demo](https://waningflow.com/vue-virtual-table/)
 
 # Installation
 
