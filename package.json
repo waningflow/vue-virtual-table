@@ -1,6 +1,6 @@
 {
   "name": "vue-virtual-table",
-  "version": "0.2.16",
+  "version": "0.2.17",
   "description": "vue table component with virtual dom",
   "author": "https://github.com/waningflow",
   "license": "MIT",
@@ -47,7 +47,7 @@
     "cross-env": "^5.2.0",
     "minimist": "^1.2.0",
     "node-sass": "^4.11.0",
-    "rollup": "^1.4.1",
+    "rollup": "^1.32.1",
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-buble": "^0.19.6",
     "rollup-plugin-commonjs": "^9.2.1",
