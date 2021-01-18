@@ -410,7 +410,7 @@
                     <VPopover trigger="hover" placement="right">
                       <span>
                         <span
-                          v-if="item.prefix && props.item[item.prop]"
+                          v-if="item.prefix && getDescendantProp(props.item, item.prop)"
                           :class="props.item._eClass[item.prop] || ''"
                           class="prefix"
                           >{{ item.prefix }}</span
@@ -422,19 +422,19 @@
                           v-else-if="item.filterable"
                           class="tag"
                           :class="
-                            item.filterTag[props.item[item.prop]] ||
+                            item.filterTag[getDescendantProp(props.item, item.prop)] ||
                               'defaultTag'
                           "
-                          >{{ props.item[item.prop] }}</span
+                          >{{ getDescendantProp(props.item, item.prop) }}</span
                         >
                         <span
                           v-else-if="item.eClass"
                           :class="props.item._eClass[item.prop]"
-                          >{{ props.item[item.prop] }}</span
+                          >{{ getDescendantProp(props.item, item.prop) }}</span
                         >
-                        <span v-else>{{ props.item[item.prop] }}</span>
+                        <span v-else>{{ getDescendantProp(props.item, item.prop) }}</span>
                         <span
-                          v-if="item.suffix && props.item[item.prop]"
+                          v-if="item.suffix && getDescendantProp(props.item, item.prop)"
                           :class="props.item._eClass[item.prop] || ''"
                           class="suffix"
                           >{{ item.suffix }}</span
@@ -499,7 +499,7 @@
                     :style="{ 'align-items': item.alignItems || 'center' }"
                   >
                     <span
-                      v-if="item.prefix && props.item[item.prop]"
+                      v-if="item.prefix && getDescendantProp(props.item, item.prop)"
                       :class="props.item._eClass[item.prop] || ''"
                       class="prefix"
                       >{{ item.prefix }}</span
@@ -511,18 +511,18 @@
                       v-else-if="item.filterable"
                       class="tag"
                       :class="
-                        item.filterTag[props.item[item.prop]] || 'defaultTag'
+                        item.filterTag[getDescendantProp(props.item, item.prop)] || 'defaultTag'
                       "
-                      >{{ props.item[item.prop] }}</span
+                      >{{ getDescendantProp(props.item, item.prop) }}}</span
                     >
                     <span
                       v-else-if="item.eClass"
                       :class="props.item._eClass[item.prop]"
-                      >{{ props.item[item.prop] }}</span
+                      >{{ getDescendantProp(props.item, item.prop) }}</span
                     >
-                    <span v-else>{{ props.item[item.prop] }}</span>
+                    <span v-else>{{ getDescendantProp(props.item, item.prop) }}</span>
                     <span
-                      v-if="item.suffix && props.item[item.prop]"
+                      v-if="item.suffix && getDescendantProp(props.item, item.prop)"
                       :class="props.item._eClass[item.prop] || ''"
                       class="suffix"
                       >{{ item.suffix }}</span
@@ -826,6 +826,9 @@ export default {
     }
   },
   methods: {
+    getDescendantProp(obj, path) {
+      return path.split('.').reduce((acc, part) => acc && acc[part], obj)
+    },
     updateBase() {
       this.configTemp = deepCopy(this.config);
       this.dataInitTemp = deepCopy(this.data);
@@ -1091,7 +1094,7 @@ export default {
         let prop = v.prop;
         if (v.filterSelectedOptions && v.filterSelectedOptions.length) {
           temp = temp.filter(
-            item => v.filterSelectedOptions.indexOf(item[prop]) > -1
+            item => v.filterSelectedOptions.indexOf(self.getDescendantProp(item, prop)) > -1
           );
         }
         if (
@@ -1104,14 +1107,14 @@ export default {
               if (fp.operator == "out") {
                 temp = temp.filter(
                   item =>
-                    (item[prop] || "")
+                    (self.getDescendantProp(item, prop) || "")
                       .toLowerCase()
                       .indexOf(fp.value.toLowerCase()) === -1
                 );
               } else {
                 temp = temp.filter(
                   item =>
-                    (item[prop] || "")
+                    (self.getDescendantProp(item, prop) || "")
                       .toLowerCase()
                       .indexOf(fp.value.toLowerCase()) > -1
                 );
@@ -1129,44 +1132,44 @@ export default {
             case "eq":
               temp = temp.filter(
                 item =>
-                  Number(item[prop]) == Number(v.numberFilterPhrase.value[0])
+                  Number(self.getDescendantProp(item, prop)) == Number(v.numberFilterPhrase.value[0])
               );
               break;
             case "neq":
               temp = temp.filter(
                 item =>
-                  Number(item[prop]) != Number(v.numberFilterPhrase.value[0])
+                  Number(self.getDescendantProp(item, prop)) != Number(v.numberFilterPhrase.value[0])
               );
               break;
             case "lt":
               temp = temp.filter(
                 item =>
-                  Number(item[prop]) < Number(v.numberFilterPhrase.value[0])
+                  Number(self.getDescendantProp(item, prop)) < Number(v.numberFilterPhrase.value[0])
               );
               break;
             case "le":
               temp = temp.filter(
                 item =>
-                  Number(item[prop]) <= Number(v.numberFilterPhrase.value[0])
+                  Number(self.getDescendantProp(item, prop)) <= Number(v.numberFilterPhrase.value[0])
               );
               break;
             case "gt":
               temp = temp.filter(
                 item =>
-                  Number(item[prop]) > Number(v.numberFilterPhrase.value[0])
+                  Number(self.getDescendantProp(item, prop)) > Number(v.numberFilterPhrase.value[0])
               );
               break;
             case "ge":
               temp = temp.filter(
                 item =>
-                  Number(item[prop]) >= Number(v.numberFilterPhrase.value[0])
+                  Number(self.getDescendantProp(item, prop)) >= Number(v.numberFilterPhrase.value[0])
               );
               break;
             case "bt":
               temp = temp.filter(
                 item =>
-                  Number(item[prop]) > Number(v.numberFilterPhrase.value[0]) &&
-                  Number(item[prop]) <= Number(v.numberFilterPhrase.value[1])
+                  Number(self.getDescendantProp(item, prop)) > Number(v.numberFilterPhrase.value[0]) &&
+                  Number(self.getDescendantProp(item, prop)) <= Number(v.numberFilterPhrase.value[1])
               );
               break;
           }
@@ -1238,10 +1241,10 @@ export default {
       self.sortParam.direction = direction;
       let isNumber = false;
       self.dataTemp.some((v, i) => {
-        if (!v[val] && v[val] != 0) {
+        if (!self.getDescendantProp(v, val) && self.getDescendantProp(v, val) != 0) {
           return false;
         }
-        if (isNaN(v[val]) && v[val] != "NaN") {
+        if (isNaN(self.getDescendantProp(v, val)) && self.getDescendantProp(v, val) != "NaN") {
           isNumber = false;
           return true;
         } else {
@@ -1253,34 +1256,34 @@ export default {
         if (!isNumber) {
           // let a_cp = a[val]||'', b_cp = b[val]||''
           self.dataTemp.sort((a, b) =>
-            (a[val] || "").localeCompare(b[val] || "")
+            (self.getDescendantProp(a, val) || "").localeCompare(self.getDescendantProp(b, val) || "")
           );
         } else {
           self.dataTemp.sort((a, b) => {
-            if (isNaN(a[val])) {
-              return -b[val] < 0 ? -1 : 1;
+            if (isNaN(self.getDescendantProp(a, val))) {
+              return -self.getDescendantProp(b, val) < 0 ? -1 : 1;
             }
-            if (isNaN(b[val])) {
-              return a[val] < 0 ? -1 : 1;
+            if (isNaN(self.getDescendantProp(b, val))) {
+              return self.getDescendantProp(a, val) < 0 ? -1 : 1;
             }
-            return a[val] - b[val] < 0 ? -1 : 1;
+            return self.getDescendantProp(a, val) - self.getDescendantProp(b, val) < 0 ? -1 : 1;
           });
         }
       } else {
         if (!isNumber) {
           // let a_cp = a[val]||'', b_cp = b[val]||''
           self.dataTemp.sort(
-            (a, b) => -(a[val] || "").localeCompare(b[val] || "")
+            (a, b) => -(self.getDescendantProp(a, val) || "").localeCompare(self.getDescendantProp(b, val) || "")
           );
         } else {
           self.dataTemp.sort((a, b) => {
-            if (isNaN(a[val])) {
-              return -b[val] > 0 ? -1 : 1;
+            if (isNaN(self.getDescendantProp(a, val))) {
+              return -self.getDescendantProp(b, val) > 0 ? -1 : 1;
             }
-            if (isNaN(b[val])) {
-              return a[val] > 0 ? -1 : 1;
+            if (isNaN(self.getDescendantProp(b, val))) {
+              return self.getDescendantProp(a, val) > 0 ? -1 : 1;
             }
-            return a[val] - b[val] > 0 ? -1 : 1;
+            return self.getDescendantProp(a, val) - self.getDescendantProp(b, val) > 0 ? -1 : 1;
           });
         }
       }
