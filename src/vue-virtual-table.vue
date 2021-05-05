@@ -513,7 +513,7 @@
                       :class="
                         item.filterTag[getDescendantProp(props.item, item.prop)] || 'defaultTag'
                       "
-                      >{{ getDescendantProp(props.item, item.prop) }}}</span
+                      >{{ getDescendantProp(props.item, item.prop) }}</span
                     >
                     <span
                       v-else-if="item.eClass"
