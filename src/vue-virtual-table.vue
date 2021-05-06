@@ -513,7 +513,7 @@
                       :class="
                         item.filterTag[getDescendantProp(props.item, item.prop)] || 'defaultTag'
                       "
-                      >{{ getDescendantProp(props.item, item.prop) }}}</span
+                      >{{ getDescendantProp(props.item, item.prop) }}</span
                     >
                     <span
                       v-else-if="item.eClass"
@@ -831,6 +831,9 @@ export default {
     },
     updateBase() {
       this.configTemp = deepCopy(this.config);
+      this.configTemp = this.configTemp.filter(function (obj) {
+        return !obj.isHidden;
+      });
       this.dataInitTemp = deepCopy(this.data);
       this.minWidthTemp = this.minWidth;
 
