@@ -143,7 +143,7 @@ Here is a complex example and you can get more info in the tables below the exam
 | hoverHighlight | Boolean | Whether to hightlight current row.      | No       | true    |
 | selectable     | Boolean | Whether row is selectable.              | No       | false   |
 | enableExport   | Boolean | Whether to show export-to-table button  | No       | false   |
-| language       | String  | Language from ['en', 'cn']              | No       | 'cn'    |
+| language       | String  | Language from ['en', 'cn', 'ptBR']              | No       | 'cn'    |
 
 ### Table Events
 
@@ -158,6 +158,7 @@ Here is a complex example and you can get more info in the tables below the exam
 | param        | type    | description                                                                                                                             | required | default                   |
 | ------------ | ------- | --------------------------------------------------------------------------------------------------------------------------------------- | -------- | ------------------------- |
 | prop         | String  | Property name                                                                                                                           | Yes      |                           |
+| key         | String  | Key of element with data need in filter                                                                                                                            | No       | same to the property name |
 | name         | String  | Display name                                                                                                                            | No       | same to the property name |
 | width        | Number  | Column width                                                                                                                            | No       | auto                      |
 | sortable     | Boolean | Whether this column is sortable                                                                                                         | No       | false                     |
@@ -180,3 +181,20 @@ Here is a complex example and you can get more info in the tables below the exam
 | \_index  | Show the index of row                |
 | \_action | A slot to customize the content      |
 | \_expand | A slot to customize a popover window |
+
+
+### Custom slot with formatted data and filter
+
+```javascript
+{prop: '_action', key: 'price', name: 'Price', sortable: true, numberFilter: true, prefix: "R$ ", actionName: 'price-info'}
+```
+
+```javascript
+{id: v.id, name: obj.name, price: obj.price, price_formatted: currency(obj.price)}
+```
+
+```html
+<template slot-scope="scope" slot="price-info">
+    <div>{{ scope.row.price_formatted }}</div>
+</template>
+```
