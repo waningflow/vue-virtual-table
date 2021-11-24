@@ -375,6 +375,7 @@
                       :index="props.itemIndex"
                       :row="clearObj(props.item)"
                       :name="item.actionName || 'action'"
+                      :key="item.key || item.prop"
                     />
                   </div>
                 </template>
@@ -388,6 +389,7 @@
                         <slot
                           :index="props.itemIndex"
                           :row="clearObj(props.item)"
+                          :key="item.key || item.prop"
                           name="expand"
                         />
                       </div>
@@ -775,6 +777,31 @@ export default {
             clear_btn: "Clear"
           }
         },
+        ptBR: {
+          selectAll: "Todos",
+          phraseFilter: {
+            in: "Incluir",
+            out: "Excluir",
+            ph: 'Pressione "Enter" para Confirmar',
+            and_btn: "E",
+            clear_btn: "Limpar"
+          },
+          selectFilter: {
+            confirm_btn: "Confirmar",
+            reverse_btn: "Inverter",
+            clear_btn: "Limpar"
+          },
+          numberFilter: {
+            eq: "=",
+            neq: "≠",
+            lt: "＜",
+            le: "≤",
+            gt: "＞",
+            ge: "≥",
+            bt: "between",
+            clear_btn: "Limpar"
+          }
+        },
         cn: {
           selectAll: "全选",
           phraseFilter: {
@@ -1094,7 +1121,7 @@ export default {
       let self = this;
       let temp = deepCopy(self.dataInitTemp);
       self.configTemp.forEach((v, i) => {
-        let prop = v.prop;
+        let prop = v.key || v.prop;
         if (v.filterSelectedOptions && v.filterSelectedOptions.length) {
           temp = temp.filter(
             item => v.filterSelectedOptions.indexOf(self.getDescendantProp(item, prop)) > -1
@@ -1134,45 +1161,41 @@ export default {
           switch (v.numberFilterPhrase.operator) {
             case "eq":
               temp = temp.filter(
-                item =>
-                  Number(self.getDescendantProp(item, prop)) == Number(v.numberFilterPhrase.value[0])
+                item => Number(self.getDescendantProp(item, prop)) == Number(v.numberFilterPhrase.value[0])
               );
               break;
             case "neq":
               temp = temp.filter(
-                item =>
-                  Number(self.getDescendantProp(item, prop)) != Number(v.numberFilterPhrase.value[0])
+                item => Number(self.getDescendantProp(item, prop)) != Number(v.numberFilterPhrase.value[0])
               );
               break;
             case "lt":
               temp = temp.filter(
-                item =>
-                  Number(self.getDescendantProp(item, prop)) < Number(v.numberFilterPhrase.value[0])
+                item => Number(self.getDescendantProp(item, prop)) < Number(v.numberFilterPhrase.value[0])
               );
               break;
             case "le":
               temp = temp.filter(
-                item =>
-                  Number(self.getDescendantProp(item, prop)) <= Number(v.numberFilterPhrase.value[0])
+                item => Number(self.getDescendantProp(item, prop)) <= Number(v.numberFilterPhrase.value[0])
               );
               break;
             case "gt":
               temp = temp.filter(
-                item =>
-                  Number(self.getDescendantProp(item, prop)) > Number(v.numberFilterPhrase.value[0])
+                item => Number(self.getDescendantProp(item, prop)) > Number(v.numberFilterPhrase.value[0])
               );
               break;
             case "ge":
               temp = temp.filter(
-                item =>
-                  Number(self.getDescendantProp(item, prop)) >= Number(v.numberFilterPhrase.value[0])
+                item => Number(self.getDescendantProp(item, prop)) >= Number(v.numberFilterPhrase.value[0])
               );
               break;
             case "bt":
               temp = temp.filter(
-                item =>
-                  Number(self.getDescendantProp(item, prop)) > Number(v.numberFilterPhrase.value[0]) &&
-                  Number(self.getDescendantProp(item, prop)) <= Number(v.numberFilterPhrase.value[1])
+                item => {
+                  const descendant = self.getDescendantProp(item, prop);
+                  return Number(descendant) > Number(v.numberFilterPhrase.value[0]) &&
+                      Number(descendant) <= Number(v.numberFilterPhrase.value[1]);
+                }
               );
               break;
           }
