@@ -175,7 +175,7 @@
                             item.filterSelectedOptions &&
                             item.filterSelectedOptions.length
                         }"
-                        >{{ item.prop }}</span
+                        >{{ item.key || item.prop }}</span
                       >
                       <base-icon
                         icon-name="arrowCarrotDown"
@@ -277,7 +277,7 @@
                         item.filterSelectedOptions &&
                         item.filterSelectedOptions.length
                     }"
-                    >{{ item.prop }}</span
+                    >{{ item.key || item.prop }}</span
                   >
                 </div>
                 <div
@@ -293,19 +293,19 @@
                 >
                   <i
                     class="sort-ascending"
-                    @click="handleClickSort(item.prop, 'asc')"
+                    @click="handleClickSort(item.key || item.prop, 'asc')"
                     :class="{
                       selected:
-                        sortParam.col === item.prop &&
+                        sortParam.col === (item.key || item.prop) &&
                         sortParam.direction === 'asc'
                     }"
                   ></i>
                   <i
                     class="sort-descending"
-                    @click="handleClickSort(item.prop, 'desc')"
+                    @click="handleClickSort(item.key || item.prop, 'desc')"
                     :class="{
                       selected:
-                        sortParam.col === item.prop &&
+                        sortParam.col === (item.key || item.prop) &&
                         sortParam.direction === 'desc'
                     }"
                   ></i>
