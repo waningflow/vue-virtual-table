@@ -367,7 +367,8 @@
                     class="item-cell-inner rowSlot"
                     :style="{
                       height: itemHeight - 12 + 'px',
-                      'align-items': item.alignItems || 'center'
+                      'align-items': item.alignItems || 'center',
+                      'justify-content': item.justifyContent || 'center'
                     }"
                     @click="handleClickAction"
                   >
@@ -407,7 +408,10 @@
                   <div
                     class="item-cell-inner"
                     v-else-if="item.eTip"
-                    :style="{ 'align-items': item.alignItems || 'center' }"
+                    :style="{ 
+                      'align-items': item.alignItems || 'center',
+                      'justify-content': item.justifyContent || 'center'
+                    }"
                   >
                     <VPopover trigger="hover" placement="right">
                       <span>
@@ -498,7 +502,10 @@
                   <div
                     class="item-cell-inner"
                     v-else
-                    :style="{ 'align-items': item.alignItems || 'center' }"
+                    :style="{ 
+                      'align-items': item.alignItems || 'center',
+                      'justify-content': item.justifyContent || 'center'
+                    }"
                   >
                     <span
                       v-if="item.prefix && getDescendantProp(props.item, item.prop)"
@@ -825,6 +832,31 @@ export default {
             ge: "≥",
             bt: "之间",
             clear_btn: "清除"
+          }
+        },
+        kr: {
+          selectAll: "전체",
+          phraseFilter: {
+            in: "포함",
+            out: "불포함",
+            ph: "“Enter”키를 누르세요",
+            and_btn: "조건 추가",
+            clear_btn: "조건 초기화"
+          },
+          selectFilter: {
+            confirm_btn: "확인",
+            reverse_btn: "반대",
+            clear_btn: "조건 초기화"
+          },
+          numberFilter: {
+            eq: "=",
+            neq: "≠",
+            lt: "＜",
+            le: "≤",
+            gt: "＞",
+            ge: "≥",
+            bt: "~",
+            clear_btn: "조건 초기화"
           }
         }
       }
