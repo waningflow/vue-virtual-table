@@ -155,24 +155,25 @@ Here is a complex example and you can get more info in the tables below the exam
 
 ### Table Config
 
-| param        | type    | description                                                                                                                             | required | default                   |
-| ------------ | ------- | --------------------------------------------------------------------------------------------------------------------------------------- | -------- | ------------------------- |
-| prop         | String  | Property name                                                                                                                           | Yes      |                           |
-| key         | String  | Key of element with data need in filter                                                                                                                            | No       | same to the property name |
-| name         | String  | Display name                                                                                                                            | No       | same to the property name |
-| width        | Number  | Column width                                                                                                                            | No       | auto                      |
-| sortable     | Boolean | Whether this column is sortable                                                                                                         | No       | false                     |
-| searchable   | Boolean | Whether this column is searchable                                                                                                       | No       | false                     |
-| filterable   | Boolean | Whether this column is filterable                                                                                                       | No       | false                     |
-| numberFilter | Boolean | If it's a column of number. You can use this.                                                                                           | No       | false                     |
-| summary      | String  | summary type from ['COUNT', 'SUM'] or customize(eg. `${clicks}*100/${reach}` is calculated with the summary of other two columns).      | No       |                           |
-| prefix       | String  | Display before the value                                                                                                                | No       |                           |
-| suffix       | String  | Display after the value                                                                                                                 | No       |                           |
-| alignItems   | String  | Same with flex. Control the content of a cell                                                                                           | No       | center                    |
-| isHidden     | Boolean | Whether this column is hidden                                                                                                           | No       | false                     |
-| eTip         | Array   | Tool tip of a cell to display certain props (eg. `['name']` will display the value of 'name' prop in the tool tip )                     | No       |                           |
-| eTipWithProp | Boolean | Whether to show the prop name in the tool tip                                                                                           | No       |                           |
-| eClass       | Object  | Attach class to the cell (eg. `{redColor: '${spend}>100'}` add the 'redColor' class to the cell whose 'spend' prop is greater than 100) | No       | No                        |
+| param          | type    | description                                                                                                                             | required | default                   |
+| -------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------- | -------- | ------------------------- |
+| prop           | String  | Property name                                                                                                                           | Yes      |                           |
+| key            | String  | Key of element with data need in filter                                                                                                 | No       | same to the property name |
+| name           | String  | Display name                                                                                                                            | No       | same to the property name |
+| width          | Number  | Column width                                                                                                                            | No       | auto                      |
+| sortable       | Boolean | Whether this column is sortable                                                                                                         | No       | false                     |
+| searchable     | Boolean | Whether this column is searchable                                                                                                       | No       | false                     |
+| filterable     | Boolean | Whether this column is filterable                                                                                                       | No       | false                     |
+| numberFilter   | Boolean | If it's a column of number. You can use this.                                                                                           | No       | false                     |
+| summary        | String  | summary type from ['COUNT', 'SUM'] or customize(eg. `${clicks}*100/${reach}` is calculated with the summary of other two columns).      | No       |                           |
+| prefix         | String  | Display before the value                                                                                                                | No       |                           |
+| suffix         | String  | Display after the value                                                                                                                 | No       |                           |
+| alignItems     | String  | Same with flex. Control the content of a cell                                                                                           | No       | center                    |
+| justifyContent | String  | Defines how the browser distributes space between and around content items.                                                             | No       | center                    |
+| isHidden       | Boolean | Whether this column is hidden                                                                                                           | No       | false                     |
+| eTip           | Array   | Tool tip of a cell to display certain props (eg. `['name']` will display the value of 'name' prop in the tool tip )                     | No       |                           |
+| eTipWithProp   | Boolean | Whether to show the prop name in the tool tip                                                                                           | No       |                           |
+| eClass         | Object  | Attach class to the cell (eg. `{redColor: '${spend}>100'}` add the 'redColor' class to the cell whose 'spend' prop is greater than 100) | No       | No                        |
 
 ### Special Props
 
