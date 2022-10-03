@@ -1070,8 +1070,8 @@ export default {
             break;
           case "SUM":
             summary_item.value = self.dataTemp.reduce((prev, curr) => {
-              if (!isNaN(curr[prop])) {
-                let this_num = Number(curr[prop]);
+              if (/^[1-9]\d*(((,\d{3}){1})?(\.\d{0,2})?)$/.test(curr[prop])) {
+                let this_num = parseFloat(curr[prop].replace(/,/g, ''));
                 prev += this_num;
               }
               return prev;
