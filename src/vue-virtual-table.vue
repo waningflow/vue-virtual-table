@@ -784,6 +784,31 @@ export default {
             clear_btn: "Clear"
           }
         },
+        de:{
+          selectAll: "Alle",
+          phraseFilter: {
+            in: "Enthalten",
+            out: "Ausgeschlossen",
+            ph: 'Drücken Sie "Enter" zum Bestätigen',
+            and_btn: "Und",
+            clear_btn: "Löschen"
+          },
+          selectFilter: {
+            confirm_btn: "Bestätigen",
+            reverse_btn: "Umkehren",
+            clear_btn: "Löschen"
+          },
+          numberFilter: {
+            eq: "=",
+            neq: "≠",
+            lt: "＜",
+            le: "≤",
+            gt: "＞",
+            ge: "≥",
+            bt: "Zwischen",
+            clear_btn: "Löschen"
+          }
+        },
         ptBR: {
           selectAll: "Todos",
           phraseFilter: {
